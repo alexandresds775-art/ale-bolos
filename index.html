@@ -140,6 +140,14 @@ input,select,textarea {
   line-height:1.5;
   font-size:14px;
 }
+.aviso.aberta {
+  background:#edf8ed;
+  border-left-color:#397847;
+}
+.aviso.fechada {
+  background:#fff0dc;
+  border-left-color:#a12b36;
+}
 .pix {
   background:#f9edf0;
   border-radius:12px;
@@ -161,15 +169,6 @@ input,select,textarea {
   color:var(--vinho);
   padding:10px;
 }
-#resultadoPedido {
-  width:100%;
-  height:225px;
-  border:1px solid #ead1c9;
-  border-radius:10px;
-  margin-top:15px;
-  display:none;
-  background:white;
-}
 #areaEndereco,
 #areaMotoboy {
   display:none;
@@ -179,20 +178,7 @@ input,select,textarea {
   font-size:14px;
   line-height:1.5;
 }
-#estadoLoja {
-  margin:0 0 18px;
-}
-#estadoLoja.fechada {
-  background:#fff0dc;
-  border-left-color:#a12b36;
-}
-#estadoLoja.aberta {
-  background:#edf8ed;
-  border-left-color:#397847;
-}
-.indisponivel {
-  opacity:.65;
-}
+.indisponivel { opacity:.65; }
 .etiqueta {
   display:inline-block;
   margin-top:8px;
@@ -203,9 +189,7 @@ input,select,textarea {
   font-size:12px;
   font-weight:bold;
 }
-#entrega {
-  background:#fff7f2;
-}
+#entrega { background:#fff7f2; }
 small { color:#7e675e; }
 footer {
   text-align:center;
@@ -231,7 +215,6 @@ footer {
 </header>
 
 <main>
-
 <section>
   <h2>🍓 Nosso cardápio</h2>
 
@@ -289,13 +272,11 @@ footer {
     <label for="entrega">
       Previsão de disponibilidade
     </label>
-
     <input
       id="entrega"
       readonly
       placeholder="Consultando calendário..."
     >
-
     <small>
       A data é definida automaticamente conforme
       os dias de funcionamento e as datas bloqueadas.
@@ -305,7 +286,6 @@ footer {
     <label for="modalidade">
       Como deseja receber seu pedido? *
     </label>
-
     <select id="modalidade" required>
       <option value="">Selecione</option>
       <option value="retirada">
@@ -435,12 +415,6 @@ footer {
 
   <div id="situacao" aria-live="polite"></div>
 
-  <iframe
-    id="resultadoPedido"
-    name="resultadoPedido"
-    title="Confirmação do registro da encomenda"
-  ></iframe>
-
   <button
     type="button"
     class="acao secundario"
@@ -508,7 +482,6 @@ function dataBrasileira(dataISO) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(dataISO || "")) {
     return "";
   }
-
   const partes = dataISO.split("-");
   return partes[2] + "/" + partes[1] + "/" + partes[0];
 }
@@ -519,13 +492,10 @@ function textoSeguro(valor) {
 
 function criarElemento(tag, classe, conteudo) {
   const elemento = document.createElement(tag);
-
   if (classe) elemento.className = classe;
-
   if (conteudo !== undefined) {
     elemento.textContent = textoSeguro(conteudo);
   }
-
   return elemento;
 }
 
@@ -567,7 +537,6 @@ function atualizarBotao() {
 
 function mostrarEstado(mensagem, aberta) {
   const aviso = document.getElementById("estadoLoja");
-
   aviso.textContent = mensagem;
   aviso.className = "aviso " +
     (aberta ? "aberta" : "fechada");
@@ -584,15 +553,11 @@ function desenharProduto(p, destino) {
   imagem.loading = "lazy";
 
   const foto = urlFoto(p.foto);
-
-  if (foto) {
-    imagem.src = foto;
-  }
+  if (foto) imagem.src = foto;
 
   card.appendChild(imagem);
   card.appendChild(criarElemento("h4", "", p.nome));
   card.appendChild(criarElemento("p", "", p.descricao));
-
   card.appendChild(
     criarElemento("div", "preco", dinheiro(p.preco))
   );
@@ -606,23 +571,15 @@ function desenharProduto(p, destino) {
 
     const menos = criarElemento("button", "", "−");
     menos.type = "button";
-    menos.setAttribute(
-      "aria-label",
-      "Diminuir " + p.nome
-    );
+    menos.setAttribute("aria-label", "Diminuir " + p.nome);
 
     const numero = criarElemento(
-      "strong",
-      "",
-      qtd[p.id] || 0
+      "strong", "", qtd[p.id] || 0
     );
 
     const mais = criarElemento("button", "", "+");
     mais.type = "button";
-    mais.setAttribute(
-      "aria-label",
-      "Adicionar " + p.nome
-    );
+    mais.setAttribute("aria-label", "Adicionar " + p.nome);
 
     menos.disabled = !lojaAberta;
     mais.disabled = !lojaAberta;
@@ -669,7 +626,6 @@ function desenhar() {
     const grade = criarElemento("div", "produtos");
 
     lista.forEach(p => desenharProduto(p, grade));
-
     outras.append(titulo, grade);
   });
 
@@ -709,7 +665,6 @@ function alterar(id, variacao) {
   if (!lojaAberta) return;
 
   const produto = produtos.find(p => p.id === id);
-
   if (!produto || !produto.ativo) return;
 
   qtd[id] = Math.max(
@@ -734,7 +689,6 @@ function aplicarCatalogo(dados) {
   }
 
   produtos.length = 0;
-
   const ids = new Set();
 
   dados.produtos.forEach(item => {
@@ -764,19 +718,12 @@ function aplicarCatalogo(dados) {
 
     produtos.push(produto);
 
-    if (!(id in qtd)) {
-      qtd[id] = 0;
-    }
-
-    if (!produto.ativo) {
-      qtd[id] = 0;
-    }
+    if (!(id in qtd)) qtd[id] = 0;
+    if (!produto.ativo) qtd[id] = 0;
   });
 
   Object.keys(qtd).forEach(id => {
-    if (!ids.has(id)) {
-      delete qtd[id];
-    }
+    if (!ids.has(id)) delete qtd[id];
   });
 
   dataDisponivel = textoSeguro(dados.proximaData);
@@ -807,7 +754,6 @@ function aplicarCatalogo(dados) {
       );
 
   mostrarEstado(mensagem, lojaAberta);
-
   desenhar();
   atualizarBotao();
 }
@@ -834,7 +780,6 @@ function consultarCatalogo() {
 
       finalizado = true;
       clearTimeout(tempo);
-
       script.remove();
 
       try {
@@ -878,9 +823,7 @@ async function atualizarLoja() {
 
   try {
     const dados = await consultarCatalogo();
-
     aplicarCatalogo(dados);
-
     return true;
 
   } catch (erro) {
@@ -901,7 +844,6 @@ async function atualizarLoja() {
       erro.message || "Erro de conexão.";
 
     desenhar();
-
     return false;
 
   } finally {
@@ -1103,9 +1045,6 @@ document.getElementById("whatsapp")
 const formularioPedido =
   document.getElementById("pedido");
 
-const iframe =
-  document.getElementById("resultadoPedido");
-
 const situacao =
   document.getElementById("situacao");
 
@@ -1116,7 +1055,6 @@ formularioPedido.addEventListener(
 
     if (enviando) return;
 
-    // Confere novamente a planilha antes de enviar.
     const atualizado = await atualizarLoja();
 
     if (!atualizado || !lojaAberta) {
@@ -1164,23 +1102,6 @@ formularioPedido.addEventListener(
       return;
     }
 
-    enviando = true;
-    atualizarBotao();
-
-    situacao.textContent =
-      "Aguarde a resposta do Google no quadro abaixo. " +
-      "O pedido só estará registrado quando aparecer " +
-      "'Pedido registrado!' e seu número.";
-
-    iframe.style.display = "block";
-
-    const envio = document.createElement("form");
-    envio.method = "POST";
-    envio.action = SCRIPT_URL;
-    envio.target = "resultadoPedido";
-    envio.style.display = "none";
-    envio.acceptCharset = "UTF-8";
-
     const dados = {
       nome:campo("nome"),
       telefone,
@@ -1203,6 +1124,13 @@ formularioPedido.addEventListener(
       quantidades:JSON.stringify(qtd)
     };
 
+    const envio = document.createElement("form");
+    envio.method = "POST";
+    envio.action = SCRIPT_URL;
+    envio.target = "_blank";
+    envio.style.display = "none";
+    envio.acceptCharset = "UTF-8";
+
     Object.entries(dados).forEach(
       ([nome, valor]) => {
         const input = document.createElement("input");
@@ -1215,39 +1143,34 @@ formularioPedido.addEventListener(
 
     document.body.appendChild(envio);
 
-    iframe.onload = () => {
-      if (!enviando) return;
+    // O resultado do Apps Script será aberto
+    // em uma nova aba, fora do iframe que falhava.
+    enviando = true;
+    atualizarBotao();
 
+    situacao.textContent =
+      "A confirmação será aberta em uma nova aba. " +
+      "O pedido só estará registrado quando aparecer " +
+      "'Pedido registrado!' com o número da encomenda. " +
+      "Se a nova aba não abrir ou mostrar erro, " +
+      "não envie novamente antes de conferir a planilha.";
+
+    try {
+      envio.submit();
+    } catch (erro) {
+      situacao.textContent =
+        "Não foi possível abrir a confirmação. " +
+        "Confira se o navegador bloqueou a nova aba.";
+    } finally {
+      envio.remove();
       enviando = false;
       atualizarBotao();
-
-      situacao.textContent =
-        "Confira o resultado no quadro abaixo. " +
-        "Se aparecer 'Pedido registrado!', guarde " +
-        "o número. Se aparecer erro ou tela em branco, " +
-        "não envie novamente antes de conferir " +
-        "a planilha ou falar conosco.";
-
-      iframe.scrollIntoView({
-        behavior:"smooth",
-        block:"center"
-      });
-    };
-
-    envio.submit();
-    envio.remove();
-
-    iframe.scrollIntoView({
-      behavior:"smooth",
-      block:"center"
-    });
+    }
   }
 );
 
-// Consulta o catálogo ao abrir o site.
 atualizarLoja();
 
-// Reconsulta quando o cliente volta para a aba.
 document.addEventListener("visibilitychange", () => {
   if (!document.hidden && !enviando) {
     atualizarLoja();
