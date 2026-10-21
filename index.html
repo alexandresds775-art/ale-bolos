@@ -6,313 +6,932 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Alê Bólos | Encomendas</title>
 <style>
-:root{--vinho:#842f43;--escuro:#51241e;--rosa:#f8d7de;--fundo:#fff1ec}
-*{box-sizing:border-box}
-body{margin:0;background:var(--fundo);font-family:Arial,sans-serif;color:var(--escuro)}
-header{background:linear-gradient(110deg,#55201d,#913d51);color:white;text-align:center;padding:25px 12px}
-header h1{margin:0;font-size:32px}
-header p{margin:8px 0 0}
-main{max-width:1150px;margin:20px auto;padding:0 14px;display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:start}
-section{background:#fffaf4;padding:20px;border-radius:20px;box-shadow:0 5px 22px #5020200c}
-h2{margin:0 0 15px;font-size:23px}
-h3{background:var(--vinho);color:white;padding:12px;border-radius:10px;font-size:17px}
-.produtos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.produto{background:white;border:1px solid #f0cfc8;border-radius:15px;text-align:center;padding:10px}
-.produto img{width:100%;height:145px;object-fit:cover;border-radius:10px;background:#fff0e8}
-.produto h4{margin:10px 0 6px}
-.produto p{font-size:13px;color:#985a50;min-height:38px}
-.preco{font-weight:bold;color:var(--vinho)}
-.contador{display:flex;justify-content:center;align-items:center;gap:18px;margin:12px 0}
-button{cursor:pointer;border:0;border-radius:10px;font-weight:bold}
-.contador button{background:#e44769;color:white;font-size:22px;width:38px;height:36px}
-.total{background:var(--rosa);border-radius:12px;padding:18px;text-align:center;font-size:23px;font-weight:bold}
-label{display:block;font-weight:bold;font-size:14px;margin:13px 0 5px}
-input,select,textarea{width:100%;padding:12px;border:1px solid #e0bdb4;border-radius:9px;font:inherit;background:white}
-.linha{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.aviso{background:#fff0dc;border-left:4px solid #b97931;padding:12px;border-radius:8px;margin:14px 0;line-height:1.5;font-size:14px}
-.pix{background:#f9edf0;border-radius:12px;padding:15px;text-align:center;margin-top:16px}
-.acao{width:100%;padding:15px;background:var(--vinho);color:white;font-size:16px;margin-top:15px}
-.secundario{background:white;border:1px solid var(--vinho);color:var(--vinho);padding:10px}
-#resultadoPedido{width:100%;height:170px;border:1px solid #ead1c9;border-radius:10px;margin-top:15px;display:none;background:white}
-small{color:#7e675e}
-footer{text-align:center;padding:20px;font-size:13px}
-@media(max-width:780px){main{grid-template-columns:1fr}.produto img{height:125px}section{padding:14px}}
-@media(max-width:370px){.produtos{grid-template-columns:1fr}}
+:root {
+  --vinho:#842f43;
+  --escuro:#51241e;
+  --rosa:#f8d7de;
+  --fundo:#fff1ec;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  background:var(--fundo);
+  font-family:Arial,sans-serif;
+  color:var(--escuro);
+}
+header {
+  background:linear-gradient(110deg,#55201d,#913d51);
+  color:white;
+  text-align:center;
+  padding:25px 12px;
+}
+header h1 { margin:0;font-size:32px; }
+header p { margin:8px 0 0; }
+main {
+  max-width:1150px;
+  margin:20px auto;
+  padding:0 14px;
+  display:grid;
+  grid-template-columns:1.1fr 1fr;
+  gap:18px;
+  align-items:start;
+}
+section {
+  background:#fffaf4;
+  padding:20px;
+  border-radius:20px;
+  box-shadow:0 5px 22px #5020200c;
+}
+h2 { margin:0 0 15px;font-size:23px; }
+h3 {
+  background:var(--vinho);
+  color:white;
+  padding:12px;
+  border-radius:10px;
+  font-size:17px;
+}
+.produtos {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.produto {
+  background:white;
+  border:1px solid #f0cfc8;
+  border-radius:15px;
+  text-align:center;
+  padding:10px;
+}
+.produto img {
+  width:100%;
+  height:145px;
+  object-fit:cover;
+  border-radius:10px;
+  background:#fff0e8;
+}
+.produto h4 { margin:10px 0 6px; }
+.produto p {
+  font-size:13px;
+  color:#985a50;
+  min-height:38px;
+}
+.preco {
+  font-weight:bold;
+  color:var(--vinho);
+}
+.contador {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:18px;
+  margin:12px 0;
+}
+button {
+  cursor:pointer;
+  border:0;
+  border-radius:10px;
+  font-weight:bold;
+}
+.contador button {
+  background:#e44769;
+  color:white;
+  font-size:22px;
+  width:38px;
+  height:36px;
+}
+.total {
+  background:var(--rosa);
+  border-radius:12px;
+  padding:18px;
+  text-align:center;
+  font-size:23px;
+  font-weight:bold;
+}
+label {
+  display:block;
+  font-weight:bold;
+  font-size:14px;
+  margin:13px 0 5px;
+}
+input,select,textarea {
+  width:100%;
+  padding:12px;
+  border:1px solid #e0bdb4;
+  border-radius:9px;
+  font:inherit;
+  background:white;
+}
+.linha {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.aviso {
+  background:#fff0dc;
+  border-left:4px solid #b97931;
+  padding:12px;
+  border-radius:8px;
+  margin:14px 0;
+  line-height:1.5;
+  font-size:14px;
+}
+.pix {
+  background:#f9edf0;
+  border-radius:12px;
+  padding:15px;
+  text-align:center;
+  margin-top:16px;
+}
+.acao {
+  width:100%;
+  padding:15px;
+  background:var(--vinho);
+  color:white;
+  font-size:16px;
+  margin-top:15px;
+}
+.acao:disabled {
+  opacity:.6;
+  cursor:wait;
+}
+.secundario {
+  background:white;
+  border:1px solid var(--vinho);
+  color:var(--vinho);
+  padding:10px;
+}
+#resultadoPedido {
+  width:100%;
+  height:225px;
+  border:1px solid #ead1c9;
+  border-radius:10px;
+  margin-top:15px;
+  display:none;
+  background:white;
+}
+#areaEndereco,
+#areaMotoboy {
+  display:none;
+}
+#situacao {
+  margin-top:12px;
+  font-size:14px;
+  line-height:1.5;
+}
+small { color:#7e675e; }
+footer {
+  text-align:center;
+  padding:20px;
+  font-size:13px;
+}
+@media(max-width:780px) {
+  main { grid-template-columns:1fr; }
+  .produto img { height:125px; }
+  section { padding:14px; }
+}
+@media(max-width:370px) {
+  .produtos { grid-template-columns:1fr; }
+  .linha { grid-template-columns:1fr; }
+}
 </style>
 </head>
 <body>
+
 <header>
-<h1>🧸 Alê Bólos 🍰</h1>
-<p>Encomende pelo celular • Feito com carinho</p>
+  <h1>🧸 Alê Bólos 🍰</h1>
+  <p>Encomende pelo celular • Feito com carinho</p>
 </header>
 
 <main>
+
 <section>
-<h2>🍓 Nosso cardápio</h2>
-<p>Escolha seus sabores e quantidades. Todos por <b>R$ 15,00</b>.</p>
-<h3>Surpresas de pote • quadradinhos</h3>
-<div class="produtos" id="surpresas"></div>
-<h3>Bolos de pote • redondinhos</h3>
-<div class="produtos" id="bolos"></div>
+  <h2>🍓 Nosso cardápio</h2>
+  <p>
+    Escolha seus sabores e quantidades.
+    Todos por <b>R$ 15,00</b>.
+  </p>
+
+  <h3>Surpresas de pote • quadradinhos</h3>
+  <div class="produtos" id="surpresas"></div>
+
+  <h3>Bolos de pote • redondinhos</h3>
+  <div class="produtos" id="bolos"></div>
 </section>
 
 <section>
-<h2>🛒 Seu pedido</h2>
-<div id="carrinho">Nenhum produto selecionado.</div>
-<div class="total" id="total">Total: R$ 0,00</div>
+  <h2>🛒 Seu pedido</h2>
 
-<h2 style="margin-top:20px">📍 Seus dados e entrega</h2>
-<form id="pedido">
-<label>Nome completo *</label>
-<input id="nome" required maxlength="100" autocomplete="name">
+  <div id="carrinho">
+    Nenhum produto selecionado.
+  </div>
 
-<label>WhatsApp com DDD *</label>
-<input id="telefone" required inputmode="tel" placeholder="(11) 99999-9999">
+  <div class="total" id="total">
+    Total: R$ 0,00
+  </div>
 
-<div class="linha">
-<div>
-<label>CEP *</label>
-<input id="cep" required inputmode="numeric" maxlength="9" placeholder="00000-000">
-</div>
-<div>
-<label>Número *</label>
-<input id="numero" required maxlength="20">
-</div>
-</div>
-<small id="cepstatus"></small>
+  <h2 style="margin-top:20px">
+    📍 Seus dados e recebimento
+  </h2>
 
-<label>Rua / Avenida *</label>
-<input id="rua" required maxlength="150">
+  <form id="pedido">
 
-<div class="linha">
-<div>
-<label>Bairro *</label>
-<input id="bairro" required maxlength="100">
-</div>
-<div>
-<label>Complemento</label>
-<input id="complemento" maxlength="100" placeholder="Apto, bloco, casa...">
-</div>
-</div>
+    <label for="nome">Nome completo *</label>
+    <input
+      id="nome"
+      required
+      maxlength="100"
+      autocomplete="name"
+    >
 
-<label>Referência de entrega</label>
-<input id="referencia" maxlength="150" placeholder="Portaria, ponto de referência...">
+    <label for="telefone">WhatsApp com DDD *</label>
+    <input
+      id="telefone"
+      required
+      inputmode="tel"
+      placeholder="(11) 99999-9999"
+    >
 
-<label>Entrega desejada *</label>
-<select id="entrega" required>
-<option value="">Selecione</option>
-<option value="quinta">Quinta-feira, após 18h — Surpresas</option>
-<option value="sexta">Sexta-feira, após 18h — Bolos de pote</option>
-</select>
+    <label for="entrega">
+      Dia de disponibilidade *
+    </label>
+    <select id="entrega" required>
+      <option value="">Selecione</option>
+      <option value="quinta">
+        Quinta-feira, após 18h — Surpresas
+      </option>
+      <option value="sexta">
+        Sexta-feira, após 18h — Bolos de pote
+      </option>
+    </select>
 
-<label>Observações</label>
-<textarea id="obs" rows="3" maxlength="350" placeholder="Alguma informação importante?"></textarea>
+    <label for="modalidade">
+      Como deseja receber seu pedido? *
+    </label>
+    <select id="modalidade" required>
+      <option value="">Selecione</option>
+      <option value="retirada">
+        Retirar no local — grátis
+      </option>
+      <option value="motoboy">
+        Enviar meu motoboy — Uber, 99 ou outro
+      </option>
+      <option value="nossa">
+        Solicitar entrega dos Alê Bólos
+      </option>
+    </select>
 
-<div class="aviso">
-<b>🚴 Entrega por entregador</b><br>
-Atendemos mediante disponibilidade na região de São Paulo.
-A taxa de entrega é calculada conforme o endereço e informada antes do pagamento.
-O valor do carrinho considera apenas os produtos.
-</div>
+    <div id="areaEndereco">
+      <div class="aviso">
+        <b>🚴 Entrega organizada pelos Alê Bólos</b>
+        <p>
+          Informe seu endereço. Vamos consultar a taxa
+          do entregador e confirmar o valor final antes
+          do pagamento.
+        </p>
+      </div>
 
-<input type="text" id="website" style="display:none" tabindex="-1" autocomplete="off">
+      <div class="linha">
+        <div>
+          <label for="cep">CEP *</label>
+          <input
+            id="cep"
+            inputmode="numeric"
+            maxlength="9"
+            placeholder="00000-000"
+          >
+        </div>
+        <div>
+          <label for="numero">Número *</label>
+          <input id="numero" maxlength="20">
+        </div>
+      </div>
 
-<button type="submit" class="acao">Registrar encomenda</button>
-</form>
+      <small id="cepstatus"></small>
 
-<iframe id="resultadoPedido" title="Resultado do registro do pedido"></iframe>
+      <label for="rua">Rua / Avenida *</label>
+      <input id="rua" maxlength="150">
 
-<button type="button" class="acao secundario" id="whatsapp">
-Conversar pelo WhatsApp
-</button>
+      <div class="linha">
+        <div>
+          <label for="bairro">Bairro *</label>
+          <input id="bairro" maxlength="100">
+        </div>
+        <div>
+          <label for="complemento">Complemento</label>
+          <input
+            id="complemento"
+            maxlength="100"
+            placeholder="Apto, bloco, casa..."
+          >
+        </div>
+      </div>
 
-<div class="pix">
-<h2>💚 Pagamento via Pix</h2>
-<p>Chave Pix (celular):</p>
-<b>+55 11 99777-4091</b>
-<p><button type="button" class="secundario" id="copiar">Copiar chave Pix</button></p>
-<small>Aguarde o valor final com a taxa de entrega antes de pagar. O pagamento será confirmado após conferência bancária.</small>
-</div>
+      <label for="referencia">
+        Referência de entrega
+      </label>
+      <input
+        id="referencia"
+        maxlength="150"
+        placeholder="Portaria, ponto de referência..."
+      >
+    </div>
+
+    <div id="areaMotoboy">
+      <div class="aviso">
+        <b>🛵 Motoboy contratado por você</b>
+        <p>
+          Você contrata e paga o motoboy diretamente
+          pelo aplicativo de sua preferência.
+          Após confirmarmos o pedido, enviaremos
+          o endereço de retirada.
+        </p>
+        <p>
+          O código de retirada poderá ser informado
+          posteriormente pelo WhatsApp.
+        </p>
+      </div>
+
+      <label for="motoboy">
+        Informações do motoboy (opcional)
+      </label>
+      <textarea
+        id="motoboy"
+        rows="2"
+        maxlength="250"
+        placeholder="Aplicativo, previsão de chegada ou código, se já tiver"
+      ></textarea>
+    </div>
+
+    <div class="aviso" id="avisoRecebimento">
+      Selecione como deseja receber o pedido.
+      O endereço de retirada será informado
+      individualmente após a confirmação.
+    </div>
+
+    <label for="obs">Observações</label>
+    <textarea
+      id="obs"
+      rows="3"
+      maxlength="350"
+      placeholder="Alguma informação importante?"
+    ></textarea>
+
+    <input
+      type="text"
+      id="website"
+      style="display:none"
+      tabindex="-1"
+      autocomplete="off"
+    >
+
+    <button type="submit" class="acao">
+      Registrar encomenda
+    </button>
+  </form>
+
+  <div id="situacao" aria-live="polite"></div>
+
+  <iframe
+    id="resultadoPedido"
+    name="resultadoPedido"
+    title="Confirmação do registro da encomenda"
+  ></iframe>
+
+  <button
+    type="button"
+    class="acao secundario"
+    id="whatsapp"
+  >
+    Conversar pelo WhatsApp
+  </button>
+
+  <div class="pix">
+    <h2>💚 Pagamento via Pix</h2>
+    <p>Chave Pix (celular):</p>
+    <b>+55 11 99777-4091</b>
+
+    <p>
+      <button
+        type="button"
+        class="secundario"
+        id="copiar"
+      >
+        Copiar chave Pix
+      </button>
+    </p>
+
+    <small>
+      Aguarde a confirmação do pedido e do valor final
+      antes de pagar. O Pix será conferido manualmente.
+    </small>
+  </div>
 </section>
 </main>
 
-<footer>Alê Bólos • Produzido com carinho ❤️</footer>
+<footer>
+  Alê Bólos • Produzido com carinho ❤️
+</footer>
 
 <script>
-const SCRIPT_URL="https://script.google.com/macros/s/AKfycbz9JZBp4y7jgorA2BM6K4yBDvsjIGkedqLlg--2Nu4-khkf88a0mLmmGoIa2ERG2NzJYQ/exec";
-const PIX="+5511997774091";
-const WHATSAPP="5511997774091";
+const SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbz9JZBp4y7jgorA2BM6K4yBDvsjIGkedqLlg--2Nu4-khkf88a0mLmmGoIa2ERG2NzJYQ/exec";
 
-const produtos=[
-{id:"morango",nome:"Surpresa de Morango",tipo:"surpresa",foto:"morango.jpg",descricao:"Morangos frescos, creme branco aveludado e ganache cremosa."},
-{id:"uva",nome:"Surpresa de Uva",tipo:"surpresa",foto:"uva.jpg",descricao:"Uvas verdes sem semente, creme branco e ganache cremosa."},
-{id:"chocolate",nome:"Chocolate Cremoso",tipo:"bolo",foto:"chocolate.jpg",descricao:"Massa de chocolate molhadinha e recheio cremoso de chocolate."},
-{id:"ninhochoc",nome:"Chocolate com Ninho",tipo:"bolo",foto:"ninhochoc.jpg",descricao:"Massa de chocolate molhadinha e creme de leite em pó."},
-{id:"ninhobranco",nome:"Massa Branca com Ninho",tipo:"bolo",foto:"ninhobranco.jpg",descricao:"Massa branca molhadinha com creme de leite em pó."}
+const PIX = "+5511997774091";
+const WHATSAPP = "5511997774091";
+
+const produtos = [
+  {
+    id:"morango",
+    nome:"Surpresa de Morango",
+    tipo:"surpresa",
+    preco:15,
+    foto:"morango.jpg",
+    descricao:
+      "Morangos frescos, creme branco aveludado e ganache cremosa."
+  },
+  {
+    id:"uva",
+    nome:"Surpresa de Uva",
+    tipo:"surpresa",
+    preco:15,
+    foto:"uva.jpg",
+    descricao:
+      "Uvas verdes sem semente, creme branco e ganache cremosa."
+  },
+  {
+    id:"chocolate",
+    nome:"Chocolate Cremoso",
+    tipo:"bolo",
+    preco:15,
+    foto:"chocolate.jpg",
+    descricao:
+      "Massa de chocolate molhadinha e recheio cremoso de chocolate."
+  },
+  {
+    id:"ninhochoc",
+    nome:"Chocolate com Ninho",
+    tipo:"bolo",
+    preco:15,
+    foto:"ninhochoc.jpg",
+    descricao:
+      "Massa de chocolate molhadinha e creme de leite em pó."
+  },
+  {
+    id:"ninhobranco",
+    nome:"Massa Branca com Ninho",
+    tipo:"bolo",
+    preco:15,
+    foto:"ninhobranco.jpg",
+    descricao:
+      "Massa branca molhadinha com creme de leite em pó."
+  }
 ];
 
-const qtd={};
-produtos.forEach(p=>qtd[p.id]=0);
+const qtd = {};
 
-const dinheiro=n=>n.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
-const campo=id=>document.getElementById(id).value.trim();
-
-function desenhar(){
-for(const tipo of ["surpresa","bolo"]){
-const destino=document.getElementById(tipo==="surpresa"?"surpresas":"bolos");
-destino.innerHTML="";
-produtos.filter(p=>p.tipo===tipo).forEach(p=>{
-const card=document.createElement("div");
-card.className="produto";
-card.innerHTML=`
-<img src="${p.foto}" alt="${p.nome}" loading="lazy">
-<h4>${p.nome}</h4>
-<p>${p.descricao}</p>
-<div class="preco">R$ 15,00</div>
-<div class="contador">
-<button type="button" aria-label="Diminuir">−</button>
-<strong>${qtd[p.id]}</strong>
-<button type="button" aria-label="Adicionar">+</button>
-</div>`;
-const botoes=card.querySelectorAll("button");
-botoes[0].onclick=()=>alterar(p.id,-1);
-botoes[1].onclick=()=>alterar(p.id,1);
-destino.appendChild(card);
+produtos.forEach(p => {
+  qtd[p.id] = 0;
 });
-}
-const escolhidos=produtos.filter(p=>qtd[p.id]>0);
-document.getElementById("carrinho").textContent=escolhidos.length
-?escolhidos.map(p=>`${qtd[p.id]}x ${p.nome}`).join(" • ")
-:"Nenhum produto selecionado.";
-const total=escolhidos.reduce((s,p)=>s+qtd[p.id]*15,0);
-document.getElementById("total").textContent="Total: "+dinheiro(total);
+
+const dinheiro = valor =>
+  valor.toLocaleString("pt-BR", {
+    style:"currency",
+    currency:"BRL"
+  });
+
+const campo = id =>
+  document.getElementById(id).value.trim();
+
+function desenhar() {
+  for (const tipo of ["surpresa", "bolo"]) {
+    const destino = document.getElementById(
+      tipo === "surpresa" ? "surpresas" : "bolos"
+    );
+
+    destino.innerHTML = "";
+
+    produtos
+      .filter(p => p.tipo === tipo)
+      .forEach(p => {
+        const card = document.createElement("div");
+        card.className = "produto";
+
+        card.innerHTML = `
+          <img
+            src="${p.foto}"
+            alt="${p.nome}"
+            loading="lazy"
+          >
+          <h4>${p.nome}</h4>
+          <p>${p.descricao}</p>
+          <div class="preco">
+            ${dinheiro(p.preco)}
+          </div>
+          <div class="contador">
+            <button
+              type="button"
+              aria-label="Diminuir"
+            >−</button>
+            <strong>${qtd[p.id]}</strong>
+            <button
+              type="button"
+              aria-label="Adicionar"
+            >+</button>
+          </div>
+        `;
+
+        const botoes = card.querySelectorAll("button");
+
+        botoes[0].onclick = () => alterar(p.id, -1);
+        botoes[1].onclick = () => alterar(p.id, 1);
+
+        destino.appendChild(card);
+      });
+  }
+
+  const escolhidos = produtos.filter(
+    p => qtd[p.id] > 0
+  );
+
+  document.getElementById("carrinho").textContent =
+    escolhidos.length
+      ? escolhidos
+          .map(p => `${qtd[p.id]}x ${p.nome}`)
+          .join(" • ")
+      : "Nenhum produto selecionado.";
+
+  const total = escolhidos.reduce(
+    (s, p) => s + qtd[p.id] * p.preco,
+    0
+  );
+
+  document.getElementById("total").textContent =
+    "Subtotal: " + dinheiro(total);
 }
 
-function alterar(id,n){
-qtd[id]=Math.max(0,Math.min(30,qtd[id]+n));
+function alterar(id, variacao) {
+  qtd[id] = Math.max(
+    0,
+    Math.min(30, qtd[id] + variacao)
+  );
+
+  desenhar();
+}
+
 desenhar();
-}
-desenhar();
 
-let ultimoCEP="";
-document.getElementById("cep").addEventListener("input",async function(){
-const cep=this.value.replace(/\D/g,"").slice(0,8);
-this.value=cep.length>5?cep.slice(0,5)+"-"+cep.slice(5):cep;
-if(cep.length!==8||cep===ultimoCEP)return;
-ultimoCEP=cep;
-const status=document.getElementById("cepstatus");
-status.textContent="Buscando endereço...";
-try{
-const r=await fetch("https://viacep.com.br/ws/"+cep+"/json/");
-if(!r.ok)throw Error();
-const d=await r.json();
-if(d.erro){status.textContent="CEP não encontrado. Preencha manualmente.";return;}
-document.getElementById("rua").value=d.logradouro||"";
-document.getElementById("bairro").value=d.bairro||"";
-status.textContent=d.localidade+" / "+d.uf+" — confira o endereço.";
-document.getElementById("numero").focus();
-}catch(e){status.textContent="Consulta indisponível. Preencha manualmente.";}
-});
+const modalidadeEl =
+  document.getElementById("modalidade");
 
-document.getElementById("copiar").onclick=async()=>{
-try{
-await navigator.clipboard.writeText(PIX);
-alert("Chave Pix copiada!");
-}catch(e){prompt("Copie a chave Pix:",PIX);}
-};
+function atualizarRecebimento() {
+  const modalidade = modalidadeEl.value;
+  const nossa = modalidade === "nossa";
+  const motoboy = modalidade === "motoboy";
 
-function mensagemWhatsApp(){
-const itens=produtos.filter(p=>qtd[p.id]>0);
-const total=itens.reduce((s,p)=>s+qtd[p.id]*15,0);
-return [
-"*ENCOMENDA — ALÊ BÓLOS*",
-"",
-...itens.map(p=>`${qtd[p.id]}x ${p.nome} — ${dinheiro(qtd[p.id]*15)}`),
-"",
-"*Subtotal:* "+dinheiro(total),
-"*Frete:* aguardando cotação",
-"*Nome:* "+campo("nome"),
-"*Telefone:* "+campo("telefone"),
-"*Endereço:* "+campo("rua")+", "+campo("numero"),
-"*Complemento:* "+(campo("complemento")||"Não informado"),
-"*Bairro:* "+campo("bairro"),
-"*CEP:* "+campo("cep"),
-"*Referência:* "+(campo("referencia")||"Não informada"),
-"*Entrega:* "+campo("entrega"),
-"*Observações:* "+(campo("obs")||"Nenhuma")
-].join("\n");
+  document.getElementById("areaEndereco")
+    .style.display = nossa ? "block" : "none";
+
+  document.getElementById("areaMotoboy")
+    .style.display = motoboy ? "block" : "none";
+
+  for (const id of ["cep", "rua", "numero", "bairro"]) {
+    document.getElementById(id).required = nossa;
+  }
+
+  const aviso =
+    document.getElementById("avisoRecebimento");
+
+  if (modalidade === "retirada") {
+    aviso.textContent =
+      "Retirada gratuita. O endereço completo e o horário " +
+      "serão enviados após a confirmação do pedido.";
+  } else if (modalidade === "motoboy") {
+    aviso.textContent =
+      "O frete será contratado e pago diretamente por você. " +
+      "Envie o código do motoboy pelo WhatsApp quando tiver.";
+  } else if (modalidade === "nossa") {
+    aviso.textContent =
+      "A taxa de entrega será consultada e informada " +
+      "antes da confirmação do valor final.";
+  } else {
+    aviso.textContent =
+      "Selecione como deseja receber seu pedido.";
+  }
 }
 
-document.getElementById("whatsapp").onclick=()=>{
-window.open("https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(mensagemWhatsApp()),"_blank");
-};
+modalidadeEl.addEventListener(
+  "change",
+  atualizarRecebimento
+);
 
-document.getElementById("pedido").onsubmit=e=>{
-e.preventDefault();
+atualizarRecebimento();
 
-const escolhidos=produtos.filter(p=>qtd[p.id]>0);
-if(!escolhidos.length){alert("Escolha pelo menos um produto.");return;}
+let ultimoCEP = "";
 
-const entrega=campo("entrega");
-if(escolhidos.some(p=>p.tipo==="surpresa")&&entrega!=="quinta"){
-alert("As surpresas estão disponíveis na quinta-feira.");
-return;
+document.getElementById("cep")
+  .addEventListener("input", async function() {
+    const cep = this.value
+      .replace(/\D/g, "")
+      .slice(0, 8);
+
+    this.value = cep.length > 5
+      ? cep.slice(0, 5) + "-" + cep.slice(5)
+      : cep;
+
+    if (cep.length !== 8 || cep === ultimoCEP) {
+      return;
+    }
+
+    ultimoCEP = cep;
+
+    const status =
+      document.getElementById("cepstatus");
+
+    status.textContent = "Buscando endereço...";
+
+    try {
+      const resposta = await fetch(
+        "https://viacep.com.br/ws/" +
+        cep +
+        "/json/"
+      );
+
+      if (!resposta.ok) throw new Error();
+
+      const dados = await resposta.json();
+
+      if (dados.erro) {
+        status.textContent =
+          "CEP não encontrado. Preencha manualmente.";
+        return;
+      }
+
+      document.getElementById("rua").value =
+        dados.logradouro || "";
+
+      document.getElementById("bairro").value =
+        dados.bairro || "";
+
+      status.textContent =
+        dados.localidade + " / " + dados.uf +
+        " — confira o endereço.";
+
+      document.getElementById("numero").focus();
+
+    } catch (_) {
+      status.textContent =
+        "Consulta indisponível. Preencha manualmente.";
+    }
+  });
+
+document.getElementById("copiar")
+  .addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(PIX);
+      alert("Chave Pix copiada!");
+    } catch (_) {
+      prompt("Copie a chave Pix:", PIX);
+    }
+  });
+
+function mensagemWhatsApp() {
+  const itens = produtos.filter(
+    p => qtd[p.id] > 0
+  );
+
+  const subtotal = itens.reduce(
+    (s, p) => s + qtd[p.id] * p.preco,
+    0
+  );
+
+  const modalidade = campo("modalidade");
+
+  const modalidades = {
+    retirada:"Retirada no local",
+    motoboy:"Motoboy contratado pelo cliente",
+    nossa:"Entrega organizada pelos Alê Bólos"
+  };
+
+  const mensagem = [
+    "*ENCOMENDA — ALÊ BÓLOS*",
+    "",
+    ...itens.map(
+      p => `${qtd[p.id]}x ${p.nome} — ` +
+        dinheiro(qtd[p.id] * p.preco)
+    ),
+    "",
+    "*Subtotal:* " + dinheiro(subtotal),
+    "*Cliente:* " + campo("nome"),
+    "*WhatsApp:* " + campo("telefone"),
+    "*Disponibilidade:* " + campo("entrega"),
+    "*Recebimento:* " +
+      (modalidades[modalidade] || "Não selecionado")
+  ];
+
+  if (modalidade === "nossa") {
+    mensagem.push(
+      "*Frete:* aguardando cotação",
+      "*Endereço:* " +
+        campo("rua") + ", " + campo("numero"),
+      "*Complemento:* " +
+        (campo("complemento") || "Não informado"),
+      "*Bairro:* " + campo("bairro"),
+      "*CEP:* " + campo("cep"),
+      "*Referência:* " +
+        (campo("referencia") || "Não informada")
+    );
+  }
+
+  if (modalidade === "motoboy") {
+    mensagem.push(
+      "*Motoboy:* " +
+        (campo("motoboy") ||
+          "Informações serão enviadas depois")
+    );
+  }
+
+  mensagem.push(
+    "*Observações:* " +
+      (campo("obs") || "Nenhuma")
+  );
+
+  return mensagem.join("\n");
 }
-if(escolhidos.some(p=>p.tipo==="bolo")&&entrega!=="sexta"){
-alert("Os bolos estão disponíveis na sexta-feira.");
-return;
-}
-const tel=campo("telefone").replace(/\D/g,"");
-const cep=campo("cep").replace(/\D/g,"");
-if(tel.length<10||tel.length>11){alert("Confira o WhatsApp.");return;}
-if(cep.length!==8){alert("Confira o CEP.");return;}
 
-const botao=e.target.querySelector('button[type="submit"]');
-botao.disabled=true;
-botao.textContent="Enviando pedido...";
+document.getElementById("whatsapp")
+  .addEventListener("click", () => {
+    const url =
+      "https://wa.me/" +
+      WHATSAPP +
+      "?text=" +
+      encodeURIComponent(mensagemWhatsApp());
 
-const iframe=document.getElementById("resultadoPedido");
-iframe.style.display="block";
-iframe.src="about:blank";
+    window.open(url, "_blank", "noopener");
+  });
 
-const formulario=document.createElement("form");
-formulario.method="POST";
-formulario.action=SCRIPT_URL;
-formulario.target="resultadoPedido";
-formulario.style.display="none";
+const formularioPedido =
+  document.getElementById("pedido");
 
-const dados={
-nome:campo("nome"),
-telefone:tel,
-cep:cep,
-rua:campo("rua"),
-numero:campo("numero"),
-complemento:campo("complemento"),
-bairro:campo("bairro"),
-referencia:campo("referencia"),
-entrega:entrega,
-obs:campo("obs"),
-website:campo("website"),
-quantidades:JSON.stringify(qtd)
-};
+const iframe =
+  document.getElementById("resultadoPedido");
 
-Object.entries(dados).forEach(([chave,valor])=>{
-const input=document.createElement("input");
-input.type="hidden";
-input.name=chave;
-input.value=valor;
-formulario.appendChild(input);
-});
+const situacao =
+  document.getElementById("situacao");
 
-document.body.appendChild(formulario);
-formulario.submit();
-formulario.remove();
+let enviando = false;
 
-botao.disabled=false;
-botao.textContent="Registrar encomenda";
+formularioPedido.addEventListener(
+  "submit",
+  evento => {
+    evento.preventDefault();
 
-iframe.scrollIntoView({behavior:"smooth",block:"center"});
-};
+    if (enviando) return;
+
+    const escolhidos = produtos.filter(
+      p => qtd[p.id] > 0
+    );
+
+    if (!escolhidos.length) {
+      alert("Escolha pelo menos um produto.");
+      return;
+    }
+
+    const entrega = campo("entrega");
+
+    if (
+      escolhidos.some(p => p.tipo === "surpresa") &&
+      entrega !== "quinta"
+    ) {
+      alert(
+        "As surpresas estão disponíveis na quinta-feira."
+      );
+      return;
+    }
+
+    if (
+      escolhidos.some(p => p.tipo === "bolo") &&
+      entrega !== "sexta"
+    ) {
+      alert(
+        "Os bolos de pote estão disponíveis na sexta-feira."
+      );
+      return;
+    }
+
+    const telefone = campo("telefone")
+      .replace(/\D/g, "");
+
+    if (
+      telefone.length < 10 ||
+      telefone.length > 11
+    ) {
+      alert("Confira o WhatsApp com DDD.");
+      return;
+    }
+
+    const modalidade = campo("modalidade");
+
+    if (!modalidade) {
+      alert("Selecione como deseja receber.");
+      return;
+    }
+
+    const cep = campo("cep")
+      .replace(/\D/g, "");
+
+    if (
+      modalidade === "nossa" &&
+      cep.length !== 8
+    ) {
+      alert("Confira o CEP de entrega.");
+      return;
+    }
+
+    const botao = formularioPedido.querySelector(
+      'button[type="submit"]'
+    );
+
+    enviando = true;
+    botao.disabled = true;
+    botao.textContent = "Enviando pedido...";
+
+    situacao.textContent =
+      "Aguarde a resposta do Google no quadro abaixo. " +
+      "O pedido só estará registrado quando aparecer " +
+      "a mensagem 'Pedido registrado!' e seu número.";
+
+    iframe.style.display = "block";
+
+    const envio = document.createElement("form");
+    envio.method = "POST";
+    envio.action = SCRIPT_URL;
+    envio.target = "resultadoPedido";
+    envio.style.display = "none";
+    envio.acceptCharset = "UTF-8";
+
+    const dados = {
+      nome:campo("nome"),
+      telefone:telefone,
+      modalidade:modalidade,
+      entrega:entrega,
+      cep:modalidade === "nossa" ? cep : "",
+      rua:modalidade === "nossa" ? campo("rua") : "",
+      numero:modalidade === "nossa"
+        ? campo("numero") : "",
+      complemento:modalidade === "nossa"
+        ? campo("complemento") : "",
+      bairro:modalidade === "nossa"
+        ? campo("bairro") : "",
+      referencia:modalidade === "nossa"
+        ? campo("referencia") : "",
+      motoboy:modalidade === "motoboy"
+        ? campo("motoboy") : "",
+      obs:campo("obs"),
+      website:campo("website"),
+      quantidades:JSON.stringify(qtd)
+    };
+
+    Object.entries(dados).forEach(
+      ([nome, valor]) => {
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = nome;
+        input.value = valor;
+        envio.appendChild(input);
+      }
+    );
+
+    document.body.appendChild(envio);
+
+    iframe.onload = () => {
+      if (!enviando) return;
+
+      enviando = false;
+      botao.disabled = false;
+      botao.textContent = "Registrar encomenda";
+
+      situacao.textContent =
+        "Confira o resultado no quadro abaixo. " +
+        "Se aparecer 'Pedido registrado!', guarde o " +
+        "número. Se aparecer erro ou uma tela em branco, " +
+        "não envie novamente antes de conferir " +
+        "a planilha ou falar conosco.";
+
+      iframe.scrollIntoView({
+        behavior:"smooth",
+        block:"center"
+      });
+    };
+
+    envio.submit();
+    envio.remove();
+
+    iframe.scrollIntoView({
+      behavior:"smooth",
+      block:"center"
+    });
+  }
+);
 </script>
 </body>
 </html>
