@@ -4,206 +4,305 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#842f43">
 <title>Alê Bólos | Encomendas</title>
 <style>
 :root {
   --vinho:#842f43;
   --escuro:#51241e;
-  --rosa:#f8d7de;
   --fundo:#fff1ec;
+  --rosa:#f8d7de;
 }
 * { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
 body {
   margin:0;
   background:var(--fundo);
-  font-family:Arial,sans-serif;
   color:var(--escuro);
+  font-family:Arial,sans-serif;
+  -webkit-text-size-adjust:100%;
 }
+button,input,select,textarea { font:inherit; }
+button { cursor:pointer; }
+button:disabled { opacity:.55;cursor:not-allowed; }
 header {
-  background:linear-gradient(110deg,#55201d,#913d51);
-  color:white;
+  background:linear-gradient(120deg,#55201d,#913d51);
+  color:#fff;
+  padding:24px 16px;
   text-align:center;
-  padding:25px 12px;
 }
-header h1 { margin:0;font-size:32px; }
-header p { margin:8px 0 0; }
+header h1 { font-size:31px;margin:0; }
+header p { margin:9px 0 0;font-size:14px; }
 main {
-  max-width:1150px;
+  width:min(1160px,100%);
   margin:20px auto;
   padding:0 14px;
   display:grid;
-  grid-template-columns:1.1fr 1fr;
+  grid-template-columns:1.08fr 1fr;
   gap:18px;
   align-items:start;
 }
 section {
-  background:#fffaf4;
+  background:#fffaf6;
+  border-radius:18px;
   padding:20px;
-  border-radius:20px;
-  box-shadow:0 5px 22px #5020200c;
+  box-shadow:0 4px 18px #5020200b;
+  min-width:0;
 }
-h2 { margin:0 0 15px;font-size:23px; }
+h2 { font-size:23px;margin:0 0 16px; }
 h3 {
+  margin:22px 0 13px;
   background:var(--vinho);
-  color:white;
+  color:#fff;
+  border-radius:11px;
   padding:12px;
-  border-radius:10px;
-  font-size:17px;
+  font-size:16px;
 }
 .produtos {
   display:grid;
-  grid-template-columns:1fr 1fr;
+  grid-template-columns:repeat(2,minmax(0,1fr));
   gap:12px;
 }
 .produto {
-  background:white;
-  border:1px solid #f0cfc8;
+  min-width:0;
+  border:1px solid #efd2c9;
+  background:#fff;
   border-radius:15px;
-  text-align:center;
   padding:10px;
+  text-align:center;
 }
 .produto img {
+  display:block;
   width:100%;
-  height:145px;
+  height:155px;
   object-fit:cover;
   border-radius:10px;
   background:#fff0e8;
 }
-.produto h4 { margin:10px 0 6px; }
+.produto h4 { margin:11px 0 6px;font-size:16px; }
 .produto p {
+  color:#96695d;
   font-size:13px;
-  color:#985a50;
-  min-height:38px;
   line-height:1.45;
+  min-height:36px;
+  margin:0 0 10px;
 }
-.preco {
-  font-weight:bold;
-  color:var(--vinho);
-}
+.preco { color:var(--vinho);font-weight:700;font-size:17px; }
 .contador {
   display:flex;
-  justify-content:center;
   align-items:center;
-  gap:18px;
-  margin:12px 0;
-}
-button {
-  cursor:pointer;
-  border:0;
-  border-radius:10px;
-  font-weight:bold;
+  justify-content:center;
+  gap:15px;
+  margin-top:12px;
 }
 .contador button {
-  background:#e44769;
+  border:0;
+  border-radius:12px;
+  background:#df4565;
   color:white;
-  font-size:22px;
-  width:38px;
-  height:36px;
+  width:46px;
+  height:46px;
+  font-size:25px;
+  font-weight:bold;
+  touch-action:manipulation;
 }
-button:disabled {
-  opacity:.5;
-  cursor:not-allowed;
+.contador strong { min-width:24px;font-size:19px; }
+.indisponivel { opacity:.65; }
+.etiqueta {
+  display:inline-block;
+  margin:10px 0;
+  border-radius:8px;
+  padding:7px 10px;
+  background:#f8d7de;
+  color:var(--vinho);
+  font-size:12px;
+  font-weight:bold;
+}
+.aviso {
+  padding:13px;
+  border-radius:10px;
+  background:#fff0dc;
+  border-left:4px solid #b97931;
+  font-size:14px;
+  line-height:1.5;
+  margin:14px 0;
+}
+.aviso.aberta {
+  background:#eaf7ed;
+  border-color:#3d8b58;
+}
+.aviso.fechada {
+  background:#fff0dc;
+  border-color:#b44a4a;
+}
+#carrinho {
+  line-height:1.6;
+  padding:6px 0 12px;
 }
 .total {
+  border-radius:13px;
   background:var(--rosa);
-  border-radius:12px;
-  padding:18px;
+  padding:17px;
   text-align:center;
-  font-size:23px;
-  font-weight:bold;
+  font-size:22px;
+  font-weight:700;
 }
 label {
   display:block;
-  font-weight:bold;
   font-size:14px;
-  margin:13px 0 5px;
+  font-weight:700;
+  margin:15px 0 6px;
 }
 input,select,textarea {
+  display:block;
   width:100%;
+  min-height:48px;
+  border:1px solid #dfbeb4;
+  border-radius:10px;
   padding:12px;
-  border:1px solid #e0bdb4;
-  border-radius:9px;
-  font:inherit;
-  background:white;
+  background:#fff;
+  color:#38221d;
+  font-size:16px;
+}
+textarea { resize:vertical; }
+input:focus,select:focus,textarea:focus {
+  outline:2px solid #b96b80;
+  outline-offset:1px;
 }
 .linha {
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:12px;
 }
-.aviso {
-  background:#fff0dc;
-  border-left:4px solid #b97931;
-  padding:12px;
-  border-radius:8px;
-  margin:14px 0;
-  line-height:1.5;
-  font-size:14px;
-}
-.aviso.aberta {
-  background:#edf8ed;
-  border-left-color:#397847;
-}
-.aviso.fechada {
-  background:#fff0dc;
-  border-left-color:#a12b36;
-}
-.pix {
-  background:#f9edf0;
-  border-radius:12px;
-  padding:15px;
-  text-align:center;
-  margin-top:16px;
-}
+#entrega { background:#fff5ee; }
+small { color:#806a60;line-height:1.5; }
+#areaEndereco,#areaMotoboy { display:none; }
 .acao {
+  display:block;
   width:100%;
-  padding:15px;
+  min-height:52px;
+  padding:13px;
+  margin-top:15px;
+  border:0;
+  border-radius:12px;
   background:var(--vinho);
   color:white;
   font-size:16px;
-  margin-top:15px;
+  font-weight:bold;
+  touch-action:manipulation;
 }
 .secundario {
-  background:white;
-  border:1px solid var(--vinho);
+  background:#fff;
   color:var(--vinho);
-  padding:10px;
+  border:1px solid var(--vinho);
 }
-#areaEndereco,
-#areaMotoboy {
-  display:none;
+.pix {
+  background:#f9edf0;
+  border-radius:14px;
+  text-align:center;
+  padding:16px;
+  margin-top:20px;
 }
 #situacao {
-  margin-top:12px;
   font-size:14px;
-  line-height:1.5;
+  line-height:1.6;
+  margin-top:12px;
 }
-.indisponivel { opacity:.65; }
-.etiqueta {
-  display:inline-block;
-  margin-top:8px;
-  padding:5px 9px;
-  border-radius:8px;
-  background:#f8d7de;
-  color:#842f43;
-  font-size:12px;
-  font-weight:bold;
-}
-#entrega { background:#fff7f2; }
-small { color:#7e675e; }
 footer {
   text-align:center;
-  padding:20px;
   font-size:13px;
+  padding:20px 12px 100px;
 }
+#barraMobile { display:none; }
+
+/* Confirmação sobreposta */
+.modalFundo {
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:rgba(37,17,19,.72);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+}
+.modalFundo.visivel { display:flex; }
+.modal {
+  background:#fffaf6;
+  width:min(440px,100%);
+  max-height:calc(100dvh - 32px);
+  overflow:auto;
+  border-radius:20px;
+  padding:26px 20px;
+  text-align:center;
+  box-shadow:0 20px 80px #0005;
+}
+.modal .simbolo { font-size:44px; }
+.modal h2 { margin:12px 0; }
+.modal p { line-height:1.6; }
+.numeroPedido {
+  background:#f6e4e6;
+  border-radius:12px;
+  padding:14px 10px;
+  margin:15px 0;
+  font-size:18px;
+  font-weight:bold;
+  overflow-wrap:anywhere;
+}
+.modal .acao { margin-top:18px; }
+body.modalAberto { overflow:hidden; }
+
 @media(max-width:780px) {
-  main { grid-template-columns:1fr; }
-  .produto img { height:125px; }
-  section { padding:14px; }
+  header { padding:19px 12px; }
+  header h1 { font-size:27px; }
+  main {
+    display:block;
+    margin:12px auto;
+    padding:0 10px;
+  }
+  section {
+    padding:15px;
+    margin-bottom:13px;
+    border-radius:16px;
+  }
+  .produtos { gap:9px; }
+  .produto { padding:8px; }
+  .produto img { height:145px; }
+  .produto h4 { font-size:15px; }
+  .produto p { font-size:12px; }
+  .contador { gap:12px; }
+  .contador button { width:48px;height:48px; }
+  .linha { gap:9px; }
+  #barraMobile {
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    z-index:80;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    background:#fffaf6;
+    border-top:1px solid #e5c9c3;
+    box-shadow:0 -3px 18px #0002;
+    padding:10px 14px;
+    padding-bottom:max(10px,env(safe-area-inset-bottom));
+  }
+  #barraMobile button {
+    min-height:46px;
+    border:0;
+    border-radius:10px;
+    background:var(--vinho);
+    color:white;
+    padding:0 18px;
+    font-weight:bold;
+  }
+  #barraMobile small { display:block;font-size:12px; }
 }
-@media(max-width:370px) {
-  .produtos { grid-template-columns:1fr; }
+@media(max-width:360px) {
   .linha { grid-template-columns:1fr; }
+  .produto img { height:110px; }
 }
 </style>
 </head>
@@ -211,21 +310,16 @@ footer {
 
 <header>
   <h1>🧸 Alê Bólos 🍰</h1>
-  <p>Encomende pelo celular • Feito com carinho</p>
+  <p>Feito com carinho, para adoçar seu dia</p>
 </header>
 
 <main>
 <section>
   <h2>🍓 Nosso cardápio</h2>
-
   <div id="estadoLoja" class="aviso">
-    Consultando disponibilidade dos produtos...
+    Consultando disponibilidade...
   </div>
-
-  <p>
-    Escolha seus sabores e quantidades.
-    Os preços são atualizados conforme nosso cardápio.
-  </p>
+  <p>Escolha seus sabores e quantidades.</p>
 
   <h3>Surpresas de pote • quadradinhos</h3>
   <div class="produtos" id="surpresas"></div>
@@ -236,95 +330,60 @@ footer {
   <div id="outrasCategorias"></div>
 </section>
 
-<section>
+<section id="secaoPedido">
   <h2>🛒 Seu pedido</h2>
+  <div id="carrinho">Carregando cardápio...</div>
+  <div class="total" id="total">Subtotal: R$ 0,00</div>
 
-  <div id="carrinho">
-    Carregando cardápio...
-  </div>
-
-  <div class="total" id="total">
-    Subtotal: R$ 0,00
-  </div>
-
-  <h2 style="margin-top:20px">
-    📍 Seus dados e recebimento
-  </h2>
+  <h2 style="margin-top:22px">📍 Dados e recebimento</h2>
 
   <form id="pedido">
-
     <label for="nome">Nome completo *</label>
-    <input
-      id="nome"
-      required
-      maxlength="100"
-      autocomplete="name"
-    >
+    <input id="nome" required maxlength="100"
+      autocomplete="name">
 
     <label for="telefone">WhatsApp com DDD *</label>
-    <input
-      id="telefone"
-      required
-      inputmode="tel"
-      placeholder="(11) 99999-9999"
-    >
+    <input id="telefone" required type="tel"
+      inputmode="tel" autocomplete="tel"
+      placeholder="(11) 99999-9999">
 
-    <label for="entrega">
-      Previsão de disponibilidade
-    </label>
-    <input
-      id="entrega"
-      readonly
-      placeholder="Consultando calendário..."
-    >
+    <label for="entrega">Previsão de atendimento</label>
+    <input id="entrega" readonly
+      placeholder="Consultando calendário...">
     <small>
-      A data é definida automaticamente conforme
-      os dias de funcionamento e as datas bloqueadas.
-      A confirmação final será feita pela nossa equipe.
+      A partir das 18h da data indicada,
+      conforme disponibilidade e confirmação.
     </small>
 
-    <label for="modalidade">
-      Como deseja receber seu pedido? *
-    </label>
+    <label for="modalidade">Como deseja receber? *</label>
     <select id="modalidade" required>
       <option value="">Selecione</option>
-      <option value="retirada">
-        Retirar no local — grátis
-      </option>
+      <option value="retirada">Retirada no local — grátis</option>
       <option value="motoboy">
-        Enviar meu motoboy — Uber, 99 ou outro
+        Meu motoboy — Uber, 99 ou outro
       </option>
       <option value="nossa">
-        Solicitar entrega dos Alê Bólos
+        Entrega organizada pelos Alê Bólos
       </option>
     </select>
 
     <div id="areaEndereco">
       <div class="aviso">
-        <b>🚴 Entrega organizada pelos Alê Bólos</b>
-        <p>
-          Informe seu endereço. Vamos consultar a taxa
-          do entregador e confirmar o valor final antes
-          do pagamento.
-        </p>
+        Informe seu endereço para cotarmos o frete.
+        O valor final será confirmado antes do pagamento.
       </div>
 
       <div class="linha">
         <div>
           <label for="cep">CEP *</label>
-          <input
-            id="cep"
-            inputmode="numeric"
-            maxlength="9"
-            placeholder="00000-000"
-          >
+          <input id="cep" inputmode="numeric"
+            maxlength="9" placeholder="00000-000">
         </div>
         <div>
           <label for="numero">Número *</label>
           <input id="numero" maxlength="20">
         </div>
       </div>
-
       <small id="cepstatus"></small>
 
       <label for="rua">Rua / Avenida *</label>
@@ -337,118 +396,100 @@ footer {
         </div>
         <div>
           <label for="complemento">Complemento</label>
-          <input
-            id="complemento"
-            maxlength="100"
-            placeholder="Apto, bloco, casa..."
-          >
+          <input id="complemento" maxlength="100">
         </div>
       </div>
 
-      <label for="referencia">
-        Referência de entrega
-      </label>
-      <input
-        id="referencia"
-        maxlength="150"
-        placeholder="Portaria, ponto de referência..."
-      >
+      <label for="referencia">Referência</label>
+      <input id="referencia" maxlength="150">
     </div>
 
     <div id="areaMotoboy">
       <div class="aviso">
-        <b>🛵 Motoboy contratado por você</b>
-        <p>
-          Você contrata e paga o motoboy diretamente
-          pelo aplicativo de sua preferência.
-          Após confirmarmos o pedido, enviaremos
-          o endereço de retirada.
-        </p>
-        <p>
-          O código de retirada poderá ser informado
-          posteriormente pelo WhatsApp.
-        </p>
+        Você contrata e paga o motoboy diretamente.
+        O endereço de retirada será enviado após
+        confirmarmos a encomenda.
       </div>
-
-      <label for="motoboy">
-        Informações do motoboy (opcional)
-      </label>
-      <textarea
-        id="motoboy"
-        rows="2"
-        maxlength="250"
-        placeholder="Aplicativo, previsão de chegada ou código, se já tiver"
-      ></textarea>
+      <label for="motoboy">Informações do motoboy</label>
+      <textarea id="motoboy" rows="2"
+        maxlength="250"></textarea>
     </div>
 
     <div class="aviso" id="avisoRecebimento">
-      Selecione como deseja receber o pedido.
-      O endereço de retirada será informado
-      individualmente após a confirmação.
+      Selecione a modalidade de recebimento.
     </div>
 
     <label for="obs">Observações</label>
-    <textarea
-      id="obs"
-      rows="3"
-      maxlength="350"
-      placeholder="Alguma informação importante?"
-    ></textarea>
+    <textarea id="obs" rows="3" maxlength="350"
+      placeholder="Alguma informação importante?"></textarea>
 
-    <input
-      type="text"
-      id="website"
-      style="display:none"
-      tabindex="-1"
-      autocomplete="off"
-    >
+    <input id="website" style="display:none"
+      tabindex="-1" autocomplete="off">
 
-    <button
-      type="submit"
-      class="acao"
-      id="botaoPedido"
-      disabled
-    >
+    <button id="botaoPedido" type="submit"
+      class="acao" disabled>
       Consultando disponibilidade...
     </button>
   </form>
 
   <div id="situacao" aria-live="polite"></div>
 
-  <button
-    type="button"
-    class="acao secundario"
-    id="whatsapp"
-  >
+  <button id="whatsapp" type="button"
+    class="acao secundario">
     Conversar pelo WhatsApp
   </button>
 
   <div class="pix">
     <h2>💚 Pagamento via Pix</h2>
     <p>Chave Pix (celular):</p>
-    <b>+55 11 99777-4091</b>
-
-    <p>
-      <button
-        type="button"
-        class="secundario"
-        id="copiar"
-      >
-        Copiar chave Pix
-      </button>
-    </p>
-
+    <strong>+55 11 99777-4091</strong>
+    <button id="copiar" type="button"
+      class="acao secundario">
+      Copiar chave Pix
+    </button>
     <small>
-      Aguarde a confirmação do pedido e do valor final
-      antes de pagar. O Pix será conferido manualmente.
+      Aguarde a confirmação do pedido e do valor final.
+      O pagamento será conferido manualmente.
     </small>
   </div>
 </section>
 </main>
 
-<footer>
-  Alê Bólos • Produzido com carinho ❤️
-</footer>
+<div id="barraMobile">
+  <div>
+    <small>Seu carrinho</small>
+    <strong id="totalMobile">R$ 0,00</strong>
+  </div>
+  <button type="button" id="irPedido">
+    Ver pedido ↑
+  </button>
+</div>
+
+<div id="modalFundo" class="modalFundo"
+  role="dialog" aria-modal="true"
+  aria-labelledby="modalTitulo">
+  <div class="modal">
+    <div id="modalIcone" class="simbolo">⏳</div>
+    <h2 id="modalTitulo">Registrando pedido...</h2>
+    <p id="modalMensagem">
+      Estamos verificando sua encomenda.
+    </p>
+    <div id="modalNumero" class="numeroPedido"
+      style="display:none"></div>
+    <p id="modalPrevisao"></p>
+    <button id="fecharModal" type="button"
+      class="acao" style="display:none">
+      Fechar
+    </button>
+  </div>
+</div>
+
+<!-- Envio invisível: não exibe o quadro cinza -->
+<iframe name="canalPedido" id="canalPedido"
+  title="Canal de envio"
+  style="display:none"></iframe>
+
+<footer>Alê Bólos • Produzido com carinho ❤️</footer>
 
 <script>
 "use strict";
@@ -465,145 +506,107 @@ const qtd = {};
 let lojaAberta = false;
 let catalogoCarregado = false;
 let dataDisponivel = "";
-let horarioLimite = "18:00";
+let horario = "18:00";
 let enviando = false;
 let carregando = false;
+let tokenPendente = null;
 
-const dinheiro = valor =>
-  Number(valor).toLocaleString("pt-BR", {
-    style:"currency",
-    currency:"BRL"
+const el = id => document.getElementById(id);
+const valor = id => el(id).value.trim();
+
+const dinheiro = n =>
+  Number(n).toLocaleString("pt-BR", {
+    style:"currency", currency:"BRL"
   });
 
-const campo = id =>
-  document.getElementById(id).value.trim();
-
-function dataBrasileira(dataISO) {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(dataISO || "")) {
-    return "";
-  }
-  const partes = dataISO.split("-");
-  return partes[2] + "/" + partes[1] + "/" + partes[0];
+function dataBR(iso) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(iso || "")) return "";
+  const [a,m,d] = iso.split("-");
+  return d + "/" + m + "/" + a;
 }
 
-function textoSeguro(valor) {
-  return String(valor == null ? "" : valor);
+function elemento(tag, classe, texto) {
+  const n = document.createElement(tag);
+  if (classe) n.className = classe;
+  if (texto !== undefined) n.textContent = String(texto);
+  return n;
 }
 
-function criarElemento(tag, classe, conteudo) {
-  const elemento = document.createElement(tag);
-  if (classe) elemento.className = classe;
-  if (conteudo !== undefined) {
-    elemento.textContent = textoSeguro(conteudo);
-  }
-  return elemento;
-}
-
-function urlFoto(foto) {
-  const valor = String(foto || "").trim();
-
-  if (/^https:\/\//i.test(valor)) {
-    return valor;
-  }
-
-  if (/^[a-zA-Z0-9_.-]+\.(jpg|jpeg|png|webp)$/i.test(valor)) {
-    return valor;
-  }
-
+function fotoUrl(foto) {
+  const f = String(foto || "").trim();
+  if (/^https:\/\//i.test(f)) return f;
+  if (/^[\w.-]+\.(jpg|jpeg|png|webp)$/i.test(f)) return f;
   return "";
 }
 
 function atualizarBotao() {
-  const botao = document.getElementById("botaoPedido");
+  const b = el("botaoPedido");
+  b.disabled = !catalogoCarregado ||
+    !lojaAberta || carregando || enviando;
 
-  botao.disabled =
-    !catalogoCarregado ||
-    !lojaAberta ||
-    enviando ||
-    carregando;
-
-  if (enviando) {
-    botao.textContent = "Enviando pedido...";
-  } else if (carregando) {
-    botao.textContent = "Consultando disponibilidade...";
-  } else if (!catalogoCarregado) {
-    botao.textContent = "Cardápio indisponível";
-  } else if (!lojaAberta) {
-    botao.textContent = "Encomendas temporariamente fechadas";
-  } else {
-    botao.textContent = "Registrar encomenda";
-  }
-}
-
-function mostrarEstado(mensagem, aberta) {
-  const aviso = document.getElementById("estadoLoja");
-  aviso.textContent = mensagem;
-  aviso.className = "aviso " +
-    (aberta ? "aberta" : "fechada");
+  b.textContent = enviando
+    ? "Verificando pedido..."
+    : carregando
+      ? "Consultando disponibilidade..."
+      : !catalogoCarregado
+        ? "Cardápio indisponível"
+        : !lojaAberta
+          ? "Encomendas temporariamente fechadas"
+          : "Registrar encomenda";
 }
 
 function desenharProduto(p, destino) {
-  const card = criarElemento(
-    "div",
-    "produto" + (p.ativo ? "" : " indisponivel")
+  const card = elemento(
+    "div", "produto" + (p.ativo ? "" : " indisponivel")
   );
+  const img = elemento("img");
+  img.alt = p.nome;
+  img.loading = "lazy";
+  const url = fotoUrl(p.foto);
+  if (url) img.src = url;
 
-  const imagem = criarElemento("img");
-  imagem.alt = p.nome;
-  imagem.loading = "lazy";
-
-  const foto = urlFoto(p.foto);
-  if (foto) imagem.src = foto;
-
-  card.appendChild(imagem);
-  card.appendChild(criarElemento("h4", "", p.nome));
-  card.appendChild(criarElemento("p", "", p.descricao));
-  card.appendChild(
-    criarElemento("div", "preco", dinheiro(p.preco))
+  card.append(
+    img,
+    elemento("h4", "", p.nome),
+    elemento("p", "", p.descricao),
+    elemento("div", "preco", dinheiro(p.preco))
   );
 
   if (!p.ativo) {
     card.appendChild(
-      criarElemento("span", "etiqueta", "Indisponível")
+      elemento("span", "etiqueta", "Indisponível")
     );
   } else {
-    const contador = criarElemento("div", "contador");
+    const contador = elemento("div", "contador");
+    const menos = elemento("button", "", "−");
+    const mais = elemento("button", "", "+");
+    const num = elemento("strong", "", qtd[p.id] || 0);
 
-    const menos = criarElemento("button", "", "−");
     menos.type = "button";
-    menos.setAttribute("aria-label", "Diminuir " + p.nome);
-
-    const numero = criarElemento(
-      "strong", "", qtd[p.id] || 0
-    );
-
-    const mais = criarElemento("button", "", "+");
     mais.type = "button";
-    mais.setAttribute("aria-label", "Adicionar " + p.nome);
-
     menos.disabled = !lojaAberta;
     mais.disabled = !lojaAberta;
-
+    menos.setAttribute("aria-label", "Diminuir " + p.nome);
+    mais.setAttribute("aria-label", "Adicionar " + p.nome);
     menos.onclick = () => alterar(p.id, -1);
     mais.onclick = () => alterar(p.id, 1);
 
-    contador.append(menos, numero, mais);
+    contador.append(menos, num, mais);
     card.appendChild(contador);
   }
-
   destino.appendChild(card);
 }
 
 function desenhar() {
-  const surpresas = document.getElementById("surpresas");
-  const bolos = document.getElementById("bolos");
-  const outras = document.getElementById("outrasCategorias");
+  const surpresas = el("surpresas");
+  const bolos = el("bolos");
+  const outras = el("outrasCategorias");
 
   surpresas.replaceChildren();
   bolos.replaceChildren();
   outras.replaceChildren();
 
-  const categoriasExtras = new Map();
+  const extras = new Map();
 
   produtos.forEach(p => {
     if (p.categoria === "surpresa") {
@@ -611,372 +614,240 @@ function desenhar() {
     } else if (p.categoria === "bolo") {
       desenharProduto(p, bolos);
     } else {
-      const categoria = p.categoria || "Outros produtos";
-
-      if (!categoriasExtras.has(categoria)) {
-        categoriasExtras.set(categoria, []);
-      }
-
-      categoriasExtras.get(categoria).push(p);
+      const cat = p.categoria || "Outros produtos";
+      if (!extras.has(cat)) extras.set(cat, []);
+      extras.get(cat).push(p);
     }
   });
 
-  categoriasExtras.forEach((lista, categoria) => {
-    const titulo = criarElemento("h3", "", categoria);
-    const grade = criarElemento("div", "produtos");
-
+  extras.forEach((lista, nome) => {
+    const titulo = elemento("h3", "", nome);
+    const grade = elemento("div", "produtos");
     lista.forEach(p => desenharProduto(p, grade));
     outras.append(titulo, grade);
   });
-
-  if (!surpresas.children.length) {
-    surpresas.appendChild(
-      criarElemento("p", "", "Nenhum produto cadastrado.")
-    );
-  }
-
-  if (!bolos.children.length) {
-    bolos.appendChild(
-      criarElemento("p", "", "Nenhum produto cadastrado.")
-    );
-  }
 
   const escolhidos = produtos.filter(
     p => p.ativo && (qtd[p.id] || 0) > 0
   );
 
-  document.getElementById("carrinho").textContent =
-    escolhidos.length
-      ? escolhidos.map(
-          p => `${qtd[p.id]}x ${p.nome}`
-        ).join(" • ")
-      : "Nenhum produto selecionado.";
+  el("carrinho").textContent = escolhidos.length
+    ? escolhidos.map(p =>
+        qtd[p.id] + "x " + p.nome
+      ).join(" • ")
+    : "Nenhum produto selecionado.";
 
   const subtotal = escolhidos.reduce(
-    (soma, p) => soma + qtd[p.id] * p.preco,
-    0
+    (s,p) => s + qtd[p.id] * p.preco, 0
   );
 
-  document.getElementById("total").textContent =
+  el("total").textContent =
     "Subtotal: " + dinheiro(subtotal);
+  el("totalMobile").textContent = dinheiro(subtotal);
 }
 
-function alterar(id, variacao) {
-  if (!lojaAberta) return;
-
-  const produto = produtos.find(p => p.id === id);
-  if (!produto || !produto.ativo) return;
-
-  qtd[id] = Math.max(
-    0,
-    Math.min(30, (qtd[id] || 0) + variacao)
-  );
-
+function alterar(id, delta) {
+  const p = produtos.find(p => p.id === id);
+  if (!lojaAberta || !p || !p.ativo) return;
+  qtd[id] = Math.max(0, Math.min(30, (qtd[id] || 0) + delta));
   desenhar();
 }
 
-function aplicarCatalogo(dados) {
-  if (
-    !dados ||
-    dados.sucesso !== true ||
-    !Array.isArray(dados.produtos)
-  ) {
-    throw new Error(
-      dados && dados.mensagem
-        ? dados.mensagem
-        : "Não foi possível consultar o cardápio."
+function jsonp(parametros) {
+  return new Promise((resolve,reject) => {
+    const callback =
+      "aleConsulta" + Math.random().toString(36).slice(2);
+    const script = document.createElement("script");
+    let finalizado = false;
+
+    const tempo = setTimeout(() => {
+      finalizar(new Error("Tempo de consulta excedido."));
+    }, 15000);
+
+    function finalizar(erro, dados) {
+      if (finalizado) return;
+      finalizado = true;
+      clearTimeout(tempo);
+      script.remove();
+      delete window[callback];
+      if (erro) reject(erro);
+      else resolve(dados);
+    }
+
+    window[callback] = dados => finalizar(null,dados);
+    script.onerror = () =>
+      finalizar(new Error("Falha na conexão."));
+
+    const url = new URL(SCRIPT_URL);
+    Object.entries(parametros).forEach(([k,v]) =>
+      url.searchParams.set(k, v)
     );
+    url.searchParams.set("callback",callback);
+    url.searchParams.set("_",Date.now());
+
+    script.src = url.toString();
+    document.head.appendChild(script);
+  });
+}
+
+function aplicarCatalogo(d) {
+  if (!d || !d.sucesso || !Array.isArray(d.produtos)) {
+    throw new Error("Catálogo indisponível.");
   }
 
   produtos.length = 0;
   const ids = new Set();
 
-  dados.produtos.forEach(item => {
-    const id = String(item.id || "").trim();
-    const preco = Number(item.preco);
-
-    if (
-      !/^[a-z0-9_-]{2,40}$/.test(id) ||
-      ids.has(id) ||
-      !Number.isFinite(preco) ||
-      preco <= 0
-    ) {
-      return;
-    }
+  d.produtos.forEach(p => {
+    const id = String(p.id || "");
+    const preco = Number(p.preco);
+    if (!/^[a-z0-9_-]{2,40}$/.test(id) ||
+        ids.has(id) || !(preco > 0)) return;
 
     ids.add(id);
-
-    const produto = {
+    produtos.push({
       id,
-      nome: textoSeguro(item.nome),
-      categoria: textoSeguro(item.categoria).toLowerCase(),
+      nome:String(p.nome || ""),
+      categoria:String(p.categoria || "").toLowerCase(),
       preco,
-      ativo: item.ativo === true,
-      foto: textoSeguro(item.foto),
-      descricao: textoSeguro(item.descricao)
-    };
-
-    produtos.push(produto);
+      ativo:p.ativo === true,
+      foto:String(p.foto || ""),
+      descricao:String(p.descricao || "")
+    });
 
     if (!(id in qtd)) qtd[id] = 0;
-    if (!produto.ativo) qtd[id] = 0;
+    if (!p.ativo) qtd[id] = 0;
   });
 
   Object.keys(qtd).forEach(id => {
     if (!ids.has(id)) delete qtd[id];
   });
 
-  dataDisponivel = textoSeguro(dados.proximaData);
-  horarioLimite = textoSeguro(
-    dados.horarioLimite || "18:00"
-  );
-
-  lojaAberta =
-    dados.aberta === true &&
-    Boolean(dataDisponivel);
-
+  dataDisponivel = String(d.proximaData || "");
+  horario = String(d.horarioLimite || "18:00");
+  lojaAberta = d.aberta === true && Boolean(dataDisponivel);
   catalogoCarregado = true;
 
-  const dataFormatada = dataBrasileira(dataDisponivel);
+  const previsao = dataBR(dataDisponivel);
+  el("entrega").value = previsao
+    ? previsao + " a partir das " + horario
+    : "Sem data disponível";
 
-  document.getElementById("entrega").value =
-    dataFormatada
-      ? dataFormatada + " até " + horarioLimite
-      : "Sem data disponível";
+  const aviso = el("estadoLoja");
+  aviso.className = "aviso " +
+    (lojaAberta ? "aberta" : "fechada");
 
-  const mensagem = lojaAberta
+  aviso.textContent = lojaAberta
     ? "🍰 Encomendas abertas! Próxima previsão: " +
-      dataFormatada + " até " + horarioLimite +
+      previsao + ", a partir das " + horario +
       ". Sujeita à confirmação."
-    : "⏸️ " + (
-        dados.mensagem ||
-        "Encomendas temporariamente fechadas."
-      );
+    : "⏸️ " + (d.mensagem || "Encomendas fechadas.");
 
-  mostrarEstado(mensagem, lojaAberta);
   desenhar();
   atualizarBotao();
 }
 
-function consultarCatalogo() {
-  return new Promise((resolve, reject) => {
-    const callback =
-      "aleBolosCatalogo" +
-      Math.random().toString(36).slice(2);
-
-    const script = document.createElement("script");
-    let finalizado = false;
-
-    const tempo = setTimeout(() => {
-      finalizar(
-        new Error(
-          "A consulta demorou demais. Atualize a página."
-        )
-      );
-    }, 15000);
-
-    function finalizar(erro, dados) {
-      if (finalizado) return;
-
-      finalizado = true;
-      clearTimeout(tempo);
-      script.remove();
-
-      try {
-        delete window[callback];
-      } catch (_) {
-        window[callback] = undefined;
-      }
-
-      if (erro) reject(erro);
-      else resolve(dados);
-    }
-
-    window[callback] = dados => finalizar(null, dados);
-
-    script.onerror = () => {
-      finalizar(
-        new Error(
-          "Não foi possível conectar ao sistema de pedidos."
-        )
-      );
-    };
-
-    const separador = SCRIPT_URL.includes("?") ? "&" : "?";
-
-    script.src =
-      SCRIPT_URL +
-      separador +
-      "acao=catalogo" +
-      "&callback=" + encodeURIComponent(callback) +
-      "&_=" + Date.now();
-
-    document.head.appendChild(script);
-  });
-}
-
 async function atualizarLoja() {
   if (carregando || enviando) return false;
-
   carregando = true;
   atualizarBotao();
 
   try {
-    const dados = await consultarCatalogo();
-    aplicarCatalogo(dados);
+    aplicarCatalogo(await jsonp({acao:"catalogo"}));
     return true;
-
   } catch (erro) {
     lojaAberta = false;
     catalogoCarregado = false;
-
-    mostrarEstado(
-      "Não foi possível consultar a disponibilidade. " +
-      "Por segurança, os pedidos estão bloqueados. " +
-      "Atualize a página ou fale conosco pelo WhatsApp.",
-      false
-    );
-
-    document.getElementById("entrega").value =
-      "Consulta indisponível";
-
-    document.getElementById("situacao").textContent =
-      erro.message || "Erro de conexão.";
-
-    desenhar();
+    el("estadoLoja").className = "aviso fechada";
+    el("estadoLoja").textContent =
+      "Não foi possível consultar o cardápio. " +
+      "Pedidos bloqueados por segurança.";
+    el("situacao").textContent = erro.message;
     return false;
-
   } finally {
     carregando = false;
     atualizarBotao();
   }
 }
 
-const modalidadeEl =
-  document.getElementById("modalidade");
+function recebimento() {
+  const m = valor("modalidade");
+  el("areaEndereco").style.display =
+    m === "nossa" ? "block" : "none";
+  el("areaMotoboy").style.display =
+    m === "motoboy" ? "block" : "none";
 
-function atualizarRecebimento() {
-  const modalidade = modalidadeEl.value;
-  const nossa = modalidade === "nossa";
-  const motoboy = modalidade === "motoboy";
+  ["cep","rua","numero","bairro"].forEach(id => {
+    el(id).required = m === "nossa";
+  });
 
-  document.getElementById("areaEndereco")
-    .style.display = nossa ? "block" : "none";
+  const avisos = {
+    retirada:
+      "Retirada gratuita. O endereço será enviado " +
+      "individualmente após a confirmação.",
+    motoboy:
+      "Você contrata e paga seu motoboy. " +
+      "Enviaremos o endereço de retirada após confirmar.",
+    nossa:
+      "Vamos cotar o frete e informar o valor final " +
+      "antes do pagamento."
+  };
 
-  document.getElementById("areaMotoboy")
-    .style.display = motoboy ? "block" : "none";
-
-  for (const id of ["cep", "rua", "numero", "bairro"]) {
-    document.getElementById(id).required = nossa;
-  }
-
-  const aviso =
-    document.getElementById("avisoRecebimento");
-
-  if (modalidade === "retirada") {
-    aviso.textContent =
-      "Retirada gratuita. O endereço completo e o horário " +
-      "serão enviados após a confirmação do pedido.";
-  } else if (modalidade === "motoboy") {
-    aviso.textContent =
-      "O frete será contratado e pago diretamente por você. " +
-      "Envie o código do motoboy pelo WhatsApp quando tiver.";
-  } else if (modalidade === "nossa") {
-    aviso.textContent =
-      "A taxa de entrega será consultada e informada " +
-      "antes da confirmação do valor final.";
-  } else {
-    aviso.textContent =
-      "Selecione como deseja receber seu pedido.";
-  }
+  el("avisoRecebimento").textContent =
+    avisos[m] || "Selecione a modalidade de recebimento.";
 }
 
-modalidadeEl.addEventListener(
-  "change",
-  atualizarRecebimento
-);
-
-atualizarRecebimento();
+el("modalidade").addEventListener("change",recebimento);
+recebimento();
 
 let ultimoCEP = "";
 
-document.getElementById("cep")
-  .addEventListener("input", async function() {
-    const cep = this.value
-      .replace(/\D/g, "")
-      .slice(0, 8);
+el("cep").addEventListener("input",async function() {
+  const cep = this.value.replace(/\D/g,"").slice(0,8);
+  this.value = cep.length > 5
+    ? cep.slice(0,5) + "-" + cep.slice(5)
+    : cep;
 
-    this.value = cep.length > 5
-      ? cep.slice(0, 5) + "-" + cep.slice(5)
-      : cep;
+  if (cep.length !== 8 || cep === ultimoCEP) return;
+  ultimoCEP = cep;
+  el("cepstatus").textContent = "Buscando endereço...";
 
-    if (cep.length !== 8 || cep === ultimoCEP) {
-      return;
-    }
+  try {
+    const r = await fetch(
+      "https://viacep.com.br/ws/" + cep + "/json/"
+    );
+    if (!r.ok) throw new Error();
+    const d = await r.json();
+    if (d.erro) throw new Error();
 
-    ultimoCEP = cep;
+    el("rua").value = d.logradouro || "";
+    el("bairro").value = d.bairro || "";
+    el("cepstatus").textContent =
+      (d.localidade || "") + " / " +
+      (d.uf || "") + " — confira o endereço.";
+    el("numero").focus();
+  } catch (_) {
+    el("cepstatus").textContent =
+      "Preencha o endereço manualmente.";
+  }
+});
 
-    const status =
-      document.getElementById("cepstatus");
+el("copiar").onclick = async () => {
+  try {
+    await navigator.clipboard.writeText(PIX);
+    alert("Chave Pix copiada!");
+  } catch (_) {
+    prompt("Copie a chave Pix:",PIX);
+  }
+};
 
-    status.textContent = "Buscando endereço...";
-
-    try {
-      const resposta = await fetch(
-        "https://viacep.com.br/ws/" +
-        cep +
-        "/json/"
-      );
-
-      if (!resposta.ok) throw new Error();
-
-      const dados = await resposta.json();
-
-      if (dados.erro) {
-        status.textContent =
-          "CEP não encontrado. Preencha manualmente.";
-        return;
-      }
-
-      document.getElementById("rua").value =
-        dados.logradouro || "";
-
-      document.getElementById("bairro").value =
-        dados.bairro || "";
-
-      status.textContent =
-        dados.localidade + " / " + dados.uf +
-        " — confira o endereço.";
-
-      document.getElementById("numero").focus();
-
-    } catch (_) {
-      status.textContent =
-        "Consulta indisponível. Preencha manualmente.";
-    }
-  });
-
-document.getElementById("copiar")
-  .addEventListener("click", async () => {
-    try {
-      await navigator.clipboard.writeText(PIX);
-      alert("Chave Pix copiada!");
-    } catch (_) {
-      prompt("Copie a chave Pix:", PIX);
-    }
-  });
-
-function mensagemWhatsApp() {
+function textoWhatsApp() {
   const itens = produtos.filter(
     p => p.ativo && (qtd[p.id] || 0) > 0
   );
-
-  const subtotal = itens.reduce(
-    (soma, p) => soma + qtd[p.id] * p.preco,
-    0
+  const total = itens.reduce(
+    (s,p) => s + qtd[p.id] * p.preco,0
   );
-
-  const modalidade = campo("modalidade");
 
   const modalidades = {
     retirada:"Retirada no local",
@@ -984,194 +855,277 @@ function mensagemWhatsApp() {
     nossa:"Entrega organizada pelos Alê Bólos"
   };
 
-  const mensagem = [
-    "*ENCOMENDA — ALÊ BÓLOS*",
-    "",
-    ...itens.map(
-      p => `${qtd[p.id]}x ${p.nome} — ` +
-        dinheiro(qtd[p.id] * p.preco)
-    ),
-    "",
-    "*Subtotal:* " + dinheiro(subtotal),
-    "*Cliente:* " + campo("nome"),
-    "*WhatsApp:* " + campo("telefone"),
-    "*Previsão:* " +
-      (campo("entrega") || "A confirmar"),
-    "*Recebimento:* " +
-      (modalidades[modalidade] || "Não selecionado")
+  const m = valor("modalidade");
+  const linhas = [
+    "*ALÊ BÓLOS — ENCOMENDA*",
+    ...itens.map(p => qtd[p.id] + "x " + p.nome),
+    "*Subtotal:* " + dinheiro(total),
+    "*Nome:* " + valor("nome"),
+    "*WhatsApp:* " + valor("telefone"),
+    "*Previsão:* " + valor("entrega"),
+    "*Recebimento:* " + (modalidades[m] || "A definir")
   ];
 
-  if (modalidade === "nossa") {
-    mensagem.push(
-      "*Frete:* aguardando cotação",
-      "*Endereço:* " +
-        campo("rua") + ", " + campo("numero"),
-      "*Complemento:* " +
-        (campo("complemento") || "Não informado"),
-      "*Bairro:* " + campo("bairro"),
-      "*CEP:* " + campo("cep"),
-      "*Referência:* " +
-        (campo("referencia") || "Não informada")
+  if (m === "nossa") {
+    linhas.push(
+      "*Endereço:* " + valor("rua") + ", " +
+        valor("numero"),
+      "*Bairro:* " + valor("bairro"),
+      "*CEP:* " + valor("cep"),
+      "*Complemento:* " + valor("complemento"),
+      "*Referência:* " + valor("referencia"),
+      "*Frete:* aguardando cotação"
     );
   }
 
-  if (modalidade === "motoboy") {
-    mensagem.push(
-      "*Motoboy:* " +
-        (campo("motoboy") ||
-          "Informações serão enviadas depois")
-    );
+  if (m === "motoboy") {
+    linhas.push("*Motoboy:* " + valor("motoboy"));
   }
 
-  mensagem.push(
-    "*Observações:* " +
-      (campo("obs") || "Nenhuma")
-  );
-
-  return mensagem.join("\n");
+  linhas.push("*Observações:* " + valor("obs"));
+  return linhas.join("\n");
 }
 
-document.getElementById("whatsapp")
-  .addEventListener("click", () => {
-    const url =
-      "https://wa.me/" +
-      WHATSAPP +
-      "?text=" +
-      encodeURIComponent(mensagemWhatsApp());
+el("whatsapp").onclick = () => {
+  window.open(
+    "https://wa.me/" + WHATSAPP +
+    "?text=" + encodeURIComponent(textoWhatsApp()),
+    "_blank","noopener"
+  );
+};
 
-    window.open(url, "_blank", "noopener");
+el("irPedido").onclick = () => {
+  el("secaoPedido").scrollIntoView({
+    behavior:"smooth",block:"start"
   });
+};
 
-const formularioPedido =
-  document.getElementById("pedido");
+function abrirModal() {
+  el("modalFundo").classList.add("visivel");
+  document.body.classList.add("modalAberto");
+  el("fecharModal").style.display = "none";
+  el("modalNumero").style.display = "none";
+  el("modalPrevisao").textContent = "";
+  el("modalIcone").textContent = "⏳";
+  el("modalTitulo").textContent = "Registrando pedido...";
+  el("modalMensagem").textContent =
+    "Estamos conferindo o registro da sua encomenda.";
+}
 
-const situacao =
-  document.getElementById("situacao");
+function resultadoModal(titulo,mensagem,icone,pedido,previsao) {
+  el("modalTitulo").textContent = titulo;
+  el("modalMensagem").textContent = mensagem;
+  el("modalIcone").textContent = icone;
+  el("modalNumero").style.display =
+    pedido ? "block" : "none";
+  el("modalNumero").textContent = pedido || "";
+  el("modalPrevisao").textContent =
+    previsao ? "Previsão: " + previsao : "";
+  el("fecharModal").style.display = "block";
+  el("fecharModal").focus();
+}
 
-formularioPedido.addEventListener(
-  "submit",
-  async evento => {
-    evento.preventDefault();
+el("fecharModal").onclick = () => {
+  el("modalFundo").classList.remove("visivel");
+  document.body.classList.remove("modalAberto");
+};
 
-    if (enviando) return;
+function esperar(ms) {
+  return new Promise(resolve => setTimeout(resolve,ms));
+}
 
-    const atualizado = await atualizarLoja();
-
-    if (!atualizado || !lojaAberta) {
-      alert(
-        "As encomendas não estão disponíveis no momento."
-      );
-      return;
-    }
-
-    const escolhidos = produtos.filter(
-      p => p.ativo && (qtd[p.id] || 0) > 0
-    );
-
-    if (!escolhidos.length) {
-      alert("Escolha pelo menos um produto disponível.");
-      return;
-    }
-
-    const telefone = campo("telefone")
-      .replace(/\D/g, "");
-
-    if (
-      telefone.length < 10 ||
-      telefone.length > 11
-    ) {
-      alert("Confira o WhatsApp com DDD.");
-      return;
-    }
-
-    const modalidade = campo("modalidade");
-
-    if (!modalidade) {
-      alert("Selecione como deseja receber.");
-      return;
-    }
-
-    const cep = campo("cep")
-      .replace(/\D/g, "");
-
-    if (
-      modalidade === "nossa" &&
-      cep.length !== 8
-    ) {
-      alert("Confira o CEP de entrega.");
-      return;
-    }
-
-    const dados = {
-      nome:campo("nome"),
-      telefone,
-      modalidade,
-      entrega:dataDisponivel,
-      cep:modalidade === "nossa" ? cep : "",
-      rua:modalidade === "nossa" ? campo("rua") : "",
-      numero:modalidade === "nossa"
-        ? campo("numero") : "",
-      complemento:modalidade === "nossa"
-        ? campo("complemento") : "",
-      bairro:modalidade === "nossa"
-        ? campo("bairro") : "",
-      referencia:modalidade === "nossa"
-        ? campo("referencia") : "",
-      motoboy:modalidade === "motoboy"
-        ? campo("motoboy") : "",
-      obs:campo("obs"),
-      website:campo("website"),
-      quantidades:JSON.stringify(qtd)
-    };
-
-    const envio = document.createElement("form");
-    envio.method = "POST";
-    envio.action = SCRIPT_URL;
-    envio.target = "_blank";
-    envio.style.display = "none";
-    envio.acceptCharset = "UTF-8";
-
-    Object.entries(dados).forEach(
-      ([nome, valor]) => {
-        const input = document.createElement("input");
-        input.type = "hidden";
-        input.name = nome;
-        input.value = valor;
-        envio.appendChild(input);
-      }
-    );
-
-    document.body.appendChild(envio);
-
-    // O resultado do Apps Script será aberto
-    // em uma nova aba, fora do iframe que falhava.
-    enviando = true;
-    atualizarBotao();
-
-    situacao.textContent =
-      "A confirmação será aberta em uma nova aba. " +
-      "O pedido só estará registrado quando aparecer " +
-      "'Pedido registrado!' com o número da encomenda. " +
-      "Se a nova aba não abrir ou mostrar erro, " +
-      "não envie novamente antes de conferir a planilha.";
+async function verificarPedido(token) {
+  // Não informa sucesso sem localizar o pedido no Sheets.
+  for (let tentativa = 0; tentativa < 12; tentativa++) {
+    await esperar(tentativa === 0 ? 2200 : 2500);
 
     try {
-      envio.submit();
+      const d = await jsonp({
+        acao:"confirmacao",
+        token
+      });
+
+      if (d && d.sucesso && d.encontrado && d.pedido) {
+        return d;
+      }
     } catch (erro) {
-      situacao.textContent =
-        "Não foi possível abrir a confirmação. " +
-        "Confira se o navegador bloqueou a nova aba.";
-    } finally {
-      envio.remove();
-      enviando = false;
-      atualizarBotao();
+      console.warn("Consulta de confirmação:",erro);
     }
   }
-);
+  return null;
+}
+
+function gerarToken() {
+  if (window.crypto && crypto.randomUUID) {
+    return crypto.randomUUID();
+  }
+
+  if (window.crypto && crypto.getRandomValues) {
+    const b = new Uint8Array(16);
+    crypto.getRandomValues(b);
+    b[6] = (b[6] & 15) | 64;
+    b[8] = (b[8] & 63) | 128;
+    const h = [...b].map(n =>
+      n.toString(16).padStart(2,"0")
+    ).join("");
+    return h.slice(0,8) + "-" + h.slice(8,12) + "-" +
+      h.slice(12,16) + "-" + h.slice(16,20) + "-" +
+      h.slice(20);
+  }
+
+  throw new Error("Navegador incompatível com envio seguro.");
+}
+
+el("pedido").addEventListener("submit",async evento => {
+  evento.preventDefault();
+
+  if (enviando) return;
+
+  // Impede novo envio enquanto houver um pedido
+  // anterior ainda sem confirmação verificável.
+  if (tokenPendente) {
+    abrirModal();
+    resultadoModal(
+      "Verificação pendente",
+      "Existe uma encomenda anterior cuja confirmação " +
+      "não foi concluída. Confira a planilha ou fale " +
+      "conosco antes de enviar novamente.",
+      "⚠️"
+    );
+    return;
+  }
+
+  const atualizado = await atualizarLoja();
+  if (!atualizado || !lojaAberta) {
+    alert("Encomendas indisponíveis no momento.");
+    return;
+  }
+
+  const escolhidos = produtos.filter(
+    p => p.ativo && (qtd[p.id] || 0) > 0
+  );
+  if (!escolhidos.length) {
+    alert("Escolha pelo menos um produto.");
+    return;
+  }
+
+  const telefone = valor("telefone").replace(/\D/g,"");
+  if (telefone.length < 10 || telefone.length > 11) {
+    alert("Confira o WhatsApp com DDD.");
+    return;
+  }
+
+  const m = valor("modalidade");
+  const cep = valor("cep").replace(/\D/g,"");
+
+  if (m === "nossa" && cep.length !== 8) {
+    alert("Confira o CEP.");
+    return;
+  }
+
+  let token;
+  try {
+    token = gerarToken();
+  } catch (erro) {
+    alert(erro.message);
+    return;
+  }
+
+  const dados = {
+    token,
+    nome:valor("nome"),
+    telefone,
+    modalidade:m,
+    cep:m === "nossa" ? cep : "",
+    rua:m === "nossa" ? valor("rua") : "",
+    numero:m === "nossa" ? valor("numero") : "",
+    complemento:m === "nossa" ? valor("complemento") : "",
+    bairro:m === "nossa" ? valor("bairro") : "",
+    referencia:m === "nossa" ? valor("referencia") : "",
+    motoboy:m === "motoboy" ? valor("motoboy") : "",
+    obs:valor("obs"),
+    website:valor("website"),
+    quantidades:JSON.stringify(qtd)
+  };
+
+  const form = document.createElement("form");
+  form.method = "POST";
+  form.action = SCRIPT_URL;
+  form.target = "canalPedido";
+  form.acceptCharset = "UTF-8";
+  form.style.display = "none";
+
+  Object.entries(dados).forEach(([nome,conteudo]) => {
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = nome;
+    input.value = conteudo;
+    form.appendChild(input);
+  });
+
+  document.body.appendChild(form);
+
+  enviando = true;
+  tokenPendente = token;
+  atualizarBotao();
+  abrirModal();
+
+  try {
+    form.submit();
+    form.remove();
+
+    const confirmado = await verificarPedido(token);
+
+    if (confirmado) {
+      tokenPendente = null;
+
+      resultadoModal(
+        "Pedido recebido!",
+        "Sua encomenda foi registrada com sucesso. " +
+        "Aguarde nossa confirmação antes de pagar.",
+        "✅",
+        confirmado.pedido,
+        confirmado.previsao
+      );
+
+      el("situacao").textContent =
+        "Pedido registrado: " + confirmado.pedido;
+
+      // Limpa quantidades apenas após confirmação.
+      Object.keys(qtd).forEach(id => { qtd[id] = 0; });
+      desenhar();
+
+    } else {
+      resultadoModal(
+        "Confirmação pendente",
+        "Não conseguimos confirmar o registro agora. " +
+        "O pedido pode ter sido recebido. " +
+        "Não envie novamente antes de conferir com " +
+        "os Alê Bólos pelo WhatsApp.",
+        "⚠️"
+      );
+
+      el("situacao").textContent =
+        "Confirmação pendente. Evite enviar novamente.";
+    }
+
+  } catch (erro) {
+    form.remove();
+    resultadoModal(
+      "Não foi possível confirmar",
+      "O envio pode ter ocorrido. Entre em contato " +
+      "pelo WhatsApp antes de tentar novamente.",
+      "⚠️"
+    );
+  } finally {
+    enviando = false;
+    atualizarBotao();
+  }
+});
 
 atualizarLoja();
 
-document.addEventListener("visibilitychange", () => {
+document.addEventListener("visibilitychange",() => {
   if (!document.hidden && !enviando) {
     atualizarLoja();
   }
