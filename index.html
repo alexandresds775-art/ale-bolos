@@ -3,7 +3,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#842f43">
 <title>Alê Bólos | Encomendas</title>
 <style>
@@ -23,18 +23,18 @@ body {
   -webkit-text-size-adjust:100%;
 }
 button,input,select,textarea { font:inherit; }
-button { cursor:pointer; }
+button { cursor:pointer;touch-action:manipulation; }
 button:disabled { opacity:.55;cursor:not-allowed; }
 header {
   background:linear-gradient(120deg,#55201d,#913d51);
   color:#fff;
-  padding:24px 16px;
+  padding:23px 15px;
   text-align:center;
 }
-header h1 { font-size:31px;margin:0; }
-header p { margin:9px 0 0;font-size:14px; }
+header h1 { font-size:30px;margin:0; }
+header p { margin:8px 0 0;font-size:14px; }
 main {
-  width:min(1160px,100%);
+  max-width:1160px;
   margin:20px auto;
   padding:0 14px;
   display:grid;
@@ -43,25 +43,25 @@ main {
   align-items:start;
 }
 section {
+  min-width:0;
   background:#fffaf6;
   border-radius:18px;
   padding:20px;
   box-shadow:0 4px 18px #5020200b;
-  min-width:0;
 }
 h2 { font-size:23px;margin:0 0 16px; }
 h3 {
   margin:22px 0 13px;
   background:var(--vinho);
-  color:#fff;
+  color:white;
   border-radius:11px;
   padding:12px;
-  font-size:16px;
+  font-size:17px;
 }
 .produtos {
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:12px;
+  gap:11px;
 }
 .produto {
   min-width:0;
@@ -72,57 +72,66 @@ h3 {
   text-align:center;
 }
 .produto img {
-  display:block;
   width:100%;
   height:155px;
   object-fit:cover;
   border-radius:10px;
+  display:block;
   background:#fff0e8;
 }
-.produto h4 { margin:11px 0 6px;font-size:16px; }
+.produto h4 {
+  margin:10px 0 6px;
+  font-size:16px;
+}
 .produto p {
   color:#96695d;
   font-size:13px;
-  line-height:1.45;
+  line-height:1.4;
   min-height:36px;
   margin:0 0 10px;
 }
-.preco { color:var(--vinho);font-weight:700;font-size:17px; }
+.preco {
+  color:var(--vinho);
+  font-weight:bold;
+  font-size:17px;
+}
 .contador {
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:15px;
+  gap:13px;
   margin-top:12px;
 }
 .contador button {
   border:0;
   border-radius:12px;
   background:#df4565;
-  color:white;
+  color:#fff;
   width:46px;
   height:46px;
   font-size:25px;
   font-weight:bold;
-  touch-action:manipulation;
 }
-.contador strong { min-width:24px;font-size:19px; }
+.contador strong {
+  min-width:24px;
+  font-size:19px;
+}
 .indisponivel { opacity:.65; }
 .etiqueta {
   display:inline-block;
-  margin:10px 0;
-  border-radius:8px;
-  padding:7px 10px;
   background:#f8d7de;
   color:var(--vinho);
+  padding:7px 10px;
+  border-radius:8px;
+  margin-top:10px;
   font-size:12px;
   font-weight:bold;
 }
 .aviso {
-  padding:13px;
-  border-radius:10px;
   background:#fff0dc;
   border-left:4px solid #b97931;
+  border-radius:10px;
+  padding:13px;
   font-size:14px;
   line-height:1.5;
   margin:14px 0;
@@ -140,17 +149,17 @@ h3 {
   padding:6px 0 12px;
 }
 .total {
-  border-radius:13px;
   background:var(--rosa);
+  border-radius:13px;
   padding:17px;
-  text-align:center;
   font-size:22px;
-  font-weight:700;
+  font-weight:bold;
+  text-align:center;
 }
 label {
   display:block;
   font-size:14px;
-  font-weight:700;
+  font-weight:bold;
   margin:15px 0 6px;
 }
 input,select,textarea {
@@ -178,7 +187,6 @@ input:focus,select:focus,textarea:focus {
 small { color:#806a60;line-height:1.5; }
 #areaEndereco,#areaMotoboy { display:none; }
 .acao {
-  display:block;
   width:100%;
   min-height:52px;
   padding:13px;
@@ -186,10 +194,9 @@ small { color:#806a60;line-height:1.5; }
   border:0;
   border-radius:12px;
   background:var(--vinho);
-  color:white;
+  color:#fff;
   font-size:16px;
   font-weight:bold;
-  touch-action:manipulation;
 }
 .secundario {
   background:#fff;
@@ -204,18 +211,20 @@ small { color:#806a60;line-height:1.5; }
   margin-top:20px;
 }
 #situacao {
-  font-size:14px;
-  line-height:1.6;
   margin-top:12px;
+  font-size:14px;
+  line-height:1.5;
 }
 footer {
   text-align:center;
   font-size:13px;
-  padding:20px 12px 100px;
+  padding:20px 12px 110px;
 }
+
+/* Carrinho fixo no celular */
 #barraMobile { display:none; }
 
-/* Confirmação sobreposta */
+/* Janela de confirmação */
 .modalFundo {
   position:fixed;
   inset:0;
@@ -224,36 +233,70 @@ footer {
   display:none;
   align-items:center;
   justify-content:center;
-  padding:16px;
+  padding:14px;
 }
 .modalFundo.visivel { display:flex; }
 .modal {
   background:#fffaf6;
-  width:min(440px,100%);
-  max-height:calc(100dvh - 32px);
+  width:min(450px,100%);
+  max-height:calc(100dvh - 28px);
   overflow:auto;
-  border-radius:20px;
-  padding:26px 20px;
+  border-radius:21px;
+  padding:24px 20px;
   text-align:center;
   box-shadow:0 20px 80px #0005;
 }
 .modal .simbolo { font-size:44px; }
 .modal h2 { margin:12px 0; }
-.modal p { line-height:1.6; }
+.modal p { line-height:1.55; }
 .numeroPedido {
   background:#f6e4e6;
   border-radius:12px;
   padding:14px 10px;
-  margin:15px 0;
+  margin:14px 0;
   font-size:18px;
   font-weight:bold;
   overflow-wrap:anywhere;
 }
-.modal .acao { margin-top:18px; }
+.avaliacao {
+  display:none;
+  border-top:1px solid #eacbd0;
+  margin-top:17px;
+  padding-top:16px;
+}
+.avaliacao h3 {
+  background:none;
+  color:var(--escuro);
+  padding:0;
+  margin:0 0 9px;
+  font-size:17px;
+}
+.estrelas {
+  display:flex;
+  justify-content:center;
+  gap:4px;
+  margin:12px 0;
+}
+.estrela {
+  border:0;
+  background:transparent;
+  color:#b9b2b0;
+  font-size:37px;
+  line-height:1;
+  padding:6px;
+  min-width:48px;
+  min-height:50px;
+}
+.estrela.ativa { color:#e5a52a; }
+#mensagemAvaliacao {
+  font-size:13px;
+  color:#806a60;
+  min-height:20px;
+}
 body.modalAberto { overflow:hidden; }
 
 @media(max-width:780px) {
-  header { padding:19px 12px; }
+  header { padding:18px 12px; }
   header h1 { font-size:27px; }
   main {
     display:block;
@@ -267,12 +310,19 @@ body.modalAberto { overflow:hidden; }
   }
   .produtos { gap:9px; }
   .produto { padding:8px; }
-  .produto img { height:145px; }
+  .produto img { height:140px; }
   .produto h4 { font-size:15px; }
-  .produto p { font-size:12px; }
-  .contador { gap:12px; }
-  .contador button { width:48px;height:48px; }
+  .produto p {
+    font-size:12px;
+    min-height:0;
+  }
+  .contador { gap:11px; }
+  .contador button {
+    width:48px;
+    height:48px;
+  }
   .linha { gap:9px; }
+
   #barraMobile {
     position:fixed;
     bottom:0;
@@ -282,32 +332,54 @@ body.modalAberto { overflow:hidden; }
     display:flex;
     align-items:center;
     justify-content:space-between;
-    gap:12px;
+    gap:10px;
     background:#fffaf6;
     border-top:1px solid #e5c9c3;
     box-shadow:0 -3px 18px #0002;
-    padding:10px 14px;
-    padding-bottom:max(10px,env(safe-area-inset-bottom));
+    padding:10px 13px;
+    padding-bottom:max(
+      10px,env(safe-area-inset-bottom)
+    );
+  }
+  #barraMobile small {
+    display:block;
+    font-size:12px;
+  }
+  #totalMobile {
+    display:block;
+    color:var(--vinho);
+    font-size:22px;
+    margin:3px 0;
+  }
+  #quantidadeMobile {
+    font-size:12px;
+    color:#806a60;
   }
   #barraMobile button {
-    min-height:46px;
+    min-height:49px;
     border:0;
-    border-radius:10px;
+    border-radius:11px;
     background:var(--vinho);
-    color:white;
-    padding:0 18px;
+    color:#fff;
+    padding:0 16px;
     font-weight:bold;
+    font-size:15px;
   }
-  #barraMobile small { display:block;font-size:12px; }
+  .modal { padding:21px 15px; }
 }
 @media(max-width:360px) {
   .linha { grid-template-columns:1fr; }
-  .produto img { height:110px; }
+  .produto img { height:112px; }
+  .estrela {
+    min-width:42px;
+    font-size:32px;
+    padding:4px;
+  }
 }
 </style>
 </head>
-<body>
 
+<body>
 <header>
   <h1>🧸 Alê Bólos 🍰</h1>
   <p>Feito com carinho, para adoçar seu dia</p>
@@ -316,15 +388,17 @@ body.modalAberto { overflow:hidden; }
 <main>
 <section>
   <h2>🍓 Nosso cardápio</h2>
+
   <div id="estadoLoja" class="aviso">
     Consultando disponibilidade...
   </div>
+
   <p>Escolha seus sabores e quantidades.</p>
 
-  <h3>Surpresas de pote • quadradinhos</h3>
+  <h3>Surpresas de pote</h3>
   <div class="produtos" id="surpresas"></div>
 
-  <h3>Bolos de pote • redondinhos</h3>
+  <h3>Bolos de pote</h3>
   <div class="produtos" id="bolos"></div>
 
   <div id="outrasCategorias"></div>
@@ -332,33 +406,61 @@ body.modalAberto { overflow:hidden; }
 
 <section id="secaoPedido">
   <h2>🛒 Seu pedido</h2>
-  <div id="carrinho">Carregando cardápio...</div>
-  <div class="total" id="total">Subtotal: R$ 0,00</div>
 
-  <h2 style="margin-top:22px">📍 Dados e recebimento</h2>
+  <div id="carrinho">
+    Carregando cardápio...
+  </div>
+
+  <div class="total" id="total">
+    Subtotal: R$ 0,00
+  </div>
+
+  <h2 style="margin-top:22px">
+    📍 Dados e recebimento
+  </h2>
 
   <form id="pedido">
     <label for="nome">Nome completo *</label>
-    <input id="nome" required maxlength="100"
-      autocomplete="name">
+    <input
+      id="nome"
+      required
+      maxlength="100"
+      autocomplete="name"
+    >
 
-    <label for="telefone">WhatsApp com DDD *</label>
-    <input id="telefone" required type="tel"
-      inputmode="tel" autocomplete="tel"
-      placeholder="(11) 99999-9999">
+    <label for="telefone">
+      WhatsApp com DDD *
+    </label>
+    <input
+      id="telefone"
+      required
+      type="tel"
+      inputmode="tel"
+      autocomplete="tel"
+      placeholder="(11) 99999-9999"
+    >
 
-    <label for="entrega">Previsão de atendimento</label>
-    <input id="entrega" readonly
-      placeholder="Consultando calendário...">
+    <label for="entrega">
+      Previsão de atendimento
+    </label>
+    <input
+      id="entrega"
+      readonly
+      placeholder="Consultando calendário..."
+    >
     <small>
-      A partir das 18h da data indicada,
+      Atendimento a partir das 18h da data indicada,
       conforme disponibilidade e confirmação.
     </small>
 
-    <label for="modalidade">Como deseja receber? *</label>
+    <label for="modalidade">
+      Como deseja receber? *
+    </label>
     <select id="modalidade" required>
       <option value="">Selecione</option>
-      <option value="retirada">Retirada no local — grátis</option>
+      <option value="retirada">
+        Retirada no local — grátis
+      </option>
       <option value="motoboy">
         Meu motoboy — Uber, 99 ou outro
       </option>
@@ -376,14 +478,19 @@ body.modalAberto { overflow:hidden; }
       <div class="linha">
         <div>
           <label for="cep">CEP *</label>
-          <input id="cep" inputmode="numeric"
-            maxlength="9" placeholder="00000-000">
+          <input
+            id="cep"
+            inputmode="numeric"
+            maxlength="9"
+            placeholder="00000-000"
+          >
         </div>
         <div>
           <label for="numero">Número *</label>
           <input id="numero" maxlength="20">
         </div>
       </div>
+
       <small id="cepstatus"></small>
 
       <label for="rua">Rua / Avenida *</label>
@@ -395,13 +502,23 @@ body.modalAberto { overflow:hidden; }
           <input id="bairro" maxlength="100">
         </div>
         <div>
-          <label for="complemento">Complemento</label>
-          <input id="complemento" maxlength="100">
+          <label for="complemento">
+            Complemento
+          </label>
+          <input
+            id="complemento"
+            maxlength="100"
+          >
         </div>
       </div>
 
-      <label for="referencia">Referência</label>
-      <input id="referencia" maxlength="150">
+      <label for="referencia">
+        Referência
+      </label>
+      <input
+        id="referencia"
+        maxlength="150"
+      >
     </div>
 
     <div id="areaMotoboy">
@@ -410,9 +527,15 @@ body.modalAberto { overflow:hidden; }
         O endereço de retirada será enviado após
         confirmarmos a encomenda.
       </div>
-      <label for="motoboy">Informações do motoboy</label>
-      <textarea id="motoboy" rows="2"
-        maxlength="250"></textarea>
+
+      <label for="motoboy">
+        Informações do motoboy
+      </label>
+      <textarea
+        id="motoboy"
+        rows="2"
+        maxlength="250"
+      ></textarea>
     </div>
 
     <div class="aviso" id="avisoRecebimento">
@@ -420,22 +543,37 @@ body.modalAberto { overflow:hidden; }
     </div>
 
     <label for="obs">Observações</label>
-    <textarea id="obs" rows="3" maxlength="350"
-      placeholder="Alguma informação importante?"></textarea>
+    <textarea
+      id="obs"
+      rows="3"
+      maxlength="350"
+      placeholder="Alguma informação importante?"
+    ></textarea>
 
-    <input id="website" style="display:none"
-      tabindex="-1" autocomplete="off">
+    <input
+      id="website"
+      style="display:none"
+      tabindex="-1"
+      autocomplete="off"
+    >
 
-    <button id="botaoPedido" type="submit"
-      class="acao" disabled>
+    <button
+      id="botaoPedido"
+      type="submit"
+      class="acao"
+      disabled
+    >
       Consultando disponibilidade...
     </button>
   </form>
 
   <div id="situacao" aria-live="polite"></div>
 
-  <button id="whatsapp" type="button"
-    class="acao secundario">
+  <button
+    id="whatsapp"
+    type="button"
+    class="acao secundario"
+  >
     Conversar pelo WhatsApp
   </button>
 
@@ -443,10 +581,15 @@ body.modalAberto { overflow:hidden; }
     <h2>💚 Pagamento via Pix</h2>
     <p>Chave Pix (celular):</p>
     <strong>+55 11 99777-4091</strong>
-    <button id="copiar" type="button"
-      class="acao secundario">
+
+    <button
+      id="copiar"
+      type="button"
+      class="acao secundario"
+    >
       Copiar chave Pix
     </button>
+
     <small>
       Aguarde a confirmação do pedido e do valor final.
       O pagamento será conferido manualmente.
@@ -459,37 +602,141 @@ body.modalAberto { overflow:hidden; }
   <div>
     <small>Seu carrinho</small>
     <strong id="totalMobile">R$ 0,00</strong>
+    <div id="quantidadeMobile">0 itens</div>
   </div>
+
   <button type="button" id="irPedido">
-    Ver pedido ↑
+    Finalizar pedido ↑
   </button>
 </div>
 
-<div id="modalFundo" class="modalFundo"
-  role="dialog" aria-modal="true"
-  aria-labelledby="modalTitulo">
+<!-- Janela de confirmação -->
+<div
+  id="modalFundo"
+  class="modalFundo"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="modalTitulo"
+>
   <div class="modal">
-    <div id="modalIcone" class="simbolo">⏳</div>
-    <h2 id="modalTitulo">Registrando pedido...</h2>
+    <div id="modalIcone" class="simbolo">
+      ⏳
+    </div>
+
+    <h2 id="modalTitulo">
+      Registrando pedido...
+    </h2>
+
     <p id="modalMensagem">
       Estamos verificando sua encomenda.
     </p>
-    <div id="modalNumero" class="numeroPedido"
-      style="display:none"></div>
+
+    <div
+      id="modalNumero"
+      class="numeroPedido"
+      style="display:none"
+    ></div>
+
     <p id="modalPrevisao"></p>
-    <button id="fecharModal" type="button"
-      class="acao" style="display:none">
+
+    <div id="areaAvaliacao" class="avaliacao">
+      <h3>Como foi fazer seu pedido?</h3>
+
+      <p>
+        Sua opinião nos ajuda a melhorar! ❤️
+      </p>
+
+      <div
+        id="estrelas"
+        class="estrelas"
+        role="group"
+        aria-label="Avalie de 1 a 5 estrelas"
+      >
+        <button
+          type="button"
+          class="estrela"
+          data-nota="1"
+          aria-label="1 estrela"
+        >★</button>
+
+        <button
+          type="button"
+          class="estrela"
+          data-nota="2"
+          aria-label="2 estrelas"
+        >★</button>
+
+        <button
+          type="button"
+          class="estrela"
+          data-nota="3"
+          aria-label="3 estrelas"
+        >★</button>
+
+        <button
+          type="button"
+          class="estrela"
+          data-nota="4"
+          aria-label="4 estrelas"
+        >★</button>
+
+        <button
+          type="button"
+          class="estrela"
+          data-nota="5"
+          aria-label="5 estrelas"
+        >★</button>
+      </div>
+
+      <div
+        id="mensagemAvaliacao"
+        aria-live="polite"
+      >
+        Toque nas estrelas para avaliar.
+      </div>
+
+      <button
+        id="enviarAvaliacao"
+        type="button"
+        class="acao"
+        disabled
+      >
+        Enviar avaliação
+      </button>
+
+      <small>
+        Avaliação opcional da experiência
+        de fazer o pedido no aplicativo.
+      </small>
+    </div>
+
+    <button
+      id="fecharModal"
+      type="button"
+      class="acao secundario"
+      style="display:none"
+    >
       Fechar
     </button>
   </div>
 </div>
 
-<!-- Envio invisível: não exibe o quadro cinza -->
-<iframe name="canalPedido" id="canalPedido"
-  title="Canal de envio"
-  style="display:none"></iframe>
+<!-- Canais invisíveis de envio -->
+<iframe
+  name="canalPedido"
+  title="Envio do pedido"
+  style="display:none"
+></iframe>
 
-<footer>Alê Bólos • Produzido com carinho ❤️</footer>
+<iframe
+  name="canalAvaliacao"
+  title="Envio da avaliação"
+  style="display:none"
+></iframe>
+
+<footer>
+  Alê Bólos • Produzido com carinho ❤️
+</footer>
 
 <script>
 "use strict";
@@ -509,59 +756,101 @@ let dataDisponivel = "";
 let horario = "18:00";
 let enviando = false;
 let carregando = false;
+
 let tokenPendente = null;
+let tokenConfirmado = null;
+let notaSelecionada = 0;
+let avaliacaoEnviando = false;
+let avaliacaoConcluida = false;
 
 const el = id => document.getElementById(id);
 const valor = id => el(id).value.trim();
 
 const dinheiro = n =>
   Number(n).toLocaleString("pt-BR", {
-    style:"currency", currency:"BRL"
+    style:"currency",
+    currency:"BRL"
   });
 
 function dataBR(iso) {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(iso || "")) return "";
-  const [a,m,d] = iso.split("-");
-  return d + "/" + m + "/" + a;
+  if (
+    !/^\d{4}-\d{2}-\d{2}$/.test(iso || "")
+  ) {
+    return "";
+  }
+
+  const [ano,mes,dia] = iso.split("-");
+  return dia + "/" + mes + "/" + ano;
+}
+
+function horaBR(h) {
+  const s = String(h || "18:00");
+  return s.endsWith(":00")
+    ? s.slice(0, -3) + "h"
+    : s.replace(":", "h");
 }
 
 function elemento(tag, classe, texto) {
   const n = document.createElement(tag);
+
   if (classe) n.className = classe;
-  if (texto !== undefined) n.textContent = String(texto);
+
+  if (texto !== undefined) {
+    n.textContent = String(texto);
+  }
+
   return n;
 }
 
 function fotoUrl(foto) {
   const f = String(foto || "").trim();
+
   if (/^https:\/\//i.test(f)) return f;
-  if (/^[\w.-]+\.(jpg|jpeg|png|webp)$/i.test(f)) return f;
+
+  if (
+    /^[\w.-]+\.(jpg|jpeg|png|webp)$/i.test(f)
+  ) {
+    return f;
+  }
+
   return "";
 }
 
 function atualizarBotao() {
   const b = el("botaoPedido");
-  b.disabled = !catalogoCarregado ||
-    !lojaAberta || carregando || enviando;
+
+  b.disabled =
+    !catalogoCarregado ||
+    !lojaAberta ||
+    carregando ||
+    enviando ||
+    Boolean(tokenPendente);
 
   b.textContent = enviando
     ? "Verificando pedido..."
     : carregando
       ? "Consultando disponibilidade..."
-      : !catalogoCarregado
-        ? "Cardápio indisponível"
-        : !lojaAberta
-          ? "Encomendas temporariamente fechadas"
-          : "Registrar encomenda";
+      : tokenPendente
+        ? "Confirmação pendente"
+        : !catalogoCarregado
+          ? "Cardápio indisponível"
+          : !lojaAberta
+            ? "Encomendas temporariamente fechadas"
+            : "Registrar encomenda";
 }
 
 function desenharProduto(p, destino) {
   const card = elemento(
-    "div", "produto" + (p.ativo ? "" : " indisponivel")
+    "div",
+    "produto" + (
+      p.ativo ? "" : " indisponivel"
+    )
   );
+
   const img = elemento("img");
   img.alt = p.nome;
   img.loading = "lazy";
+
   const url = fotoUrl(p.foto);
   if (url) img.src = url;
 
@@ -574,26 +863,58 @@ function desenharProduto(p, destino) {
 
   if (!p.ativo) {
     card.appendChild(
-      elemento("span", "etiqueta", "Indisponível")
+      elemento(
+        "span",
+        "etiqueta",
+        "Indisponível"
+      )
     );
   } else {
-    const contador = elemento("div", "contador");
-    const menos = elemento("button", "", "−");
-    const mais = elemento("button", "", "+");
-    const num = elemento("strong", "", qtd[p.id] || 0);
+    const contador = elemento(
+      "div", "contador"
+    );
+
+    const menos = elemento(
+      "button", "", "−"
+    );
+
+    const mais = elemento(
+      "button", "", "+"
+    );
+
+    const num = elemento(
+      "strong", "", qtd[p.id] || 0
+    );
 
     menos.type = "button";
     mais.type = "button";
+
     menos.disabled = !lojaAberta;
     mais.disabled = !lojaAberta;
-    menos.setAttribute("aria-label", "Diminuir " + p.nome);
-    mais.setAttribute("aria-label", "Adicionar " + p.nome);
-    menos.onclick = () => alterar(p.id, -1);
-    mais.onclick = () => alterar(p.id, 1);
 
-    contador.append(menos, num, mais);
+    menos.setAttribute(
+      "aria-label",
+      "Diminuir " + p.nome
+    );
+
+    mais.setAttribute(
+      "aria-label",
+      "Adicionar " + p.nome
+    );
+
+    menos.onclick = () =>
+      alterar(p.id, -1);
+
+    mais.onclick = () =>
+      alterar(p.id, 1);
+
+    contador.append(
+      menos, num, mais
+    );
+
     card.appendChild(contador);
   }
+
   destino.appendChild(card);
 }
 
@@ -614,16 +935,30 @@ function desenhar() {
     } else if (p.categoria === "bolo") {
       desenharProduto(p, bolos);
     } else {
-      const cat = p.categoria || "Outros produtos";
-      if (!extras.has(cat)) extras.set(cat, []);
+      const cat =
+        p.categoria || "Outros produtos";
+
+      if (!extras.has(cat)) {
+        extras.set(cat, []);
+      }
+
       extras.get(cat).push(p);
     }
   });
 
   extras.forEach((lista, nome) => {
-    const titulo = elemento("h3", "", nome);
-    const grade = elemento("div", "produtos");
-    lista.forEach(p => desenharProduto(p, grade));
+    const titulo = elemento(
+      "h3", "", nome
+    );
+
+    const grade = elemento(
+      "div", "produtos"
+    );
+
+    lista.forEach(p =>
+      desenharProduto(p, grade)
+    );
+
     outras.append(titulo, grade);
   });
 
@@ -631,59 +966,112 @@ function desenhar() {
     p => p.ativo && (qtd[p.id] || 0) > 0
   );
 
-  el("carrinho").textContent = escolhidos.length
-    ? escolhidos.map(p =>
-        qtd[p.id] + "x " + p.nome
-      ).join(" • ")
-    : "Nenhum produto selecionado.";
+  el("carrinho").textContent =
+    escolhidos.length
+      ? escolhidos.map(p =>
+          qtd[p.id] + "x " + p.nome
+        ).join(" • ")
+      : "Nenhum produto selecionado.";
 
   const subtotal = escolhidos.reduce(
-    (s,p) => s + qtd[p.id] * p.preco, 0
+    (s,p) => s + qtd[p.id] * p.preco,
+    0
+  );
+
+  const unidades = escolhidos.reduce(
+    (s,p) => s + qtd[p.id],
+    0
   );
 
   el("total").textContent =
     "Subtotal: " + dinheiro(subtotal);
-  el("totalMobile").textContent = dinheiro(subtotal);
+
+  el("totalMobile").textContent =
+    dinheiro(subtotal);
+
+  el("quantidadeMobile").textContent =
+    unidades + (
+      unidades === 1 ? " item" : " itens"
+    );
 }
 
 function alterar(id, delta) {
-  const p = produtos.find(p => p.id === id);
-  if (!lojaAberta || !p || !p.ativo) return;
-  qtd[id] = Math.max(0, Math.min(30, (qtd[id] || 0) + delta));
+  const p = produtos.find(
+    p => p.id === id
+  );
+
+  if (
+    !lojaAberta ||
+    !p ||
+    !p.ativo ||
+    enviando ||
+    tokenPendente
+  ) {
+    return;
+  }
+
+  qtd[id] = Math.max(
+    0,
+    Math.min(
+      30,
+      (qtd[id] || 0) + delta
+    )
+  );
+
   desenhar();
 }
 
 function jsonp(parametros) {
   return new Promise((resolve,reject) => {
     const callback =
-      "aleConsulta" + Math.random().toString(36).slice(2);
-    const script = document.createElement("script");
+      "aleConsulta" +
+      Math.random().toString(36).slice(2);
+
+    const script =
+      document.createElement("script");
+
     let finalizado = false;
 
     const tempo = setTimeout(() => {
-      finalizar(new Error("Tempo de consulta excedido."));
+      finalizar(
+        new Error("Tempo de consulta excedido.")
+      );
     }, 15000);
 
-    function finalizar(erro, dados) {
+    function finalizar(erro,dados) {
       if (finalizado) return;
+
       finalizado = true;
       clearTimeout(tempo);
       script.remove();
       delete window[callback];
+
       if (erro) reject(erro);
       else resolve(dados);
     }
 
-    window[callback] = dados => finalizar(null,dados);
+    window[callback] = dados =>
+      finalizar(null,dados);
+
     script.onerror = () =>
-      finalizar(new Error("Falha na conexão."));
+      finalizar(
+        new Error("Falha na conexão.")
+      );
 
     const url = new URL(SCRIPT_URL);
-    Object.entries(parametros).forEach(([k,v]) =>
-      url.searchParams.set(k, v)
+
+    Object.entries(parametros).forEach(
+      ([k,v]) =>
+        url.searchParams.set(k,v)
     );
-    url.searchParams.set("callback",callback);
-    url.searchParams.set("_",Date.now());
+
+    url.searchParams.set(
+      "callback",callback
+    );
+
+    url.searchParams.set(
+      "_",Date.now()
+    );
 
     script.src = url.toString();
     document.head.appendChild(script);
@@ -691,8 +1079,14 @@ function jsonp(parametros) {
 }
 
 function aplicarCatalogo(d) {
-  if (!d || !d.sucesso || !Array.isArray(d.produtos)) {
-    throw new Error("Catálogo indisponível.");
+  if (
+    !d ||
+    !d.sucesso ||
+    !Array.isArray(d.produtos)
+  ) {
+    throw new Error(
+      "Catálogo indisponível."
+    );
   }
 
   produtos.length = 0;
@@ -701,69 +1095,125 @@ function aplicarCatalogo(d) {
   d.produtos.forEach(p => {
     const id = String(p.id || "");
     const preco = Number(p.preco);
-    if (!/^[a-z0-9_-]{2,40}$/.test(id) ||
-        ids.has(id) || !(preco > 0)) return;
+
+    if (
+      !/^[a-z0-9_-]{2,40}$/.test(id) ||
+      ids.has(id) ||
+      !(preco > 0)
+    ) {
+      return;
+    }
 
     ids.add(id);
+
     produtos.push({
       id,
       nome:String(p.nome || ""),
-      categoria:String(p.categoria || "").toLowerCase(),
+      categoria:String(
+        p.categoria || ""
+      ).toLowerCase(),
       preco,
       ativo:p.ativo === true,
       foto:String(p.foto || ""),
-      descricao:String(p.descricao || "")
+      descricao:String(
+        p.descricao || ""
+      )
     });
 
-    if (!(id in qtd)) qtd[id] = 0;
-    if (!p.ativo) qtd[id] = 0;
+    if (!(id in qtd)) {
+      qtd[id] = 0;
+    }
+
+    if (!p.ativo) {
+      qtd[id] = 0;
+    }
   });
 
   Object.keys(qtd).forEach(id => {
-    if (!ids.has(id)) delete qtd[id];
+    if (!ids.has(id)) {
+      delete qtd[id];
+    }
   });
 
-  dataDisponivel = String(d.proximaData || "");
-  horario = String(d.horarioLimite || "18:00");
-  lojaAberta = d.aberta === true && Boolean(dataDisponivel);
+  dataDisponivel = String(
+    d.proximaData || ""
+  );
+
+  horario = String(
+    d.horarioLimite || "18:00"
+  );
+
+  lojaAberta =
+    d.aberta === true &&
+    Boolean(dataDisponivel);
+
   catalogoCarregado = true;
 
-  const previsao = dataBR(dataDisponivel);
-  el("entrega").value = previsao
-    ? previsao + " a partir das " + horario
-    : "Sem data disponível";
+  const previsao =
+    dataBR(dataDisponivel);
+
+  const horarioTexto =
+    horaBR(horario);
+
+  el("entrega").value =
+    previsao
+      ? previsao +
+        ", a partir das " +
+        horarioTexto
+      : "Sem data disponível";
 
   const aviso = el("estadoLoja");
-  aviso.className = "aviso " +
+
+  aviso.className =
+    "aviso " +
     (lojaAberta ? "aberta" : "fechada");
 
   aviso.textContent = lojaAberta
-    ? "🍰 Encomendas abertas! Próxima previsão: " +
-      previsao + ", a partir das " + horario +
+    ? "🍰 Encomendas abertas! " +
+      "Próxima previsão: " +
+      previsao +
+      ", a partir das " +
+      horarioTexto +
       ". Sujeita à confirmação."
-    : "⏸️ " + (d.mensagem || "Encomendas fechadas.");
+    : "⏸️ " +
+      (d.mensagem || "Encomendas fechadas.");
 
   desenhar();
   atualizarBotao();
 }
 
 async function atualizarLoja() {
-  if (carregando || enviando) return false;
+  if (carregando || enviando) {
+    return false;
+  }
+
   carregando = true;
   atualizarBotao();
 
   try {
-    aplicarCatalogo(await jsonp({acao:"catalogo"}));
+    const dados = await jsonp({
+      acao:"catalogo"
+    });
+
+    aplicarCatalogo(dados);
     return true;
+
   } catch (erro) {
     lojaAberta = false;
     catalogoCarregado = false;
-    el("estadoLoja").className = "aviso fechada";
+
+    el("estadoLoja").className =
+      "aviso fechada";
+
     el("estadoLoja").textContent =
       "Não foi possível consultar o cardápio. " +
       "Pedidos bloqueados por segurança.";
-    el("situacao").textContent = erro.message;
+
+    el("situacao").textContent =
+      erro.message;
+
     return false;
+
   } finally {
     carregando = false;
     atualizarBotao();
@@ -772,65 +1222,108 @@ async function atualizarLoja() {
 
 function recebimento() {
   const m = valor("modalidade");
-  el("areaEndereco").style.display =
-    m === "nossa" ? "block" : "none";
-  el("areaMotoboy").style.display =
-    m === "motoboy" ? "block" : "none";
 
-  ["cep","rua","numero","bairro"].forEach(id => {
+  el("areaEndereco").style.display =
+    m === "nossa"
+      ? "block"
+      : "none";
+
+  el("areaMotoboy").style.display =
+    m === "motoboy"
+      ? "block"
+      : "none";
+
+  [
+    "cep","rua","numero","bairro"
+  ].forEach(id => {
     el(id).required = m === "nossa";
   });
 
   const avisos = {
     retirada:
-      "Retirada gratuita. O endereço será enviado " +
+      "Retirada gratuita. " +
+      "O endereço será enviado " +
       "individualmente após a confirmação.",
     motoboy:
       "Você contrata e paga seu motoboy. " +
-      "Enviaremos o endereço de retirada após confirmar.",
+      "Enviaremos o endereço de retirada " +
+      "após confirmar.",
     nossa:
-      "Vamos cotar o frete e informar o valor final " +
-      "antes do pagamento."
+      "Vamos cotar o frete e informar " +
+      "o valor final antes do pagamento."
   };
 
   el("avisoRecebimento").textContent =
-    avisos[m] || "Selecione a modalidade de recebimento.";
+    avisos[m] ||
+    "Selecione a modalidade de recebimento.";
 }
 
-el("modalidade").addEventListener("change",recebimento);
+el("modalidade").addEventListener(
+  "change", recebimento
+);
+
 recebimento();
 
 let ultimoCEP = "";
 
-el("cep").addEventListener("input",async function() {
-  const cep = this.value.replace(/\D/g,"").slice(0,8);
-  this.value = cep.length > 5
-    ? cep.slice(0,5) + "-" + cep.slice(5)
-    : cep;
+el("cep").addEventListener(
+  "input",
+  async function() {
+    const cep = this.value
+      .replace(/\D/g,"")
+      .slice(0,8);
 
-  if (cep.length !== 8 || cep === ultimoCEP) return;
-  ultimoCEP = cep;
-  el("cepstatus").textContent = "Buscando endereço...";
+    this.value = cep.length > 5
+      ? cep.slice(0,5) +
+        "-" +
+        cep.slice(5)
+      : cep;
 
-  try {
-    const r = await fetch(
-      "https://viacep.com.br/ws/" + cep + "/json/"
-    );
-    if (!r.ok) throw new Error();
-    const d = await r.json();
-    if (d.erro) throw new Error();
+    if (
+      cep.length !== 8 ||
+      cep === ultimoCEP
+    ) {
+      return;
+    }
 
-    el("rua").value = d.logradouro || "";
-    el("bairro").value = d.bairro || "";
+    ultimoCEP = cep;
+
     el("cepstatus").textContent =
-      (d.localidade || "") + " / " +
-      (d.uf || "") + " — confira o endereço.";
-    el("numero").focus();
-  } catch (_) {
-    el("cepstatus").textContent =
-      "Preencha o endereço manualmente.";
+      "Buscando endereço...";
+
+    try {
+      const r = await fetch(
+        "https://viacep.com.br/ws/" +
+        cep +
+        "/json/"
+      );
+
+      if (!r.ok) throw new Error();
+
+      const d = await r.json();
+
+      if (d.erro) throw new Error();
+
+      el("rua").value =
+        d.logradouro || "";
+
+      el("bairro").value =
+        d.bairro || "";
+
+      el("cepstatus").textContent =
+        (d.localidade || "") +
+        " / " +
+        (d.uf || "") +
+        " — confira o endereço.";
+
+      el("numero").focus();
+
+    } catch (_) {
+      el("cepstatus").textContent =
+        "Preencha o endereço manualmente.";
+    }
   }
-});
+);
 
 el("copiar").onclick = async () => {
   try {
@@ -845,8 +1338,10 @@ function textoWhatsApp() {
   const itens = produtos.filter(
     p => p.ativo && (qtd[p.id] || 0) > 0
   );
+
   const total = itens.reduce(
-    (s,p) => s + qtd[p.id] * p.preco,0
+    (s,p) => s + qtd[p.id] * p.preco,
+    0
   );
 
   const modalidades = {
@@ -856,88 +1351,238 @@ function textoWhatsApp() {
   };
 
   const m = valor("modalidade");
+
   const linhas = [
     "*ALÊ BÓLOS — ENCOMENDA*",
-    ...itens.map(p => qtd[p.id] + "x " + p.nome),
+    ...itens.map(
+      p => qtd[p.id] + "x " + p.nome
+    ),
     "*Subtotal:* " + dinheiro(total),
     "*Nome:* " + valor("nome"),
     "*WhatsApp:* " + valor("telefone"),
     "*Previsão:* " + valor("entrega"),
-    "*Recebimento:* " + (modalidades[m] || "A definir")
+    "*Recebimento:* " +
+      (modalidades[m] || "A definir")
   ];
 
   if (m === "nossa") {
     linhas.push(
-      "*Endereço:* " + valor("rua") + ", " +
+      "*Endereço:* " +
+        valor("rua") + ", " +
         valor("numero"),
       "*Bairro:* " + valor("bairro"),
       "*CEP:* " + valor("cep"),
-      "*Complemento:* " + valor("complemento"),
-      "*Referência:* " + valor("referencia"),
+      "*Complemento:* " +
+        valor("complemento"),
+      "*Referência:* " +
+        valor("referencia"),
       "*Frete:* aguardando cotação"
     );
   }
 
   if (m === "motoboy") {
-    linhas.push("*Motoboy:* " + valor("motoboy"));
+    linhas.push(
+      "*Motoboy:* " +
+      valor("motoboy")
+    );
   }
 
-  linhas.push("*Observações:* " + valor("obs"));
+  linhas.push(
+    "*Observações:* " +
+    valor("obs")
+  );
+
   return linhas.join("\n");
 }
 
 el("whatsapp").onclick = () => {
   window.open(
-    "https://wa.me/" + WHATSAPP +
-    "?text=" + encodeURIComponent(textoWhatsApp()),
-    "_blank","noopener"
+    "https://wa.me/" +
+      WHATSAPP +
+      "?text=" +
+      encodeURIComponent(
+        textoWhatsApp()
+      ),
+    "_blank",
+    "noopener"
   );
 };
 
 el("irPedido").onclick = () => {
   el("secaoPedido").scrollIntoView({
-    behavior:"smooth",block:"start"
+    behavior:"smooth",
+    block:"start"
   });
 };
 
 function abrirModal() {
-  el("modalFundo").classList.add("visivel");
-  document.body.classList.add("modalAberto");
-  el("fecharModal").style.display = "none";
-  el("modalNumero").style.display = "none";
-  el("modalPrevisao").textContent = "";
+  el("modalFundo")
+    .classList.add("visivel");
+
+  document.body
+    .classList.add("modalAberto");
+
   el("modalIcone").textContent = "⏳";
-  el("modalTitulo").textContent = "Registrando pedido...";
+
+  el("modalTitulo").textContent =
+    "Registrando pedido...";
+
   el("modalMensagem").textContent =
-    "Estamos conferindo o registro da sua encomenda.";
+    "Estamos conferindo o registro " +
+    "da sua encomenda.";
+
+  el("modalNumero").style.display =
+    "none";
+
+  el("modalPrevisao").textContent = "";
+
+  el("areaAvaliacao").style.display =
+    "none";
+
+  el("fecharModal").style.display =
+    "none";
 }
 
-function resultadoModal(titulo,mensagem,icone,pedido,previsao) {
-  el("modalTitulo").textContent = titulo;
-  el("modalMensagem").textContent = mensagem;
-  el("modalIcone").textContent = icone;
+function mostrarResultado(
+  titulo,
+  mensagem,
+  icone,
+  pedido,
+  previsao
+) {
+  el("modalTitulo").textContent =
+    titulo;
+
+  el("modalMensagem").textContent =
+    mensagem;
+
+  el("modalIcone").textContent =
+    icone;
+
   el("modalNumero").style.display =
     pedido ? "block" : "none";
-  el("modalNumero").textContent = pedido || "";
+
+  el("modalNumero").textContent =
+    pedido || "";
+
   el("modalPrevisao").textContent =
-    previsao ? "Previsão: " + previsao : "";
-  el("fecharModal").style.display = "block";
-  el("fecharModal").focus();
+    previsao
+      ? "Previsão: " + previsao
+      : "";
+
+  el("fecharModal").style.display =
+    "block";
 }
 
+function prepararAvaliacao() {
+  notaSelecionada = 0;
+  avaliacaoEnviando = false;
+  avaliacaoConcluida = false;
+
+  el("areaAvaliacao").style.display =
+    "block";
+
+  el("enviarAvaliacao").disabled =
+    true;
+
+  el("enviarAvaliacao").textContent =
+    "Enviar avaliação";
+
+  el("mensagemAvaliacao").textContent =
+    "Toque nas estrelas para avaliar.";
+
+  atualizarEstrelas();
+}
+
+function atualizarEstrelas() {
+  document.querySelectorAll(
+    ".estrela"
+  ).forEach(botao => {
+    const nota = Number(
+      botao.dataset.nota
+    );
+
+    botao.classList.toggle(
+      "ativa",
+      nota <= notaSelecionada
+    );
+
+    botao.setAttribute(
+      "aria-pressed",
+      String(
+        nota === notaSelecionada
+      )
+    );
+
+    botao.disabled =
+      avaliacaoEnviando ||
+      avaliacaoConcluida;
+  });
+
+  el("enviarAvaliacao").disabled =
+    notaSelecionada === 0 ||
+    avaliacaoEnviando ||
+    avaliacaoConcluida;
+}
+
+document.querySelectorAll(
+  ".estrela"
+).forEach(botao => {
+  botao.addEventListener(
+    "click",
+    () => {
+      if (
+        avaliacaoEnviando ||
+        avaliacaoConcluida
+      ) {
+        return;
+      }
+
+      notaSelecionada = Number(
+        botao.dataset.nota
+      );
+
+      el("mensagemAvaliacao").textContent =
+        "Você selecionou " +
+        notaSelecionada +
+        (
+          notaSelecionada === 1
+            ? " estrela."
+            : " estrelas."
+        );
+
+      atualizarEstrelas();
+    }
+  );
+});
+
 el("fecharModal").onclick = () => {
-  el("modalFundo").classList.remove("visivel");
-  document.body.classList.remove("modalAberto");
+  if (avaliacaoEnviando) return;
+
+  el("modalFundo")
+    .classList.remove("visivel");
+
+  document.body
+    .classList.remove("modalAberto");
 };
 
 function esperar(ms) {
-  return new Promise(resolve => setTimeout(resolve,ms));
+  return new Promise(
+    resolve => setTimeout(resolve,ms)
+  );
 }
 
 async function verificarPedido(token) {
-  // Não informa sucesso sem localizar o pedido no Sheets.
-  for (let tentativa = 0; tentativa < 12; tentativa++) {
-    await esperar(tentativa === 0 ? 2200 : 2500);
+  for (
+    let tentativa = 0;
+    tentativa < 12;
+    tentativa++
+  ) {
+    await esperar(
+      tentativa === 0
+        ? 2200
+        : 2500
+    );
 
     try {
       const d = await jsonp({
@@ -945,191 +1590,419 @@ async function verificarPedido(token) {
         token
       });
 
-      if (d && d.sucesso && d.encontrado && d.pedido) {
+      if (
+        d &&
+        d.sucesso &&
+        d.encontrado &&
+        d.pedido
+      ) {
         return d;
       }
     } catch (erro) {
-      console.warn("Consulta de confirmação:",erro);
+      console.warn(
+        "Consulta de confirmação:",
+        erro
+      );
     }
   }
+
+  return null;
+}
+
+async function verificarAvaliacao(token) {
+  for (
+    let tentativa = 0;
+    tentativa < 8;
+    tentativa++
+  ) {
+    await esperar(
+      tentativa === 0
+        ? 1400
+        : 1800
+    );
+
+    try {
+      const d = await jsonp({
+        acao:"status_avaliacao",
+        token
+      });
+
+      if (
+        d &&
+        d.sucesso &&
+        d.registrada === true
+      ) {
+        return d;
+      }
+    } catch (erro) {
+      console.warn(
+        "Consulta de avaliação:",
+        erro
+      );
+    }
+  }
+
   return null;
 }
 
 function gerarToken() {
-  if (window.crypto && crypto.randomUUID) {
+  if (
+    window.crypto &&
+    crypto.randomUUID
+  ) {
     return crypto.randomUUID();
   }
 
-  if (window.crypto && crypto.getRandomValues) {
+  if (
+    window.crypto &&
+    crypto.getRandomValues
+  ) {
     const b = new Uint8Array(16);
+
     crypto.getRandomValues(b);
+
     b[6] = (b[6] & 15) | 64;
     b[8] = (b[8] & 63) | 128;
-    const h = [...b].map(n =>
-      n.toString(16).padStart(2,"0")
+
+    const h = [...b].map(
+      n => n.toString(16).padStart(2,"0")
     ).join("");
-    return h.slice(0,8) + "-" + h.slice(8,12) + "-" +
-      h.slice(12,16) + "-" + h.slice(16,20) + "-" +
+
+    return h.slice(0,8) + "-" +
+      h.slice(8,12) + "-" +
+      h.slice(12,16) + "-" +
+      h.slice(16,20) + "-" +
       h.slice(20);
   }
 
-  throw new Error("Navegador incompatível com envio seguro.");
+  throw new Error(
+    "Navegador incompatível com envio seguro."
+  );
 }
 
-el("pedido").addEventListener("submit",async evento => {
-  evento.preventDefault();
-
-  if (enviando) return;
-
-  // Impede novo envio enquanto houver um pedido
-  // anterior ainda sem confirmação verificável.
-  if (tokenPendente) {
-    abrirModal();
-    resultadoModal(
-      "Verificação pendente",
-      "Existe uma encomenda anterior cuja confirmação " +
-      "não foi concluída. Confira a planilha ou fale " +
-      "conosco antes de enviar novamente.",
-      "⚠️"
-    );
-    return;
-  }
-
-  const atualizado = await atualizarLoja();
-  if (!atualizado || !lojaAberta) {
-    alert("Encomendas indisponíveis no momento.");
-    return;
-  }
-
-  const escolhidos = produtos.filter(
-    p => p.ativo && (qtd[p.id] || 0) > 0
+function enviarFormularioOculto(
+  dados,
+  destino
+) {
+  const form = document.createElement(
+    "form"
   );
-  if (!escolhidos.length) {
-    alert("Escolha pelo menos um produto.");
-    return;
-  }
 
-  const telefone = valor("telefone").replace(/\D/g,"");
-  if (telefone.length < 10 || telefone.length > 11) {
-    alert("Confira o WhatsApp com DDD.");
-    return;
-  }
-
-  const m = valor("modalidade");
-  const cep = valor("cep").replace(/\D/g,"");
-
-  if (m === "nossa" && cep.length !== 8) {
-    alert("Confira o CEP.");
-    return;
-  }
-
-  let token;
-  try {
-    token = gerarToken();
-  } catch (erro) {
-    alert(erro.message);
-    return;
-  }
-
-  const dados = {
-    token,
-    nome:valor("nome"),
-    telefone,
-    modalidade:m,
-    cep:m === "nossa" ? cep : "",
-    rua:m === "nossa" ? valor("rua") : "",
-    numero:m === "nossa" ? valor("numero") : "",
-    complemento:m === "nossa" ? valor("complemento") : "",
-    bairro:m === "nossa" ? valor("bairro") : "",
-    referencia:m === "nossa" ? valor("referencia") : "",
-    motoboy:m === "motoboy" ? valor("motoboy") : "",
-    obs:valor("obs"),
-    website:valor("website"),
-    quantidades:JSON.stringify(qtd)
-  };
-
-  const form = document.createElement("form");
   form.method = "POST";
   form.action = SCRIPT_URL;
-  form.target = "canalPedido";
+  form.target = destino;
   form.acceptCharset = "UTF-8";
   form.style.display = "none";
 
-  Object.entries(dados).forEach(([nome,conteudo]) => {
-    const input = document.createElement("input");
-    input.type = "hidden";
-    input.name = nome;
-    input.value = conteudo;
-    form.appendChild(input);
-  });
+  Object.entries(dados).forEach(
+    ([nome,conteudo]) => {
+      const input = document.createElement(
+        "input"
+      );
+
+      input.type = "hidden";
+      input.name = nome;
+      input.value = String(conteudo);
+
+      form.appendChild(input);
+    }
+  );
 
   document.body.appendChild(form);
 
-  enviando = true;
-  tokenPendente = token;
-  atualizarBotao();
-  abrirModal();
-
   try {
     form.submit();
+  } finally {
     form.remove();
+  }
+}
 
-    const confirmado = await verificarPedido(token);
+el("pedido").addEventListener(
+  "submit",
+  async evento => {
+    evento.preventDefault();
 
-    if (confirmado) {
-      tokenPendente = null;
+    if (enviando) return;
 
-      resultadoModal(
-        "Pedido recebido!",
-        "Sua encomenda foi registrada com sucesso. " +
-        "Aguarde nossa confirmação antes de pagar.",
-        "✅",
-        confirmado.pedido,
-        confirmado.previsao
-      );
+    if (tokenPendente) {
+      abrirModal();
 
-      el("situacao").textContent =
-        "Pedido registrado: " + confirmado.pedido;
-
-      // Limpa quantidades apenas após confirmação.
-      Object.keys(qtd).forEach(id => { qtd[id] = 0; });
-      desenhar();
-
-    } else {
-      resultadoModal(
+      mostrarResultado(
         "Confirmação pendente",
-        "Não conseguimos confirmar o registro agora. " +
-        "O pedido pode ter sido recebido. " +
-        "Não envie novamente antes de conferir com " +
-        "os Alê Bólos pelo WhatsApp.",
+        "Existe uma encomenda anterior " +
+        "ainda sem confirmação. " +
+        "Fale conosco pelo WhatsApp " +
+        "antes de enviar novamente.",
         "⚠️"
       );
 
-      el("situacao").textContent =
-        "Confirmação pendente. Evite enviar novamente.";
+      return;
     }
 
-  } catch (erro) {
-    form.remove();
-    resultadoModal(
-      "Não foi possível confirmar",
-      "O envio pode ter ocorrido. Entre em contato " +
-      "pelo WhatsApp antes de tentar novamente.",
-      "⚠️"
-    );
-  } finally {
-    enviando = false;
+    const atualizado =
+      await atualizarLoja();
+
+    if (!atualizado || !lojaAberta) {
+      alert(
+        "Encomendas indisponíveis no momento."
+      );
+      return;
+    }
+
+    const escolhidos =
+      produtos.filter(
+        p =>
+          p.ativo &&
+          (qtd[p.id] || 0) > 0
+      );
+
+    if (!escolhidos.length) {
+      alert(
+        "Escolha pelo menos um produto."
+      );
+      return;
+    }
+
+    const telefone =
+      valor("telefone")
+        .replace(/\D/g,"");
+
+    if (
+      telefone.length < 10 ||
+      telefone.length > 11
+    ) {
+      alert(
+        "Confira o WhatsApp com DDD."
+      );
+      return;
+    }
+
+    const m = valor("modalidade");
+
+    const cep =
+      valor("cep").replace(/\D/g,"");
+
+    if (
+      m === "nossa" &&
+      cep.length !== 8
+    ) {
+      alert("Confira o CEP.");
+      return;
+    }
+
+    let token;
+
+    try {
+      token = gerarToken();
+    } catch (erro) {
+      alert(erro.message);
+      return;
+    }
+
+    const dados = {
+      token,
+      nome:valor("nome"),
+      telefone,
+      modalidade:m,
+      cep:m === "nossa" ? cep : "",
+      rua:m === "nossa"
+        ? valor("rua") : "",
+      numero:m === "nossa"
+        ? valor("numero") : "",
+      complemento:m === "nossa"
+        ? valor("complemento") : "",
+      bairro:m === "nossa"
+        ? valor("bairro") : "",
+      referencia:m === "nossa"
+        ? valor("referencia") : "",
+      motoboy:m === "motoboy"
+        ? valor("motoboy") : "",
+      obs:valor("obs"),
+      website:valor("website"),
+      quantidades:JSON.stringify(qtd)
+    };
+
+    enviando = true;
+    tokenPendente = token;
+
     atualizarBotao();
+    abrirModal();
+
+    try {
+      enviarFormularioOculto(
+        dados,
+        "canalPedido"
+      );
+
+      const confirmado =
+        await verificarPedido(token);
+
+      if (confirmado) {
+        tokenPendente = null;
+        tokenConfirmado = token;
+
+        mostrarResultado(
+          "Pedido recebido! 🎉",
+          "Agradecemos pela preferência! ❤️ " +
+          "Sua encomenda foi registrada " +
+          "com sucesso. Em breve entraremos " +
+          "em contato para confirmar os " +
+          "detalhes. Aguarde antes de pagar.",
+          "✅",
+          confirmado.pedido,
+          confirmado.previsao
+        );
+
+        prepararAvaliacao();
+
+        el("situacao").textContent =
+          "Pedido registrado: " +
+          confirmado.pedido;
+
+        Object.keys(qtd).forEach(
+          id => { qtd[id] = 0; }
+        );
+
+        desenhar();
+
+      } else {
+        mostrarResultado(
+          "Confirmação pendente",
+          "Não conseguimos confirmar " +
+          "o registro agora. O pedido pode " +
+          "ter sido recebido. Não envie " +
+          "novamente antes de falar conosco.",
+          "⚠️"
+        );
+
+        el("situacao").textContent =
+          "Confirmação pendente.";
+      }
+
+    } catch (erro) {
+      mostrarResultado(
+        "Não foi possível confirmar",
+        "O envio pode ter ocorrido. " +
+        "Fale conosco antes de tentar novamente.",
+        "⚠️"
+      );
+
+    } finally {
+      enviando = false;
+      atualizarBotao();
+    }
   }
-});
+);
+
+el("enviarAvaliacao").addEventListener(
+  "click",
+  async () => {
+    if (
+      !tokenConfirmado ||
+      notaSelecionada < 1 ||
+      notaSelecionada > 5 ||
+      avaliacaoEnviando ||
+      avaliacaoConcluida
+    ) {
+      return;
+    }
+
+    avaliacaoEnviando = true;
+    atualizarEstrelas();
+
+    el("enviarAvaliacao").textContent =
+      "Enviando avaliação...";
+
+    el("mensagemAvaliacao").textContent =
+      "Estamos registrando sua opinião.";
+
+    try {
+      enviarFormularioOculto({
+        acao:"avaliar",
+        token:tokenConfirmado,
+        nota:notaSelecionada
+      }, "canalAvaliacao");
+
+      const resultado =
+        await verificarAvaliacao(
+          tokenConfirmado
+        );
+
+      if (resultado) {
+        avaliacaoConcluida = true;
+
+        notaSelecionada =
+          Number(resultado.nota);
+
+        el("mensagemAvaliacao").textContent =
+          "❤️ Muito obrigado! " +
+          "Sua avaliação foi registrada.";
+
+        el("enviarAvaliacao").textContent =
+          "Avaliação enviada ✓";
+
+      } else {
+        el("mensagemAvaliacao").textContent =
+          "Não conseguimos confirmar " +
+          "a avaliação agora. " +
+          "Ela pode ter sido recebida.";
+
+        el("enviarAvaliacao").textContent =
+          "Verificar novamente";
+
+        // Na próxima tentativa, apenas consulta.
+        el("enviarAvaliacao").onclick =
+          async evento => {
+            evento.stopPropagation();
+
+            const d = await verificarAvaliacao(
+              tokenConfirmado
+            );
+
+            if (d) {
+              avaliacaoConcluida = true;
+              notaSelecionada =
+                Number(d.nota);
+
+              el("mensagemAvaliacao").textContent =
+                "❤️ Avaliação registrada!";
+
+              el("enviarAvaliacao").textContent =
+                "Avaliação enviada ✓";
+
+              atualizarEstrelas();
+            } else {
+              el("mensagemAvaliacao").textContent =
+                "A confirmação continua pendente.";
+            }
+          };
+      }
+
+    } catch (erro) {
+      el("mensagemAvaliacao").textContent =
+        "Não foi possível confirmar " +
+        "a avaliação agora.";
+
+    } finally {
+      avaliacaoEnviando = false;
+      atualizarEstrelas();
+    }
+  }
+);
 
 atualizarLoja();
 
-document.addEventListener("visibilitychange",() => {
-  if (!document.hidden && !enviando) {
-    atualizarLoja();
+document.addEventListener(
+  "visibilitychange",
+  () => {
+    if (
+      !document.hidden &&
+      !enviando
+    ) {
+      atualizarLoja();
+    }
   }
-});
+);
 </script>
 </body>
 </html>
