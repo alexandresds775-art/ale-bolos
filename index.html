@@ -74,6 +74,7 @@ h3 {
   font-size:13px;
   color:#985a50;
   min-height:38px;
+  line-height:1.45;
 }
 .preco {
   font-weight:bold;
@@ -98,6 +99,10 @@ button {
   font-size:22px;
   width:38px;
   height:36px;
+}
+button:disabled {
+  opacity:.5;
+  cursor:not-allowed;
 }
 .total {
   background:var(--rosa);
@@ -150,10 +155,6 @@ input,select,textarea {
   font-size:16px;
   margin-top:15px;
 }
-.acao:disabled {
-  opacity:.6;
-  cursor:wait;
-}
 .secundario {
   background:white;
   border:1px solid var(--vinho);
@@ -177,6 +178,33 @@ input,select,textarea {
   margin-top:12px;
   font-size:14px;
   line-height:1.5;
+}
+#estadoLoja {
+  margin:0 0 18px;
+}
+#estadoLoja.fechada {
+  background:#fff0dc;
+  border-left-color:#a12b36;
+}
+#estadoLoja.aberta {
+  background:#edf8ed;
+  border-left-color:#397847;
+}
+.indisponivel {
+  opacity:.65;
+}
+.etiqueta {
+  display:inline-block;
+  margin-top:8px;
+  padding:5px 9px;
+  border-radius:8px;
+  background:#f8d7de;
+  color:#842f43;
+  font-size:12px;
+  font-weight:bold;
+}
+#entrega {
+  background:#fff7f2;
 }
 small { color:#7e675e; }
 footer {
@@ -206,9 +234,14 @@ footer {
 
 <section>
   <h2>🍓 Nosso cardápio</h2>
+
+  <div id="estadoLoja" class="aviso">
+    Consultando disponibilidade dos produtos...
+  </div>
+
   <p>
     Escolha seus sabores e quantidades.
-    Todos por <b>R$ 15,00</b>.
+    Os preços são atualizados conforme nosso cardápio.
   </p>
 
   <h3>Surpresas de pote • quadradinhos</h3>
@@ -216,17 +249,19 @@ footer {
 
   <h3>Bolos de pote • redondinhos</h3>
   <div class="produtos" id="bolos"></div>
+
+  <div id="outrasCategorias"></div>
 </section>
 
 <section>
   <h2>🛒 Seu pedido</h2>
 
   <div id="carrinho">
-    Nenhum produto selecionado.
+    Carregando cardápio...
   </div>
 
   <div class="total" id="total">
-    Total: R$ 0,00
+    Subtotal: R$ 0,00
   </div>
 
   <h2 style="margin-top:20px">
@@ -252,21 +287,25 @@ footer {
     >
 
     <label for="entrega">
-      Dia de disponibilidade *
+      Previsão de disponibilidade
     </label>
-    <select id="entrega" required>
-      <option value="">Selecione</option>
-      <option value="quinta">
-        Quinta-feira, após 18h — Surpresas
-      </option>
-      <option value="sexta">
-        Sexta-feira, após 18h — Bolos de pote
-      </option>
-    </select>
+
+    <input
+      id="entrega"
+      readonly
+      placeholder="Consultando calendário..."
+    >
+
+    <small>
+      A data é definida automaticamente conforme
+      os dias de funcionamento e as datas bloqueadas.
+      A confirmação final será feita pela nossa equipe.
+    </small>
 
     <label for="modalidade">
       Como deseja receber seu pedido? *
     </label>
+
     <select id="modalidade" required>
       <option value="">Selecione</option>
       <option value="retirada">
@@ -384,8 +423,13 @@ footer {
       autocomplete="off"
     >
 
-    <button type="submit" class="acao">
-      Registrar encomenda
+    <button
+      type="submit"
+      class="acao"
+      id="botaoPedido"
+      disabled
+    >
+      Consultando disponibilidade...
     </button>
   </form>
 
@@ -433,68 +477,26 @@ footer {
 </footer>
 
 <script>
+"use strict";
+
 const SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbz9JZBp4y7jgorA2BM6K4yBDvsjIGkedqLlg--2Nu4-khkf88a0mLmmGoIa2ERG2NzJYQ/exec";
 
 const PIX = "+5511997774091";
 const WHATSAPP = "5511997774091";
 
-const produtos = [
-  {
-    id:"morango",
-    nome:"Surpresa de Morango",
-    tipo:"surpresa",
-    preco:15,
-    foto:"morango.jpg",
-    descricao:
-      "Morangos frescos, creme branco aveludado e ganache cremosa."
-  },
-  {
-    id:"uva",
-    nome:"Surpresa de Uva",
-    tipo:"surpresa",
-    preco:15,
-    foto:"uva.jpg",
-    descricao:
-      "Uvas verdes sem semente, creme branco e ganache cremosa."
-  },
-  {
-    id:"chocolate",
-    nome:"Chocolate Cremoso",
-    tipo:"bolo",
-    preco:15,
-    foto:"chocolate.jpg",
-    descricao:
-      "Massa de chocolate molhadinha e recheio cremoso de chocolate."
-  },
-  {
-    id:"ninhochoc",
-    nome:"Chocolate com Ninho",
-    tipo:"bolo",
-    preco:15,
-    foto:"ninhochoc.jpg",
-    descricao:
-      "Massa de chocolate molhadinha e creme de leite em pó."
-  },
-  {
-    id:"ninhobranco",
-    nome:"Massa Branca com Ninho",
-    tipo:"bolo",
-    preco:15,
-    foto:"ninhobranco.jpg",
-    descricao:
-      "Massa branca molhadinha com creme de leite em pó."
-  }
-];
-
+const produtos = [];
 const qtd = {};
 
-produtos.forEach(p => {
-  qtd[p.id] = 0;
-});
+let lojaAberta = false;
+let catalogoCarregado = false;
+let dataDisponivel = "";
+let horarioLimite = "18:00";
+let enviando = false;
+let carregando = false;
 
 const dinheiro = valor =>
-  valor.toLocaleString("pt-BR", {
+  Number(valor).toLocaleString("pt-BR", {
     style:"currency",
     currency:"BRL"
   });
@@ -502,83 +504,411 @@ const dinheiro = valor =>
 const campo = id =>
   document.getElementById(id).value.trim();
 
-function desenhar() {
-  for (const tipo of ["surpresa", "bolo"]) {
-    const destino = document.getElementById(
-      tipo === "surpresa" ? "surpresas" : "bolos"
+function dataBrasileira(dataISO) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dataISO || "")) {
+    return "";
+  }
+
+  const partes = dataISO.split("-");
+  return partes[2] + "/" + partes[1] + "/" + partes[0];
+}
+
+function textoSeguro(valor) {
+  return String(valor == null ? "" : valor);
+}
+
+function criarElemento(tag, classe, conteudo) {
+  const elemento = document.createElement(tag);
+
+  if (classe) elemento.className = classe;
+
+  if (conteudo !== undefined) {
+    elemento.textContent = textoSeguro(conteudo);
+  }
+
+  return elemento;
+}
+
+function urlFoto(foto) {
+  const valor = String(foto || "").trim();
+
+  if (/^https:\/\//i.test(valor)) {
+    return valor;
+  }
+
+  if (/^[a-zA-Z0-9_.-]+\.(jpg|jpeg|png|webp)$/i.test(valor)) {
+    return valor;
+  }
+
+  return "";
+}
+
+function atualizarBotao() {
+  const botao = document.getElementById("botaoPedido");
+
+  botao.disabled =
+    !catalogoCarregado ||
+    !lojaAberta ||
+    enviando ||
+    carregando;
+
+  if (enviando) {
+    botao.textContent = "Enviando pedido...";
+  } else if (carregando) {
+    botao.textContent = "Consultando disponibilidade...";
+  } else if (!catalogoCarregado) {
+    botao.textContent = "Cardápio indisponível";
+  } else if (!lojaAberta) {
+    botao.textContent = "Encomendas temporariamente fechadas";
+  } else {
+    botao.textContent = "Registrar encomenda";
+  }
+}
+
+function mostrarEstado(mensagem, aberta) {
+  const aviso = document.getElementById("estadoLoja");
+
+  aviso.textContent = mensagem;
+  aviso.className = "aviso " +
+    (aberta ? "aberta" : "fechada");
+}
+
+function desenharProduto(p, destino) {
+  const card = criarElemento(
+    "div",
+    "produto" + (p.ativo ? "" : " indisponivel")
+  );
+
+  const imagem = criarElemento("img");
+  imagem.alt = p.nome;
+  imagem.loading = "lazy";
+
+  const foto = urlFoto(p.foto);
+
+  if (foto) {
+    imagem.src = foto;
+  }
+
+  card.appendChild(imagem);
+  card.appendChild(criarElemento("h4", "", p.nome));
+  card.appendChild(criarElemento("p", "", p.descricao));
+
+  card.appendChild(
+    criarElemento("div", "preco", dinheiro(p.preco))
+  );
+
+  if (!p.ativo) {
+    card.appendChild(
+      criarElemento("span", "etiqueta", "Indisponível")
+    );
+  } else {
+    const contador = criarElemento("div", "contador");
+
+    const menos = criarElemento("button", "", "−");
+    menos.type = "button";
+    menos.setAttribute(
+      "aria-label",
+      "Diminuir " + p.nome
     );
 
-    destino.innerHTML = "";
+    const numero = criarElemento(
+      "strong",
+      "",
+      qtd[p.id] || 0
+    );
 
-    produtos
-      .filter(p => p.tipo === tipo)
-      .forEach(p => {
-        const card = document.createElement("div");
-        card.className = "produto";
+    const mais = criarElemento("button", "", "+");
+    mais.type = "button";
+    mais.setAttribute(
+      "aria-label",
+      "Adicionar " + p.nome
+    );
 
-        card.innerHTML = `
-          <img
-            src="${p.foto}"
-            alt="${p.nome}"
-            loading="lazy"
-          >
-          <h4>${p.nome}</h4>
-          <p>${p.descricao}</p>
-          <div class="preco">
-            ${dinheiro(p.preco)}
-          </div>
-          <div class="contador">
-            <button
-              type="button"
-              aria-label="Diminuir"
-            >−</button>
-            <strong>${qtd[p.id]}</strong>
-            <button
-              type="button"
-              aria-label="Adicionar"
-            >+</button>
-          </div>
-        `;
+    menos.disabled = !lojaAberta;
+    mais.disabled = !lojaAberta;
 
-        const botoes = card.querySelectorAll("button");
+    menos.onclick = () => alterar(p.id, -1);
+    mais.onclick = () => alterar(p.id, 1);
 
-        botoes[0].onclick = () => alterar(p.id, -1);
-        botoes[1].onclick = () => alterar(p.id, 1);
+    contador.append(menos, numero, mais);
+    card.appendChild(contador);
+  }
 
-        destino.appendChild(card);
-      });
+  destino.appendChild(card);
+}
+
+function desenhar() {
+  const surpresas = document.getElementById("surpresas");
+  const bolos = document.getElementById("bolos");
+  const outras = document.getElementById("outrasCategorias");
+
+  surpresas.replaceChildren();
+  bolos.replaceChildren();
+  outras.replaceChildren();
+
+  const categoriasExtras = new Map();
+
+  produtos.forEach(p => {
+    if (p.categoria === "surpresa") {
+      desenharProduto(p, surpresas);
+    } else if (p.categoria === "bolo") {
+      desenharProduto(p, bolos);
+    } else {
+      const categoria = p.categoria || "Outros produtos";
+
+      if (!categoriasExtras.has(categoria)) {
+        categoriasExtras.set(categoria, []);
+      }
+
+      categoriasExtras.get(categoria).push(p);
+    }
+  });
+
+  categoriasExtras.forEach((lista, categoria) => {
+    const titulo = criarElemento("h3", "", categoria);
+    const grade = criarElemento("div", "produtos");
+
+    lista.forEach(p => desenharProduto(p, grade));
+
+    outras.append(titulo, grade);
+  });
+
+  if (!surpresas.children.length) {
+    surpresas.appendChild(
+      criarElemento("p", "", "Nenhum produto cadastrado.")
+    );
+  }
+
+  if (!bolos.children.length) {
+    bolos.appendChild(
+      criarElemento("p", "", "Nenhum produto cadastrado.")
+    );
   }
 
   const escolhidos = produtos.filter(
-    p => qtd[p.id] > 0
+    p => p.ativo && (qtd[p.id] || 0) > 0
   );
 
   document.getElementById("carrinho").textContent =
     escolhidos.length
-      ? escolhidos
-          .map(p => `${qtd[p.id]}x ${p.nome}`)
-          .join(" • ")
+      ? escolhidos.map(
+          p => `${qtd[p.id]}x ${p.nome}`
+        ).join(" • ")
       : "Nenhum produto selecionado.";
 
-  const total = escolhidos.reduce(
-    (s, p) => s + qtd[p.id] * p.preco,
+  const subtotal = escolhidos.reduce(
+    (soma, p) => soma + qtd[p.id] * p.preco,
     0
   );
 
   document.getElementById("total").textContent =
-    "Subtotal: " + dinheiro(total);
+    "Subtotal: " + dinheiro(subtotal);
 }
 
 function alterar(id, variacao) {
+  if (!lojaAberta) return;
+
+  const produto = produtos.find(p => p.id === id);
+
+  if (!produto || !produto.ativo) return;
+
   qtd[id] = Math.max(
     0,
-    Math.min(30, qtd[id] + variacao)
+    Math.min(30, (qtd[id] || 0) + variacao)
   );
 
   desenhar();
 }
 
-desenhar();
+function aplicarCatalogo(dados) {
+  if (
+    !dados ||
+    dados.sucesso !== true ||
+    !Array.isArray(dados.produtos)
+  ) {
+    throw new Error(
+      dados && dados.mensagem
+        ? dados.mensagem
+        : "Não foi possível consultar o cardápio."
+    );
+  }
+
+  produtos.length = 0;
+
+  const ids = new Set();
+
+  dados.produtos.forEach(item => {
+    const id = String(item.id || "").trim();
+    const preco = Number(item.preco);
+
+    if (
+      !/^[a-z0-9_-]{2,40}$/.test(id) ||
+      ids.has(id) ||
+      !Number.isFinite(preco) ||
+      preco <= 0
+    ) {
+      return;
+    }
+
+    ids.add(id);
+
+    const produto = {
+      id,
+      nome: textoSeguro(item.nome),
+      categoria: textoSeguro(item.categoria).toLowerCase(),
+      preco,
+      ativo: item.ativo === true,
+      foto: textoSeguro(item.foto),
+      descricao: textoSeguro(item.descricao)
+    };
+
+    produtos.push(produto);
+
+    if (!(id in qtd)) {
+      qtd[id] = 0;
+    }
+
+    if (!produto.ativo) {
+      qtd[id] = 0;
+    }
+  });
+
+  Object.keys(qtd).forEach(id => {
+    if (!ids.has(id)) {
+      delete qtd[id];
+    }
+  });
+
+  dataDisponivel = textoSeguro(dados.proximaData);
+  horarioLimite = textoSeguro(
+    dados.horarioLimite || "18:00"
+  );
+
+  lojaAberta =
+    dados.aberta === true &&
+    Boolean(dataDisponivel);
+
+  catalogoCarregado = true;
+
+  const dataFormatada = dataBrasileira(dataDisponivel);
+
+  document.getElementById("entrega").value =
+    dataFormatada
+      ? dataFormatada + " até " + horarioLimite
+      : "Sem data disponível";
+
+  const mensagem = lojaAberta
+    ? "🍰 Encomendas abertas! Próxima previsão: " +
+      dataFormatada + " até " + horarioLimite +
+      ". Sujeita à confirmação."
+    : "⏸️ " + (
+        dados.mensagem ||
+        "Encomendas temporariamente fechadas."
+      );
+
+  mostrarEstado(mensagem, lojaAberta);
+
+  desenhar();
+  atualizarBotao();
+}
+
+function consultarCatalogo() {
+  return new Promise((resolve, reject) => {
+    const callback =
+      "aleBolosCatalogo" +
+      Math.random().toString(36).slice(2);
+
+    const script = document.createElement("script");
+    let finalizado = false;
+
+    const tempo = setTimeout(() => {
+      finalizar(
+        new Error(
+          "A consulta demorou demais. Atualize a página."
+        )
+      );
+    }, 15000);
+
+    function finalizar(erro, dados) {
+      if (finalizado) return;
+
+      finalizado = true;
+      clearTimeout(tempo);
+
+      script.remove();
+
+      try {
+        delete window[callback];
+      } catch (_) {
+        window[callback] = undefined;
+      }
+
+      if (erro) reject(erro);
+      else resolve(dados);
+    }
+
+    window[callback] = dados => finalizar(null, dados);
+
+    script.onerror = () => {
+      finalizar(
+        new Error(
+          "Não foi possível conectar ao sistema de pedidos."
+        )
+      );
+    };
+
+    const separador = SCRIPT_URL.includes("?") ? "&" : "?";
+
+    script.src =
+      SCRIPT_URL +
+      separador +
+      "acao=catalogo" +
+      "&callback=" + encodeURIComponent(callback) +
+      "&_=" + Date.now();
+
+    document.head.appendChild(script);
+  });
+}
+
+async function atualizarLoja() {
+  if (carregando || enviando) return false;
+
+  carregando = true;
+  atualizarBotao();
+
+  try {
+    const dados = await consultarCatalogo();
+
+    aplicarCatalogo(dados);
+
+    return true;
+
+  } catch (erro) {
+    lojaAberta = false;
+    catalogoCarregado = false;
+
+    mostrarEstado(
+      "Não foi possível consultar a disponibilidade. " +
+      "Por segurança, os pedidos estão bloqueados. " +
+      "Atualize a página ou fale conosco pelo WhatsApp.",
+      false
+    );
+
+    document.getElementById("entrega").value =
+      "Consulta indisponível";
+
+    document.getElementById("situacao").textContent =
+      erro.message || "Erro de conexão.";
+
+    desenhar();
+
+    return false;
+
+  } finally {
+    carregando = false;
+    atualizarBotao();
+  }
+}
 
 const modalidadeEl =
   document.getElementById("modalidade");
@@ -696,11 +1026,11 @@ document.getElementById("copiar")
 
 function mensagemWhatsApp() {
   const itens = produtos.filter(
-    p => qtd[p.id] > 0
+    p => p.ativo && (qtd[p.id] || 0) > 0
   );
 
   const subtotal = itens.reduce(
-    (s, p) => s + qtd[p.id] * p.preco,
+    (soma, p) => soma + qtd[p.id] * p.preco,
     0
   );
 
@@ -723,7 +1053,8 @@ function mensagemWhatsApp() {
     "*Subtotal:* " + dinheiro(subtotal),
     "*Cliente:* " + campo("nome"),
     "*WhatsApp:* " + campo("telefone"),
-    "*Disponibilidade:* " + campo("entrega"),
+    "*Previsão:* " +
+      (campo("entrega") || "A confirmar"),
     "*Recebimento:* " +
       (modalidades[modalidade] || "Não selecionado")
   ];
@@ -778,43 +1109,29 @@ const iframe =
 const situacao =
   document.getElementById("situacao");
 
-let enviando = false;
-
 formularioPedido.addEventListener(
   "submit",
-  evento => {
+  async evento => {
     evento.preventDefault();
 
     if (enviando) return;
 
+    // Confere novamente a planilha antes de enviar.
+    const atualizado = await atualizarLoja();
+
+    if (!atualizado || !lojaAberta) {
+      alert(
+        "As encomendas não estão disponíveis no momento."
+      );
+      return;
+    }
+
     const escolhidos = produtos.filter(
-      p => qtd[p.id] > 0
+      p => p.ativo && (qtd[p.id] || 0) > 0
     );
 
     if (!escolhidos.length) {
-      alert("Escolha pelo menos um produto.");
-      return;
-    }
-
-    const entrega = campo("entrega");
-
-    if (
-      escolhidos.some(p => p.tipo === "surpresa") &&
-      entrega !== "quinta"
-    ) {
-      alert(
-        "As surpresas estão disponíveis na quinta-feira."
-      );
-      return;
-    }
-
-    if (
-      escolhidos.some(p => p.tipo === "bolo") &&
-      entrega !== "sexta"
-    ) {
-      alert(
-        "Os bolos de pote estão disponíveis na sexta-feira."
-      );
+      alert("Escolha pelo menos um produto disponível.");
       return;
     }
 
@@ -847,18 +1164,13 @@ formularioPedido.addEventListener(
       return;
     }
 
-    const botao = formularioPedido.querySelector(
-      'button[type="submit"]'
-    );
-
     enviando = true;
-    botao.disabled = true;
-    botao.textContent = "Enviando pedido...";
+    atualizarBotao();
 
     situacao.textContent =
       "Aguarde a resposta do Google no quadro abaixo. " +
       "O pedido só estará registrado quando aparecer " +
-      "a mensagem 'Pedido registrado!' e seu número.";
+      "'Pedido registrado!' e seu número.";
 
     iframe.style.display = "block";
 
@@ -871,9 +1183,9 @@ formularioPedido.addEventListener(
 
     const dados = {
       nome:campo("nome"),
-      telefone:telefone,
-      modalidade:modalidade,
-      entrega:entrega,
+      telefone,
+      modalidade,
+      entrega:dataDisponivel,
       cep:modalidade === "nossa" ? cep : "",
       rua:modalidade === "nossa" ? campo("rua") : "",
       numero:modalidade === "nossa"
@@ -907,13 +1219,12 @@ formularioPedido.addEventListener(
       if (!enviando) return;
 
       enviando = false;
-      botao.disabled = false;
-      botao.textContent = "Registrar encomenda";
+      atualizarBotao();
 
       situacao.textContent =
         "Confira o resultado no quadro abaixo. " +
-        "Se aparecer 'Pedido registrado!', guarde o " +
-        "número. Se aparecer erro ou uma tela em branco, " +
+        "Se aparecer 'Pedido registrado!', guarde " +
+        "o número. Se aparecer erro ou tela em branco, " +
         "não envie novamente antes de conferir " +
         "a planilha ou falar conosco.";
 
@@ -932,6 +1243,16 @@ formularioPedido.addEventListener(
     });
   }
 );
+
+// Consulta o catálogo ao abrir o site.
+atualizarLoja();
+
+// Reconsulta quando o cliente volta para a aba.
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden && !enviando) {
+    atualizarLoja();
+  }
+});
 </script>
 </body>
 </html>
