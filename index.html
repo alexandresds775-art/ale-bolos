@@ -1,59 +1,318 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Alê Bólos | Encomendas</title>
 <style>
-:root{--choco:#51221d;--wine:#8c3041;--pink:#f7b7c0;--cream:#fff7ed}*{box-sizing:border-box}body{margin:0;font:16px system-ui,Arial;color:#43231f;background:#fff1eb}header{background:linear-gradient(130deg,#4a1b18,#943c4b);color:white;padding:25px 16px;text-align:center}header h1{font:italic bold 44px Georgia;margin:0}header p{margin:6px}main{max-width:1080px;margin:auto;padding:18px;display:grid;grid-template-columns:1.15fr 1fr;gap:18px}.panel{background:var(--cream);border-radius:20px;padding:18px;box-shadow:0 3px 15px #51221d15}h2{margin:0 0 12px;color:var(--choco)}h3{background:var(--wine);color:white;padding:10px;border-radius:10px;margin:16px 0 12px}.products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.product{background:white;border:1px solid #f1d6cf;border-radius:14px;overflow:hidden;padding-bottom:12px;text-align:center}.product img{width:100%;aspect-ratio:1.35;object-fit:cover}.product strong{display:block;padding:6px 6px 0}.product small{display:block;min-height:38px;padding:4px 8px;color:#795b56}.price{font-weight:bold;color:var(--wine)}.counter{display:flex;justify-content:center;align-items:center;gap:16px;margin:10px 0 0}.counter button{background:#df4c69;color:white;border:0;border-radius:9px;font-size:22px;width:38px;height:34px;cursor:pointer}.counter output{min-width:18px;font-weight:bold}.total{background:#f8d1d6;border-radius:12px;padding:14px;text-align:center;font-weight:bold;font-size:23px;margin:12px 0}label{display:block;font-weight:650;margin:12px 0 5px}input,select,textarea{width:100%;padding:11px;border:1px solid #d9bcb5;border-radius:9px;font:inherit;background:white}textarea{resize:vertical}fieldset{border:1px solid #dfc6bd;border-radius:12px;margin:14px 0;padding:12px}legend{font-weight:bold}.address{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}.wide{grid-column:1/-1}.pix{background:#eaf8ee;border:1px solid #b3d6bd;border-radius:12px;padding:12px}.btn{background:#268f52;color:white;border:0;border-radius:11px;padding:14px;width:100%;font-size:16px;font-weight:bold;cursor:pointer;margin-top:12px}.secondary{background:#7c3945}.hint{font-size:13px;color:#765c55;line-height:1.45}.note{background:#fff0cc;padding:10px;border-radius:10px}footer{text-align:center;padding:20px;color:#775b55}@media(max-width:760px){main{grid-template-columns:1fr;padding:10px}.panel{padding:13px}.products{gap:9px}.product small{font-size:12px}.address{grid-template-columns:1fr}header h1{font-size:38px}}
+:root{--vinho:#842f43;--escuro:#51241e;--rosa:#f8d7de;--fundo:#fff1ec}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fundo);font-family:Arial,sans-serif;color:var(--escuro)}
+header{background:linear-gradient(110deg,#55201d,#913d51);color:white;text-align:center;padding:25px 12px}
+header h1{margin:0;font-size:32px}
+header p{margin:8px 0 0}
+main{max-width:1150px;margin:20px auto;padding:0 14px;display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:start}
+section{background:#fffaf4;padding:20px;border-radius:20px;box-shadow:0 5px 22px #5020200c}
+h2{margin:0 0 15px;font-size:23px}
+h3{background:var(--vinho);color:white;padding:12px;border-radius:10px;font-size:17px}
+.produtos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.produto{background:white;border:1px solid #f0cfc8;border-radius:15px;text-align:center;padding:10px}
+.produto img{width:100%;height:145px;object-fit:cover;border-radius:10px;background:#fff0e8}
+.produto h4{margin:10px 0 6px}
+.produto p{font-size:13px;color:#985a50;min-height:38px}
+.preco{font-weight:bold;color:var(--vinho)}
+.contador{display:flex;justify-content:center;align-items:center;gap:18px;margin:12px 0}
+button{cursor:pointer;border:0;border-radius:10px;font-weight:bold}
+.contador button{background:#e44769;color:white;font-size:22px;width:38px;height:36px}
+.total{background:var(--rosa);border-radius:12px;padding:18px;text-align:center;font-size:23px;font-weight:bold}
+label{display:block;font-weight:bold;font-size:14px;margin:13px 0 5px}
+input,select,textarea{width:100%;padding:12px;border:1px solid #e0bdb4;border-radius:9px;font:inherit;background:white}
+.linha{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.aviso{background:#fff0dc;border-left:4px solid #b97931;padding:12px;border-radius:8px;margin:14px 0;line-height:1.5;font-size:14px}
+.pix{background:#f9edf0;border-radius:12px;padding:15px;text-align:center;margin-top:16px}
+.acao{width:100%;padding:15px;background:var(--vinho);color:white;font-size:16px;margin-top:15px}
+.secundario{background:white;border:1px solid var(--vinho);color:var(--vinho);padding:10px}
+#resultadoPedido{width:100%;height:170px;border:1px solid #ead1c9;border-radius:10px;margin-top:15px;display:none;background:white}
+small{color:#7e675e}
+footer{text-align:center;padding:20px;font-size:13px}
+@media(max-width:780px){main{grid-template-columns:1fr}.produto img{height:125px}section{padding:14px}}
+@media(max-width:370px){.produtos{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<header><h1>🐻‍❄️ Alê Bólos 👨‍🍳</h1><p>Doces momentos em cada pote ♥</p><p>Encomende pelo celular • Feito com carinho</p></header>
+<header>
+<h1>🧸 Alê Bólos 🍰</h1>
+<p>Encomende pelo celular • Feito com carinho</p>
+</header>
+
 <main>
-<section class="panel"><h2>🍓 Nosso cardápio</h2><p>Escolha seus sabores e quantidades. Todos por <b>R$ 15,00</b>.</p><h3>Surpresas de pote • quadradinhos</h3><div class="products" id="surpresas"></div><h3>Bolos de pote • redondinhos</h3><div class="products" id="bolos"></div></section>
-<section class="panel"><h2>🛒 Seu pedido</h2><div id="resumo" aria-live="polite">Nenhum produto selecionado.</div><div class="total" id="total">Total: R$ 0,00</div>
+<section>
+<h2>🍓 Nosso cardápio</h2>
+<p>Escolha seus sabores e quantidades. Todos por <b>R$ 15,00</b>.</p>
+<h3>Surpresas de pote • quadradinhos</h3>
+<div class="produtos" id="surpresas"></div>
+<h3>Bolos de pote • redondinhos</h3>
+<div class="produtos" id="bolos"></div>
+</section>
+
+<section>
+<h2>🛒 Seu pedido</h2>
+<div id="carrinho">Nenhum produto selecionado.</div>
+<div class="total" id="total">Total: R$ 0,00</div>
+
+<h2 style="margin-top:20px">📍 Seus dados e entrega</h2>
 <form id="pedido">
-<h2>📍 Seus dados e entrega</h2>
-<label for="nome">Nome completo *</label><input id="nome" required maxlength="100" autocomplete="name">
-<label for="telefone">Seu WhatsApp com DDD *</label><input id="telefone" required inputmode="tel" autocomplete="tel" placeholder="(11) 99999-9999" minlength="10">
-<div class="address"><div><label for="cep">CEP * <small id="cepstatus" style="font-weight:normal"></small></label><input id="cep" required inputmode="numeric" maxlength="9" autocomplete="postal-code" placeholder="00000-000"></div><div><label for="numero">Número *</label><input id="numero" required maxlength="15"></div><div class="wide"><label for="rua">Rua / Avenida *</label><input id="rua" required maxlength="150" autocomplete="street-address"></div><div><label for="complemento">Complemento</label><input id="complemento" placeholder="Bloco, apto, casa..." maxlength="100"></div><div><label for="bairro">Bairro *</label><input id="bairro" required maxlength="100"></div><div class="wide"><label for="referencia">Referência para entrega</label><input id="referencia" maxlength="150" placeholder="Portaria, torre, ponto de referência..."></div></div>
-<label for="entrega">Quando deseja receber? *</label><select id="entrega" required><option value="">Selecione</option><option value="quinta">Quinta-feira, após as 18h (surpresas)</option><option value="sexta">Sexta-feira, após as 18h (bolos de pote)</option></select>
-<p class="hint">Para pedidos com sabores de dias diferentes, faça duas encomendas separadas.</p>
-<p class="note"><b>Entrega local por entregador:</b> taxa calculada separadamente conforme o endereço, informada antes da confirmação. O total exibido considera apenas os produtos. Aguarde o valor final antes de pagar.</p>
-<label for="obs">Observações</label><textarea id="obs" rows="2" maxlength="350" placeholder="Informações úteis para sua entrega"></textarea>
-<h2>💚 Pagamento via Pix</h2><div class="pix"><b>Chave Pix (celular)</b><p id="chave">+5511997774091</p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANcAAADXAQAAAAChBvkYAAACjElEQVR4nO2YPY7jRhCFvxIFtDZqAU6ctW7gG7DlyGcyQIEacwAfy6R8keYJtpm1AIrPgWYzzzqaaQdbYb+gCtWvXv2YeM+0exeCH9hnYjIzi0e473ic0PF1vpuZVYnTSwUehuyK7ZYrRCnVydmLYfM1uBHmAr9HZPsP9PcfmI7MB7xLAPPH+/seZtpToIOYXz/B37+bNi+VmBs5aYWY+1SilLRVyMtidlC4zks8/pmKwh4ms1ONvEiSNhpJuYOoNby9VdCX48vJGq2zxeCkkWa6n5dLBX1Byk3SpEEa/SCnTCgxEz4/L2jzK0QNyU1S0kgvN9LViYXuSRpMSsWepKnBF7T5NWCZIGVCAUKBvkJNI+VGGv2VEnOH2/yV0vq1wh/tgMfp/msGFPZhOdOnw43XD/T3Payf3F/HRoe/czMdboudNM2a6mjdkDBJmiS50SvRAnX40uFGOmj9IGLuVSx3VWLZaFRaCMVyLzflRlhuKtVRFzRlKDE3qeCVMF0r6a5SiRrSs6alQdp8Ja2jw02S3JS7gOVeTrmG1u2ARveLXex+pklu9PsZvMXPr+k9+MtJt19+Sj//xuO0fPm6Um5tk6rMmPQJyx3Yt0Gz4Icqf2T5NbiRJrkNZlhccprXD/P3vu0BWL58hWW3rSzmLzHd2n2oswdckTSIli64t45dowfssNwni7bObpJL2Kx0mMJaJS9vewABy400Atr8UGcPMDM7+ysaYT60Xul+Xta52t7YeonnZOmHpM2vVfjyvDPkl5PbeMT7blmx3TKkineGPoF36dB6iwWowN1v2HI5LedlnfXHokTL41TzzpDclDuK5S7oOTjU6Ee8jZc8i6mXpBrctR/33f899g8uy9YxROxYwQAAAABJRU5ErkJggg==" alt="QR Code Pix Alê Bólos sem valor definido" style="display:block;width:180px;max-width:100%;margin:10px auto;border-radius:8px"><p class="hint" style="text-align:center">QR Code Pix sem valor fixo. <b>Pague somente depois de receber o total com a taxa de entrega.</b></p><button type="button" class="btn secondary" id="copiarpix">Copiar Pix Copia e Cola</button><button type="button" class="btn secondary" id="copiar">Copiar chave Pix</button><p class="hint">Aguarde a confirmação da disponibilidade e da taxa de entrega. O pagamento só será confirmado após a conferência do recebimento.</p></div>
-<p class="note"><b>Comprovante:</b> após abrir a conversa pelo botão abaixo, anexe o comprovante no WhatsApp. Nesta versão, o site ainda não armazena arquivos nem registra pedidos automaticamente.</p>
-<label><input type="checkbox" id="consentimento" required style="width:auto"> Concordo em compartilhar meus dados para atendimento e entrega deste pedido.</label>
-<button class="btn" type="submit">Finalizar pedido pelo WhatsApp ↗</button>
-<p class="hint">O WhatsApp abrirá com o resumo do pedido preenchido. Envie a mensagem para concluir sua solicitação. Entrega sujeita à confirmação e disponibilidade.</p>
-</form></section>
-</main><footer>Alê Bólos ♥ Encomendas artesanais</footer>
+<label>Nome completo *</label>
+<input id="nome" required maxlength="100" autocomplete="name">
+
+<label>WhatsApp com DDD *</label>
+<input id="telefone" required inputmode="tel" placeholder="(11) 99999-9999">
+
+<div class="linha">
+<div>
+<label>CEP *</label>
+<input id="cep" required inputmode="numeric" maxlength="9" placeholder="00000-000">
+</div>
+<div>
+<label>Número *</label>
+<input id="numero" required maxlength="20">
+</div>
+</div>
+<small id="cepstatus"></small>
+
+<label>Rua / Avenida *</label>
+<input id="rua" required maxlength="150">
+
+<div class="linha">
+<div>
+<label>Bairro *</label>
+<input id="bairro" required maxlength="100">
+</div>
+<div>
+<label>Complemento</label>
+<input id="complemento" maxlength="100" placeholder="Apto, bloco, casa...">
+</div>
+</div>
+
+<label>Referência de entrega</label>
+<input id="referencia" maxlength="150" placeholder="Portaria, ponto de referência...">
+
+<label>Entrega desejada *</label>
+<select id="entrega" required>
+<option value="">Selecione</option>
+<option value="quinta">Quinta-feira, após 18h — Surpresas</option>
+<option value="sexta">Sexta-feira, após 18h — Bolos de pote</option>
+</select>
+
+<label>Observações</label>
+<textarea id="obs" rows="3" maxlength="350" placeholder="Alguma informação importante?"></textarea>
+
+<div class="aviso">
+<b>🚴 Entrega por entregador</b><br>
+Atendemos mediante disponibilidade na região de São Paulo.
+A taxa de entrega é calculada conforme o endereço e informada antes do pagamento.
+O valor do carrinho considera apenas os produtos.
+</div>
+
+<input type="text" id="website" style="display:none" tabindex="-1" autocomplete="off">
+
+<button type="submit" class="acao">Registrar encomenda</button>
+</form>
+
+<iframe id="resultadoPedido" title="Resultado do registro do pedido"></iframe>
+
+<button type="button" class="acao secundario" id="whatsapp">
+Conversar pelo WhatsApp
+</button>
+
+<div class="pix">
+<h2>💚 Pagamento via Pix</h2>
+<p>Chave Pix (celular):</p>
+<b>+55 11 99777-4091</b>
+<p><button type="button" class="secundario" id="copiar">Copiar chave Pix</button></p>
+<small>Aguarde o valor final com a taxa de entrega antes de pagar. O pagamento será confirmado após conferência bancária.</small>
+</div>
+</section>
+</main>
+
+<footer>Alê Bólos • Produzido com carinho ❤️</footer>
+
 <script>
-const PIX='+5511997774091',WHATSAPP='5511997774091',PIX_COPIA_COLA='00020126360014br.gov.bcb.pix0114+55119977740915204000053039865802BR5909ALE BOLOS6009SAO PAULO62070503***6304670F';
-const produtos=[{id:'morango',nome:'Surpresa de Morango',tipo:'surpresa',img:'morango.jpg',desc:'Morangos frescos, creme branco aveludado e ganache cremosa.'},{id:'uva',nome:'Surpresa de Uva',tipo:'surpresa',img:'uva.jpg',desc:'Uvas verdes sem semente, creme branco e ganache cremosa.'},{id:'chocolate',nome:'Chocolate Cremoso',tipo:'bolo',img:'chocolate.jpg',desc:'Massa de chocolate molhadinha e recheio de chocolate.'},{id:'ninhochoc',nome:'Chocolate com Ninho',tipo:'bolo',img:'ninhochoc.jpg',desc:'Massa de chocolate molhadinha e creme de leite em pó.'},{id:'ninhobranco',nome:'Massa Branca com Ninho',tipo:'bolo',img:'ninhobranco.jpg',desc:'Massa branca molhadinha e creme de leite em pó.'}];
-const qtd=Object.fromEntries(produtos.map(p=>[p.id,0]));const dinheiro=n=>n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
-for(const p of produtos){const card=document.createElement('article');card.className='product';card.innerHTML=`<img src="${p.img}" alt="${p.nome}" loading="lazy"><strong>${p.nome}</strong><small>${p.desc}</small><span class="price">R$ 15,00</span><div class="counter"><button type="button" aria-label="Diminuir ${p.nome}">−</button><output>0</output><button type="button" aria-label="Aumentar ${p.nome}">+</button></div>`;const b=card.querySelectorAll('button');b[0].onclick=()=>mudar(p,-1,card);b[1].onclick=()=>mudar(p,1,card);document.getElementById(p.tipo==='bolo'?'bolos':'surpresas').append(card)}
-function mudar(p,d,card){qtd[p.id]=Math.max(0,Math.min(30,qtd[p.id]+d));card.querySelector('output').textContent=qtd[p.id];atualizar()}
-function atualizar(){const linhas=produtos.filter(p=>qtd[p.id]).map(p=>`${qtd[p.id]} × ${p.nome} — ${dinheiro(qtd[p.id]*15)}`);document.getElementById('resumo').textContent=linhas.join(' | ')||'Nenhum produto selecionado.';document.getElementById('total').textContent='Total: '+dinheiro(produtos.reduce((n,p)=>n+qtd[p.id]*15,0))}
-document.getElementById('copiarpix').onclick=async()=>{try{await navigator.clipboard.writeText(PIX_COPIA_COLA);alert('Pix Copia e Cola copiado!')}catch{prompt('Copie o código Pix:',PIX_COPIA_COLA)}};
-const cepInput=document.getElementById('cep'),cepStatus=document.getElementById('cepstatus');
-let cepAnterior='';
-cepInput.addEventListener('input',()=>{const d=cepInput.value.replace(/\D/g,'').slice(0,8);cepInput.value=d.length>5?d.slice(0,5)+'-'+d.slice(5):d;cepStatus.textContent='';if(d.length===8&&d!==cepAnterior)buscarCEP(d)});
-async function buscarCEP(cep){
-  cepAnterior=cep;cepStatus.textContent='Buscando...';
-  try{
-    const resposta=await fetch('https://viacep.com.br/ws/'+cep+'/json/',{signal:AbortSignal.timeout(8000)});
-    if(!resposta.ok)throw new Error('Falha');
-    const dados=await resposta.json();
-    if(dados.erro){cepStatus.textContent='CEP não encontrado';return}
-    if(dados.uf!=='SP'||(dados.localidade||'').toLowerCase()!=='são paulo'){cepStatus.textContent='Consulte a área de entrega antes de pedir';}
-    else cepStatus.textContent='Endereço localizado ✓';
-    document.getElementById('rua').value=dados.logradouro||'';
-    document.getElementById('bairro').value=dados.bairro||'';
-    document.getElementById('numero').focus();
-  }catch{cepStatus.textContent='Preencha rua e bairro manualmente'}
+const SCRIPT_URL="https://script.google.com/macros/s/AKfycbz9JZBp4y7jgorA2BM6K4yBDvsjIGkedqLlg--2Nu4-khkf88a0mLmmGoIa2ERG2NzJYQ/exec";
+const PIX="+5511997774091";
+const WHATSAPP="5511997774091";
+
+const produtos=[
+{id:"morango",nome:"Surpresa de Morango",tipo:"surpresa",foto:"morango.jpg",descricao:"Morangos frescos, creme branco aveludado e ganache cremosa."},
+{id:"uva",nome:"Surpresa de Uva",tipo:"surpresa",foto:"uva.jpg",descricao:"Uvas verdes sem semente, creme branco e ganache cremosa."},
+{id:"chocolate",nome:"Chocolate Cremoso",tipo:"bolo",foto:"chocolate.jpg",descricao:"Massa de chocolate molhadinha e recheio cremoso de chocolate."},
+{id:"ninhochoc",nome:"Chocolate com Ninho",tipo:"bolo",foto:"ninhochoc.jpg",descricao:"Massa de chocolate molhadinha e creme de leite em pó."},
+{id:"ninhobranco",nome:"Massa Branca com Ninho",tipo:"bolo",foto:"ninhobranco.jpg",descricao:"Massa branca molhadinha com creme de leite em pó."}
+];
+
+const qtd={};
+produtos.forEach(p=>qtd[p.id]=0);
+
+const dinheiro=n=>n.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+const campo=id=>document.getElementById(id).value.trim();
+
+function desenhar(){
+for(const tipo of ["surpresa","bolo"]){
+const destino=document.getElementById(tipo==="surpresa"?"surpresas":"bolos");
+destino.innerHTML="";
+produtos.filter(p=>p.tipo===tipo).forEach(p=>{
+const card=document.createElement("div");
+card.className="produto";
+card.innerHTML=`
+<img src="${p.foto}" alt="${p.nome}" loading="lazy">
+<h4>${p.nome}</h4>
+<p>${p.descricao}</p>
+<div class="preco">R$ 15,00</div>
+<div class="contador">
+<button type="button" aria-label="Diminuir">−</button>
+<strong>${qtd[p.id]}</strong>
+<button type="button" aria-label="Adicionar">+</button>
+</div>`;
+const botoes=card.querySelectorAll("button");
+botoes[0].onclick=()=>alterar(p.id,-1);
+botoes[1].onclick=()=>alterar(p.id,1);
+destino.appendChild(card);
+});
 }
-document.getElementById('copiar').onclick=async()=>{try{await navigator.clipboard.writeText(PIX);alert('Chave Pix copiada!')}catch{prompt('Copie a chave Pix:',PIX)}};
-document.getElementById('pedido').onsubmit=e=>{e.preventDefault();const itens=produtos.filter(p=>qtd[p.id]);if(!itens.length)return alert('Selecione pelo menos um produto.');const entrega=document.getElementById('entrega').value;if(itens.some(p=>p.tipo==='surpresa')&&entrega!=='quinta'||itens.some(p=>p.tipo==='bolo')&&entrega!=='sexta')return alert('Surpresas: quinta-feira. Bolos: sexta-feira. Faça pedidos separados para datas diferentes.');const v=id=>document.getElementById(id).value.trim();const cep=v('cep').replace(/\D/g,'');if(cep.length!==8)return alert('Informe um CEP com 8 números.');const tel=v('telefone').replace(/\D/g,'');if(tel.length<10||tel.length>11)return alert('Informe um WhatsApp válido com DDD.');const total=itens.reduce((n,p)=>n+qtd[p.id]*15,0);const texto=['*NOVA ENCOMENDA — ALÊ BÓLOS*','',...itens.map(p=>`${qtd[p.id]}x ${p.nome} — ${dinheiro(qtd[p.id]*15)}`),'','*Subtotal dos produtos:* '+dinheiro(total),'*Entrega:* taxa do entregador a calcular e informar antes do Pix','*Nome:* '+v('nome'),'*WhatsApp:* '+v('telefone'),'*Endereço:* '+v('rua')+', '+v('numero')+(v('complemento')?', '+v('complemento'):''),'*Bairro:* '+v('bairro'),' *CEP:* '+v('cep'),' *Referência:* '+(v('referencia')||'Não informada'),'*Entrega:* '+(entrega==='quinta'?'Quinta após 18h':'Sexta após 18h'),'*Observações:* '+(v('obs')||'Nenhuma'),'','*Pix:* '+PIX,'Aguardo o total com frete antes de realizar o Pix. Enviarei o comprovante nesta conversa.'].join('\n');window.open('https://wa.me/'+WHATSAPP+'?text='+encodeURIComponent(texto),'_blank','noopener,noreferrer')};
+const escolhidos=produtos.filter(p=>qtd[p.id]>0);
+document.getElementById("carrinho").textContent=escolhidos.length
+?escolhidos.map(p=>`${qtd[p.id]}x ${p.nome}`).join(" • ")
+:"Nenhum produto selecionado.";
+const total=escolhidos.reduce((s,p)=>s+qtd[p.id]*15,0);
+document.getElementById("total").textContent="Total: "+dinheiro(total);
+}
+
+function alterar(id,n){
+qtd[id]=Math.max(0,Math.min(30,qtd[id]+n));
+desenhar();
+}
+desenhar();
+
+let ultimoCEP="";
+document.getElementById("cep").addEventListener("input",async function(){
+const cep=this.value.replace(/\D/g,"").slice(0,8);
+this.value=cep.length>5?cep.slice(0,5)+"-"+cep.slice(5):cep;
+if(cep.length!==8||cep===ultimoCEP)return;
+ultimoCEP=cep;
+const status=document.getElementById("cepstatus");
+status.textContent="Buscando endereço...";
+try{
+const r=await fetch("https://viacep.com.br/ws/"+cep+"/json/");
+if(!r.ok)throw Error();
+const d=await r.json();
+if(d.erro){status.textContent="CEP não encontrado. Preencha manualmente.";return;}
+document.getElementById("rua").value=d.logradouro||"";
+document.getElementById("bairro").value=d.bairro||"";
+status.textContent=d.localidade+" / "+d.uf+" — confira o endereço.";
+document.getElementById("numero").focus();
+}catch(e){status.textContent="Consulta indisponível. Preencha manualmente.";}
+});
+
+document.getElementById("copiar").onclick=async()=>{
+try{
+await navigator.clipboard.writeText(PIX);
+alert("Chave Pix copiada!");
+}catch(e){prompt("Copie a chave Pix:",PIX);}
+};
+
+function mensagemWhatsApp(){
+const itens=produtos.filter(p=>qtd[p.id]>0);
+const total=itens.reduce((s,p)=>s+qtd[p.id]*15,0);
+return [
+"*ENCOMENDA — ALÊ BÓLOS*",
+"",
+...itens.map(p=>`${qtd[p.id]}x ${p.nome} — ${dinheiro(qtd[p.id]*15)}`),
+"",
+"*Subtotal:* "+dinheiro(total),
+"*Frete:* aguardando cotação",
+"*Nome:* "+campo("nome"),
+"*Telefone:* "+campo("telefone"),
+"*Endereço:* "+campo("rua")+", "+campo("numero"),
+"*Complemento:* "+(campo("complemento")||"Não informado"),
+"*Bairro:* "+campo("bairro"),
+"*CEP:* "+campo("cep"),
+"*Referência:* "+(campo("referencia")||"Não informada"),
+"*Entrega:* "+campo("entrega"),
+"*Observações:* "+(campo("obs")||"Nenhuma")
+].join("\n");
+}
+
+document.getElementById("whatsapp").onclick=()=>{
+window.open("https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(mensagemWhatsApp()),"_blank");
+};
+
+document.getElementById("pedido").onsubmit=e=>{
+e.preventDefault();
+
+const escolhidos=produtos.filter(p=>qtd[p.id]>0);
+if(!escolhidos.length){alert("Escolha pelo menos um produto.");return;}
+
+const entrega=campo("entrega");
+if(escolhidos.some(p=>p.tipo==="surpresa")&&entrega!=="quinta"){
+alert("As surpresas estão disponíveis na quinta-feira.");
+return;
+}
+if(escolhidos.some(p=>p.tipo==="bolo")&&entrega!=="sexta"){
+alert("Os bolos estão disponíveis na sexta-feira.");
+return;
+}
+const tel=campo("telefone").replace(/\D/g,"");
+const cep=campo("cep").replace(/\D/g,"");
+if(tel.length<10||tel.length>11){alert("Confira o WhatsApp.");return;}
+if(cep.length!==8){alert("Confira o CEP.");return;}
+
+const botao=e.target.querySelector('button[type="submit"]');
+botao.disabled=true;
+botao.textContent="Enviando pedido...";
+
+const iframe=document.getElementById("resultadoPedido");
+iframe.style.display="block";
+iframe.src="about:blank";
+
+const formulario=document.createElement("form");
+formulario.method="POST";
+formulario.action=SCRIPT_URL;
+formulario.target="resultadoPedido";
+formulario.style.display="none";
+
+const dados={
+nome:campo("nome"),
+telefone:tel,
+cep:cep,
+rua:campo("rua"),
+numero:campo("numero"),
+complemento:campo("complemento"),
+bairro:campo("bairro"),
+referencia:campo("referencia"),
+entrega:entrega,
+obs:campo("obs"),
+website:campo("website"),
+quantidades:JSON.stringify(qtd)
+};
+
+Object.entries(dados).forEach(([chave,valor])=>{
+const input=document.createElement("input");
+input.type="hidden";
+input.name=chave;
+input.value=valor;
+formulario.appendChild(input);
+});
+
+document.body.appendChild(formulario);
+formulario.submit();
+formulario.remove();
+
+botao.disabled=false;
+botao.textContent="Registrar encomenda";
+
+iframe.scrollIntoView({behavior:"smooth",block:"center"});
+};
 </script>
-</body></html>
+</body>
+</html>
